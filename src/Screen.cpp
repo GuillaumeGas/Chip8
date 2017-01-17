@@ -67,7 +67,7 @@ void Screen::_init_content () {
 	for (int j = 0; j < SCREEN_HEIGHT; j++) {
 	    _content[i][j].pos.x = i * PIXEL_DIM;
 	    _content[i][j].pos.y = j * PIXEL_DIM;
-	    _content[i][j].color = (i%(j+1)==0) ? BLACK : WHITE;
+	    _content[i][j].color = BLACK;
 	}
     }
 }

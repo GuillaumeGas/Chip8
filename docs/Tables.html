@@ -1,0 +1,987 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd">
+<!-- saved from url=(0046)http://devernay.free.fr/hacks/chip8/chip8.html -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>Tables</title>
+
+	<!-- "G_PLUGIN_FOR_HTML" -->
+<style type="text/css">
+tt {
+	font-family: courier;
+}
+td {
+	font-family: helvetica, sans-serif;
+}
+caption {
+	font-family: helvetica, sans-serif;
+	font-size: 14pt;
+	text-align: left;
+}
+</style>
+</head>
+<body>
+<p></p><table cellspacing="0" cellpadding="3">
+<caption>List</caption>
+<tbody><tr>
+<td valign="center" align="center" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">code</td>
+<td valign="center" align="center" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">instruction</td>
+<td valign="center" align="center" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">description</td>
+<td valign="center" align="center" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">CHIP8</td>
+<td valign="center" align="center" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">CHIP48</td>
+<td valign="center" align="center" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">SCHIP10</td>
+<td valign="center" align="center" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">SCHIP11</td>
+<td style=" border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;"></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+</tr>
+<tr>
+<td valign="center" align="center" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">00CN</td>
+<td valign="center" align="left" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">SCD Nibble</td>
+<td valign="center" align="left" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">Scroll screen Nibble lines down</td>
+<td style=" border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;"></td>
+<td style=" border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;"></td>
+<td style=" border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;"></td>
+<td valign="center" align="center" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">○</td>
+<td valign="center" align="left" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">CHIP8FN_(00CN,"SCD Nibble")</td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+</tr>
+<tr>
+<td valign="center" align="center" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">00E0</td>
+<td valign="center" align="left" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">CLS</td>
+<td valign="center" align="left" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">Clear display</td>
+<td valign="center" align="center" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">○</td>
+<td valign="center" align="center" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">○</td>
+<td valign="center" align="center" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">○</td>
+<td valign="center" align="center" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">○</td>
+<td valign="center" align="left" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">CHIP8FN_(00E0,"CLS")</td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+</tr>
+<tr>
+<td valign="center" align="center" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">00EE</td>
+<td valign="center" align="left" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">RET</td>
+<td valign="center" align="left" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">Return from subroutine (16 levels)</td>
+<td valign="center" align="center" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">○</td>
+<td valign="center" align="center" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">○</td>
+<td valign="center" align="center" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">○</td>
+<td valign="center" align="center" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">○</td>
+<td valign="center" align="left" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">CHIP8FN_(00EE,"RET")</td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+</tr>
+<tr>
+<td valign="center" align="center" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">00FB</td>
+<td valign="center" align="left" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">SCR</td>
+<td valign="center" align="left" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">Scroll screen 4 pixels right</td>
+<td style=" border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;"></td>
+<td style=" border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;"></td>
+<td style=" border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;"></td>
+<td valign="center" align="center" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">○</td>
+<td valign="center" align="left" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">CHIP8FN_(00FB,"SCR")</td>
+<td colspan="11" valign="center" align="left" style=" font-size:9pt;">This, a 4 pixels left or right scrolling in SCHIP graphic mode will be interpreted as a TWO PIXELS scroll in CHIP-8 mode.</td>
+</tr>
+<tr>
+<td valign="center" align="center" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">00FC</td>
+<td valign="center" align="left" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">SCL</td>
+<td valign="center" align="left" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">Scroll screen 4 pixels left</td>
+<td style=" border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;"></td>
+<td style=" border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;"></td>
+<td style=" border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;"></td>
+<td valign="center" align="center" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">○</td>
+<td valign="center" align="left" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">CHIP8FN_(00FC,"SCL")</td>
+<td colspan="11" valign="center" align="left" style=" font-size:9pt;">This, a 4 pixels left or right scrolling in SCHIP graphic mode will be interpreted as a TWO PIXELS scroll in CHIP-8 mode.</td>
+</tr>
+<tr>
+<td valign="center" align="center" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">00FD</td>
+<td valign="center" align="left" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">EXIT</td>
+<td valign="center" align="left" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">Terminate the interpreter</td>
+<td style=" border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;"></td>
+<td style=" border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;"></td>
+<td valign="center" align="center" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">○</td>
+<td valign="center" align="center" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">○</td>
+<td valign="center" align="left" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">CHIP8FN_(00FD,"EXIT")</td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+</tr>
+<tr>
+<td valign="center" align="center" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">00FE</td>
+<td valign="center" align="left" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">LOW</td>
+<td valign="center" align="left" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">Disable extended screen mode</td>
+<td style=" border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;"></td>
+<td style=" border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;"></td>
+<td valign="center" align="center" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">○</td>
+<td valign="center" align="center" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">○</td>
+<td valign="center" align="left" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">CHIP8FN_(00FE,"LOW")</td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+</tr>
+<tr>
+<td valign="center" align="center" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">00FF</td>
+<td valign="center" align="left" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">HIGH</td>
+<td valign="center" align="left" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">Enable extended screen mode</td>
+<td style=" border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;"></td>
+<td style=" border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;"></td>
+<td valign="center" align="center" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">○</td>
+<td valign="center" align="center" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">○</td>
+<td valign="center" align="left" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">CHIP8FN_(00FF,"HIGH")</td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+</tr>
+<tr>
+<td valign="center" align="center" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">0NNN</td>
+<td valign="center" align="left" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">SYS Addr</td>
+<td valign="center" align="left" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">Call CDP1802 code at Addr</td>
+<td valign="center" align="center" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">○</td>
+<td style=" border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;"></td>
+<td style=" border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;"></td>
+<td style=" border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;"></td>
+<td valign="center" align="left" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">CHIP8FN_(0NNN,"SYS Addr")</td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+</tr>
+<tr>
+<td valign="center" align="center" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">1NNN</td>
+<td valign="center" align="left" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">JP Addr</td>
+<td valign="center" align="left" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">Jump to Addr</td>
+<td valign="center" align="center" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">○</td>
+<td valign="center" align="center" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">○</td>
+<td valign="center" align="center" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">○</td>
+<td valign="center" align="center" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">○</td>
+<td valign="center" align="left" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">CHIP8FN_(1NNN,"JP Addr")</td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+</tr>
+<tr>
+<td valign="center" align="center" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">2NNN</td>
+<td valign="center" align="left" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">CALL Addr</td>
+<td valign="center" align="left" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">Call subroutine at Addr (16 levels)</td>
+<td valign="center" align="center" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">○</td>
+<td valign="center" align="center" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">○</td>
+<td valign="center" align="center" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">○</td>
+<td valign="center" align="center" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">○</td>
+<td valign="center" align="left" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">CHIP8FN_(2NNN,"CALL Addr")</td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+</tr>
+<tr>
+<td valign="center" align="center" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">3XKK</td>
+<td valign="center" align="left" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">SE VX,Byte</td>
+<td valign="center" align="left" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">Skip next instruction if VX == Byte</td>
+<td valign="center" align="center" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">○</td>
+<td valign="center" align="center" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">○</td>
+<td valign="center" align="center" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">○</td>
+<td valign="center" align="center" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">○</td>
+<td valign="center" align="left" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">CHIP8FN_(3XKK,"SE VX,Byte")</td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+</tr>
+<tr>
+<td valign="center" align="center" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">4XKK</td>
+<td valign="center" align="left" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">SNE VX,Byte</td>
+<td valign="center" align="left" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">Skip next instruction if VX != Byte</td>
+<td valign="center" align="center" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">○</td>
+<td valign="center" align="center" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">○</td>
+<td valign="center" align="center" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">○</td>
+<td valign="center" align="center" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">○</td>
+<td valign="center" align="left" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">CHIP8FN_(4XKK,"SNE VX,Byte")</td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+</tr>
+<tr>
+<td valign="center" align="center" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">5XY0</td>
+<td valign="center" align="left" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">SE VX,VY</td>
+<td valign="center" align="left" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">Skip next instruction if VX == VY</td>
+<td valign="center" align="center" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">○</td>
+<td valign="center" align="center" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">○</td>
+<td valign="center" align="center" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">○</td>
+<td valign="center" align="center" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">○</td>
+<td valign="center" align="left" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">CHIP8FN_(5XY0,"SE VX,VY")</td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+</tr>
+<tr>
+<td valign="center" align="center" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">6XKK</td>
+<td valign="center" align="left" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">LD VX,Byte</td>
+<td valign="center" align="left" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">Set VX = Byte</td>
+<td valign="center" align="center" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">○</td>
+<td valign="center" align="center" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">○</td>
+<td valign="center" align="center" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">○</td>
+<td valign="center" align="center" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">○</td>
+<td valign="center" align="left" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">CHIP8FN_(6XKK,"LD VX,Byte")</td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+</tr>
+<tr>
+<td valign="center" align="center" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">7XKK</td>
+<td valign="center" align="left" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">ADD VX,Byte</td>
+<td valign="center" align="left" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">Set VX = VX + Byte</td>
+<td valign="center" align="center" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">○</td>
+<td valign="center" align="center" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">○</td>
+<td valign="center" align="center" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">○</td>
+<td valign="center" align="center" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">○</td>
+<td valign="center" align="left" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">CHIP8FN_(7XKK,"ADD VX,Byte")</td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+</tr>
+<tr>
+<td valign="center" align="center" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">8XY0</td>
+<td valign="center" align="left" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">LD VX,VY</td>
+<td valign="center" align="left" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">Set VX = VY, VF updates</td>
+<td valign="center" align="center" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">○</td>
+<td valign="center" align="center" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">○</td>
+<td valign="center" align="center" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">○</td>
+<td valign="center" align="center" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">○</td>
+<td valign="center" align="left" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">CHIP8FN_(8XY0,"LD VX,VY")</td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+</tr>
+<tr>
+<td valign="center" align="center" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">8XY1</td>
+<td valign="center" align="left" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">OR VX,VY</td>
+<td valign="center" align="left" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">Set VX = VX | VY, VF updates</td>
+<td valign="center" align="center" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">○</td>
+<td valign="center" align="center" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">○</td>
+<td valign="center" align="center" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">○</td>
+<td valign="center" align="center" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">○</td>
+<td valign="center" align="left" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">CHIP8FN_(8XY1,"OR VX,VY")</td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+</tr>
+<tr>
+<td valign="center" align="center" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">8XY2</td>
+<td valign="center" align="left" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">AND VX,VY</td>
+<td valign="center" align="left" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">Set VX = VX &amp; VY, VF updates</td>
+<td valign="center" align="center" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">○</td>
+<td valign="center" align="center" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">○</td>
+<td valign="center" align="center" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">○</td>
+<td valign="center" align="center" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">○</td>
+<td valign="center" align="left" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">CHIP8FN_(8XY2,"AND VX,VY")</td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+</tr>
+<tr>
+<td valign="center" align="center" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">8XY3</td>
+<td valign="center" align="left" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">XOR VX,VY</td>
+<td valign="center" align="left" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">Set VX = VX ^ VY, VF updates</td>
+<td valign="center" align="center" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">○</td>
+<td valign="center" align="center" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">○</td>
+<td valign="center" align="center" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">○</td>
+<td valign="center" align="center" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">○</td>
+<td valign="center" align="left" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">CHIP8FN_(8XY3,"XOR VX,VY")</td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+</tr>
+<tr>
+<td valign="center" align="center" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">8XY4</td>
+<td valign="center" align="left" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">ADD VX,VY</td>
+<td valign="center" align="left" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">Set VX = VX + VY, VF = carry</td>
+<td valign="center" align="center" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">○</td>
+<td valign="center" align="center" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">○</td>
+<td valign="center" align="center" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">○</td>
+<td valign="center" align="center" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">○</td>
+<td valign="center" align="left" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">CHIP8FN_(8XY4,"ADD VX,VY")</td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+</tr>
+<tr>
+<td valign="center" align="center" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">8XY5</td>
+<td valign="center" align="left" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">SUB VX,VY</td>
+<td valign="center" align="left" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">Set VX = VX - VY, VF = !borrow</td>
+<td valign="center" align="center" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">○</td>
+<td valign="center" align="center" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">○</td>
+<td valign="center" align="center" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">○</td>
+<td valign="center" align="center" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">○</td>
+<td valign="center" align="left" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">CHIP8FN_(8XY5,"SUB VX,VY")</td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+</tr>
+<tr>
+<td valign="center" align="center" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">8XY6</td>
+<td valign="center" align="left" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">SHR VX{,VY}</td>
+<td valign="center" align="left" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">Set VX = VX &gt;&gt; 1, VF = carry</td>
+<td valign="center" align="center" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">○</td>
+<td valign="center" align="center" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">○</td>
+<td valign="center" align="center" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">○</td>
+<td valign="center" align="center" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">○</td>
+<td valign="center" align="left" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">CHIP8FN_(8XY6,"SHR VX{,VY}")</td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+</tr>
+<tr>
+<td valign="center" align="center" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">8XY7</td>
+<td valign="center" align="left" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">SUBN VX,VY</td>
+<td valign="center" align="left" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">Set VX = VY - VX, VF = !borrow</td>
+<td valign="center" align="center" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">○</td>
+<td valign="center" align="center" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">○</td>
+<td valign="center" align="center" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">○</td>
+<td valign="center" align="center" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">○</td>
+<td valign="center" align="left" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">CHIP8FN_(8XY7,"SUBN VX,VY")</td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+</tr>
+<tr>
+<td valign="center" align="center" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">8XYE</td>
+<td valign="center" align="left" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">SHL VX{,VY}</td>
+<td valign="center" align="left" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">Set VX = VX &lt;&lt; 1, VF = carry</td>
+<td valign="center" align="center" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">○</td>
+<td valign="center" align="center" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">○</td>
+<td valign="center" align="center" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">○</td>
+<td valign="center" align="center" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">○</td>
+<td valign="center" align="left" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">CHIP8FN_(8XYE,"SHL VX{,VY}")</td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+</tr>
+<tr>
+<td valign="center" align="center" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">9XY0</td>
+<td valign="center" align="left" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">SNE VX,VY</td>
+<td valign="center" align="left" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">Skip next instruction if VX != VY</td>
+<td valign="center" align="center" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">○</td>
+<td valign="center" align="center" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">○</td>
+<td valign="center" align="center" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">○</td>
+<td valign="center" align="center" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">○</td>
+<td valign="center" align="left" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">CHIP8FN_(9XY0,"SNE VX,VY")</td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+</tr>
+<tr>
+<td valign="center" align="center" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">ANNN</td>
+<td valign="center" align="left" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">LD I,Addr</td>
+<td valign="center" align="left" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">Set I = Addr</td>
+<td valign="center" align="center" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">○</td>
+<td valign="center" align="center" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">○</td>
+<td valign="center" align="center" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">○</td>
+<td valign="center" align="center" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">○</td>
+<td valign="center" align="left" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">CHIP8FN_(ANNN,"LD I,Addr")</td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+</tr>
+<tr>
+<td valign="center" align="center" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">BNNN</td>
+<td valign="center" align="left" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">JP V0,Addr</td>
+<td valign="center" align="left" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">Jump to Addr + V0</td>
+<td valign="center" align="center" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">○</td>
+<td valign="center" align="center" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">○</td>
+<td valign="center" align="center" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">○</td>
+<td valign="center" align="center" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">○</td>
+<td valign="center" align="left" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">CHIP8FN_(BNNN,"JP V0,Addr")</td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+</tr>
+<tr>
+<td valign="center" align="center" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">CXKK</td>
+<td valign="center" align="left" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">RND VX,Byte</td>
+<td valign="center" align="left" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">Set VX = random &amp; Byte</td>
+<td valign="center" align="center" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">○</td>
+<td valign="center" align="center" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">○</td>
+<td valign="center" align="center" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">○</td>
+<td valign="center" align="center" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">○</td>
+<td valign="center" align="left" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">CHIP8FN_(CXKK,"RND VX,Byte")</td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+</tr>
+<tr>
+<td valign="center" align="center" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">DXY0</td>
+<td valign="center" align="left" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">DRW VX,VY,0</td>
+<td valign="center" align="left" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">Draw extended sprite stored at [I] at VX, VY. Set VF = collision</td>
+<td style=" border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;"></td>
+<td style=" border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;"></td>
+<td valign="center" align="center" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">○</td>
+<td valign="center" align="center" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">○</td>
+<td valign="center" align="left" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">CHIP8FN_(DXY0,"DRW VX,VY,0")</td>
+<td colspan="8" valign="center" align="left" style=" font-size:9pt;">Drawing the 16 x 16 pixels SCHIP sprite in CHIP-8 mode will display an 8 x 16 sprite.</td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+</tr>
+<tr>
+<td valign="center" align="center" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">DXYN</td>
+<td valign="center" align="left" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">DRW VX,VY,Nibble</td>
+<td valign="center" align="left" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">Draw Nibble byte sprite stored at [I] at VX, VY. Set VF = collision</td>
+<td valign="center" align="center" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">○</td>
+<td valign="center" align="center" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">○</td>
+<td valign="center" align="center" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">○</td>
+<td valign="center" align="center" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">○</td>
+<td valign="center" align="left" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">CHIP8FN_(DXYN,"DRW VX,VY,Nibble")</td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+</tr>
+<tr>
+<td valign="center" align="center" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">EX9E</td>
+<td valign="center" align="left" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">SKP VX</td>
+<td valign="center" align="left" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">Skip next instruction if key VX down</td>
+<td valign="center" align="center" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">○</td>
+<td valign="center" align="center" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">○</td>
+<td valign="center" align="center" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">○</td>
+<td valign="center" align="center" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">○</td>
+<td valign="center" align="left" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">CHIP8FN_(EX9E,"SKP VX")</td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+</tr>
+<tr>
+<td valign="center" align="center" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">EXA1</td>
+<td valign="center" align="left" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">SKNP VX</td>
+<td valign="center" align="left" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">Skip next instruction if key VX up</td>
+<td valign="center" align="center" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">○</td>
+<td valign="center" align="center" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">○</td>
+<td valign="center" align="center" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">○</td>
+<td valign="center" align="center" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">○</td>
+<td valign="center" align="left" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">CHIP8FN_(EXA1,"SKNP VX")</td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+</tr>
+<tr>
+<td valign="center" align="center" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">FX07</td>
+<td valign="center" align="left" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">LD VX,DT</td>
+<td valign="center" align="left" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">Set VX = delaytimer</td>
+<td valign="center" align="center" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">○</td>
+<td valign="center" align="center" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">○</td>
+<td valign="center" align="center" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">○</td>
+<td valign="center" align="center" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">○</td>
+<td valign="center" align="left" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">CHIP8FN_(FX07,"LD VX,DT")</td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+</tr>
+<tr>
+<td valign="center" align="center" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">FX0A</td>
+<td valign="center" align="left" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">LD VX,K</td>
+<td valign="center" align="left" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">Set VX = key, wait for keypress</td>
+<td valign="center" align="center" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">○</td>
+<td valign="center" align="center" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">○</td>
+<td valign="center" align="center" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">○</td>
+<td valign="center" align="center" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">○</td>
+<td valign="center" align="left" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">CHIP8FN_(FX0A,"LD VX,K")</td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+</tr>
+<tr>
+<td valign="center" align="center" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">FX15</td>
+<td valign="center" align="left" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">LD DT,VX</td>
+<td valign="center" align="left" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">Set delaytimer = VX</td>
+<td valign="center" align="center" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">○</td>
+<td valign="center" align="center" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">○</td>
+<td valign="center" align="center" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">○</td>
+<td valign="center" align="center" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">○</td>
+<td valign="center" align="left" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">CHIP8FN_(FX15,"LD DT,VX")</td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+</tr>
+<tr>
+<td valign="center" align="center" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">FX18</td>
+<td valign="center" align="left" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">LD ST,VX</td>
+<td valign="center" align="left" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">Set soundtimer = VX</td>
+<td valign="center" align="center" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">○</td>
+<td valign="center" align="center" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">○</td>
+<td valign="center" align="center" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">○</td>
+<td valign="center" align="center" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">○</td>
+<td valign="center" align="left" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">CHIP8FN_(FX18,"LD ST,VX")</td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+</tr>
+<tr>
+<td valign="center" align="center" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">FX1E</td>
+<td valign="center" align="left" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">ADD I,VX</td>
+<td valign="center" align="left" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">Set I = I + VX</td>
+<td valign="center" align="center" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">○</td>
+<td valign="center" align="center" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">○</td>
+<td valign="center" align="center" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">○</td>
+<td valign="center" align="center" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">○</td>
+<td valign="center" align="left" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">CHIP8FN_(FX1E,"ADD I,VX")</td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+</tr>
+<tr>
+<td valign="center" align="center" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">(FX29)</td>
+<td valign="center" align="left" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">LD F,VX</td>
+<td valign="center" align="left" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">Point I to 5 byte numeric sprite for value in VX</td>
+<td valign="center" align="center" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">○</td>
+<td valign="center" align="center" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">○</td>
+<td style=" border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;"></td>
+<td style=" border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;"></td>
+<td style=" border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;"></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+</tr>
+<tr>
+<td valign="center" align="center" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">FX29</td>
+<td valign="center" align="left" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">LD LF,VX</td>
+<td valign="center" align="left" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">Point I to 5 byte numeric sprite for value in VX</td>
+<td style=" border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;"></td>
+<td style=" border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;"></td>
+<td valign="center" align="center" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">○</td>
+<td valign="center" align="center" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">○</td>
+<td valign="center" align="left" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">CHIP8FN_(FX29,"LD LF,VX")</td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+</tr>
+<tr>
+<td valign="center" align="center" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">FX30</td>
+<td valign="center" align="left" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">LD HF,VX</td>
+<td valign="center" align="left" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">Point I to 10 byte numeric sprite for value in VX</td>
+<td style=" border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;"></td>
+<td style=" border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;"></td>
+<td valign="center" align="center" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">○</td>
+<td valign="center" align="center" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">○</td>
+<td valign="center" align="left" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">CHIP8FN_(FX30,"LD HF,VX")</td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+</tr>
+<tr>
+<td valign="center" align="center" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">FX33</td>
+<td valign="center" align="left" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">LD B,VX</td>
+<td valign="center" align="left" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">Store BCD of VX in [I], [I+1], [I+2]</td>
+<td valign="center" align="center" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">○</td>
+<td valign="center" align="center" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">○</td>
+<td valign="center" align="center" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">○</td>
+<td valign="center" align="center" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">○</td>
+<td valign="center" align="left" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">CHIP8FN_(FX33,"LD B,VX")</td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+</tr>
+<tr>
+<td valign="center" align="center" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">FX55</td>
+<td valign="center" align="left" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">LD [I],VX</td>
+<td valign="center" align="left" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">Store V0 .. VX in [I] .. [I+X]</td>
+<td valign="center" align="center" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">○</td>
+<td valign="center" align="center" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">○</td>
+<td valign="center" align="center" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">○</td>
+<td valign="center" align="center" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">○</td>
+<td valign="center" align="left" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">CHIP8FN_(FX55,"LD [I],VX")</td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+</tr>
+<tr>
+<td valign="center" align="center" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">FX65</td>
+<td valign="center" align="left" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">LD VX,[I]</td>
+<td valign="center" align="left" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">Read V0 .. VX from [I] .. [I+X]</td>
+<td valign="center" align="center" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">○</td>
+<td valign="center" align="center" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">○</td>
+<td valign="center" align="center" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">○</td>
+<td valign="center" align="center" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">○</td>
+<td valign="center" align="left" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">CHIP8FN_(FX65,"LD VX,[I]")</td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+</tr>
+<tr>
+<td valign="center" align="center" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">FX75</td>
+<td valign="center" align="left" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">LD R,VX</td>
+<td valign="center" align="left" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">Store V0 .. VX in RPL user flags. Only V0 .. V7 valid</td>
+<td style=" border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;"></td>
+<td style=" border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;"></td>
+<td valign="center" align="center" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">○</td>
+<td valign="center" align="center" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">○</td>
+<td valign="center" align="left" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">CHIP8FN_(FX75,"LD R,VX")</td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+</tr>
+<tr>
+<td valign="center" align="center" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">FX85</td>
+<td valign="center" align="left" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">LD VX,R</td>
+<td valign="center" align="left" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">Read V0 .. VX from RPL user flags. Only V0 .. V7 valid</td>
+<td style=" border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;"></td>
+<td style=" border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;"></td>
+<td valign="center" align="center" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">○</td>
+<td valign="center" align="center" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">○</td>
+<td valign="center" align="left" style=" font-size:9pt; border-top:0.5pt solid #000000; border-bottom:0.5pt solid #000000; border-left:0.5pt solid #000000; border-right:0.5pt solid #000000;">CHIP8FN_(FX85,"LD VX,R")</td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+<td style=""></td>
+</tr>
+</tbody></table>
+
+
+</body></html>
