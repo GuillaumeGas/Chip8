@@ -31,7 +31,8 @@ public:
 
 private:
     void _count ();
-    Uint8 * _getRegV (unsigned int i);
+    Uint8 _getRegV (Uint16 i);
+    void _setRegV (Uint16 i, Uint8 val);
     Uint16 _getNextOpCode ();
     void _exec_opcode (const Uint16 opcode);
 

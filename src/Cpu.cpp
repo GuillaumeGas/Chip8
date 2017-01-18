@@ -41,11 +41,18 @@ void Cpu::_count () {
 	_sound_counter--;
 }
 
-Uint8 * Cpu::_getRegV (unsigned int i) {
+Uint8 Cpu::_getRegV (Uint16 i) {
     if (i < 1 || i > 16)
 	throw -1;
 
-    return &(_v_registers [i - 1]);
+    return _v_registers [i - 1];
+}
+
+void Cpu::_setRegV (Uint16 i, Uint8 val) {
+    if (i < 1 || i > 16)
+	throw -1;
+
+    _v_registers [i - 1] = val;
 }
 
 void Cpu::print () const {
@@ -67,43 +74,102 @@ void Cpu::_exec_opcode (const Uint16 opcode) {
     }
 }
 
-void Cpu::_op_sys (const Uint16 opcode);
+void Cpu::_op_sys (const Uint16 opcode) {}
 void Cpu::_op_cls (const Uint16 opcode) {
     _screen->clear ();
 }
-void Cpu::_op_ret (const Uint16 opcode);
-void Cpu::_op_jp_addr (const Uint16 opcode);
-void Cpu::_op_call (const Uint16 opcode);
-void Cpu::_op_se_byte (const Uint16 opcode);
-void Cpu::_op_sne (const Uint16 opcode);
-void Cpu::_op_se_vy (const Uint16 opcode);
-void Cpu::_op_ld_vx_byte (const Uint16 opcode);
-void Cpu::_op_add_vx_byte (const Uint16 opcode);
-void Cpu::_op_ld_vx_vy (const Uint16 opcode);
-void Cpu::_op_or (const Uint16 opcode);
-void Cpu::_op_and (const Uint16 opcode);
-void Cpu::_op_xor (const Uint16 opcode);
-void Cpu::_op_add_vx_vy (const Uint16 opcode);
-void Cpu::_op_sub (const Uint16 opcode);
-void Cpu::_op_shr (const Uint16 opcode);
-void Cpu::_op_subn (const Uint16 opcode);
-void Cpu::_op_shl (const Uint16 opcode);
-void Cpu::_op_sne_vx_vy (const Uint16 opcode);
-void Cpu::_op_ld_i_addr (const Uint16 opcode);
-void Cpu::_op_jp_v0_addr (const Uint16 opcode);
-void Cpu::_op_rnd (const Uint16 opcode);
-void Cpu::_op_drw (const Uint16 opcode);
-void Cpu::_op_skp (const Uint16 opcode);
-void Cpu::_op_sknp (const Uint16 opcode);
-void Cpu::_op_ld_vx_dt (const Uint16 opcode);
-void Cpu::_op_ld_vx_k (const Uint16 opcode);
-void Cpu::_op_ld_dt_vx (const Uint16 opcode);
-void Cpu::_op_ld_st_vx (const Uint16 opcode);
-void Cpu::_op_add_i_vx (const Uint16 opcode);
-void Cpu::_op_ld_f_vx (const Uint16 opcode);
-void Cpu::_op_ld_b_vx (const Uint16 opcode);
-void Cpu::_op_ld_i_vx (const Uint16 opcode);
-void Cpu::_op_ld_vx_i (const Uint16 opcode);
+void Cpu::_op_ret (const Uint16 opcode) {
+    _pc = _stack[_sp];
+    if (_sp > 0) _sp--;
+}
+void Cpu::_op_jp_addr (const Uint16 opcode) {
+    _pc = opcode & 0x0FFF;
+    _pc -= 2;
+}
+void Cpu::_op_call (const Uint16 opcode) {
+    _sp++;
+    _stack[_sp] = _pc;
+    _pc = opcode & 0x0FFF;
+    _pc -= 2;
+}
+void Cpu::_op_se_byte (const Uint16 opcode) {
+    Uint16 mask_x = 0x0F00;
+    Uint16 mask_k = 0x00FF;
+    Uint16 vx = (opcode & mask_x) >> 8;
+    if (_getRegV (vx) == (opcode & mask_k))
+	_pc += 2;
+}
+void Cpu::_op_sne (const Uint16 opcode) {
+    Uint16 mask_x = 0x0F00;
+    Uint16 mask_k = 0x00FF;
+    Uint16 vx = (opcode & mask_x) >> 8;
+    if (_getRegV (vx) != (opcode & mask_k))
+	_pc += 2;
+}
+void Cpu::_op_se_vy (const Uint16 opcode) {
+    Uint16 vx = (opcode & 0x0F00) >> 8;
+    Uint16 vy = (opcode & 0x00F0) >> 4;
+    if (_getRegV (vx) != _getRegV (vy))
+	_pc += 2;
+}
+void Cpu::_op_ld_vx_byte (const Uint16 opcode) {
+    Uint16 vx = (opcode & 0x0F00) >> 8;
+    _setRegV (vx, opcode & 0x00FF);
+}
+void Cpu::_op_add_vx_byte (const Uint16 opcode) {
+    Uint16 vx = (opcode & 0x0F00) >> 8;
+    _setRegV (vx, _getRegV (vx) + (opcode & 0x00FF));
+}
+void Cpu::_op_ld_vx_vy (const Uint16 opcode) {
+    Uint16 vx = (opcode & 0x0F00) >> 8;
+    Uint16 vy = (opcode & 0x0F00) >> 4;
+    _setRegV (vx, _getRegV (vy));
+}
+void Cpu::_op_or (const Uint16 opcode) {
+    Uint16 vx = (opcode & 0x0F00) >> 8;
+    Uint16 vy = (opcode & 0x0F00) >> 4;
+    _setRegV (vx, _getRegV (vx) | _getRegV (vy));
+}
+void Cpu::_op_and (const Uint16 opcode) {
+    Uint16 vx = (opcode & 0x0F00) >> 8;
+    Uint16 vy = (opcode & 0x0F00) >> 4;
+    _setRegV (vx, _getRegV (vx) & _getRegV (vy));
+}
+void Cpu::_op_xor (const Uint16 opcode) {
+    Uint16 vx = (opcode & 0x0F00) >> 8;
+    Uint16 vy = (opcode & 0x0F00) >> 4;
+    _setRegV (vx, _getRegV (vx) ^ _getRegV (vy));
+}
+void Cpu::_op_add_vx_vy (const Uint16 opcode) {
+    Uint16 vx = (opcode & 0x0F00) >> 8;
+    Uint16 vy = (opcode & 0x0F00) >> 4;
+    if (_getRegV (vx) + _getRegV (vy) > 0xFF) {
+	_setRegV (0xF, 1);
+    } else {
+	_setRegV (0xF, 0);
+    }
+    _setRegV (vx, _getRegV (vx) + _getRegV (vy));
+}
+void Cpu::_op_sub (const Uint16 opcode) {}
+void Cpu::_op_shr (const Uint16 opcode) {}
+void Cpu::_op_subn (const Uint16 opcode) {}
+void Cpu::_op_shl (const Uint16 opcode) {}
+void Cpu::_op_sne_vx_vy (const Uint16 opcode) {}
+void Cpu::_op_ld_i_addr (const Uint16 opcode) {}
+void Cpu::_op_jp_v0_addr (const Uint16 opcode) {}
+void Cpu::_op_rnd (const Uint16 opcode) {}
+void Cpu::_op_drw (const Uint16 opcode) {}
+void Cpu::_op_skp (const Uint16 opcode) {}
+void Cpu::_op_sknp (const Uint16 opcode) {}
+void Cpu::_op_ld_vx_dt (const Uint16 opcode) {}
+void Cpu::_op_ld_vx_k (const Uint16 opcode) {}
+void Cpu::_op_ld_dt_vx (const Uint16 opcode) {}
+void Cpu::_op_ld_st_vx (const Uint16 opcode) {}
+void Cpu::_op_add_i_vx (const Uint16 opcode) {}
+void Cpu::_op_ld_f_vx (const Uint16 opcode) {}
+void Cpu::_op_ld_b_vx (const Uint16 opcode) {}
+void Cpu::_op_ld_i_vx (const Uint16 opcode) {}
+void Cpu::_op_ld_vx_i (const Uint16 opcode) {}
 
 void Cpu::_init_opcodes () {
     _opcode_list[0].id = 0x0FFF; _opcode_list[0].mask = 0x0000; _opcode_list[0].fun_ptr = &Cpu::_op_sys;           /* 0NNN */
