@@ -22,6 +22,10 @@ struct opcode_t {
     FunPtr fun_ptr;
 };
 
+struct param_t {
+    Uint16 vx, vy;
+};
+
 class Cpu {
 public:
     Cpu (Screen * sc);
@@ -35,6 +39,7 @@ private:
     void _setRegV (Uint16 i, Uint8 val);
     Uint16 _getNextOpCode ();
     void _exec_opcode (const Uint16 opcode);
+    param_t _getParams (const Uint16 opcode);
 
     void _init_opcodes ();
 
