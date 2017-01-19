@@ -3,6 +3,7 @@
 #include <iostream>
 #include <cstring>
 #include <cstdint>
+#include <cstdlib>
 #include <SDL/SDL.h>
 
 #define MEM_SIZE 4096
@@ -54,9 +55,9 @@ private:
     Uint8 _sp;
     Uint16 _stack[STACK_SIZE];
     /* delay timer */
-    Uint8 _delay_counter;
+    Uint8 _delay_timer;
     /* sound timer */
-    Uint8 _sound_counter;
+    Uint8 _sound_timer;
     /* Pointer on the screen */
     Screen * _screen;
     /* List of existing opcodes */

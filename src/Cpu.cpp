@@ -11,10 +11,12 @@ Cpu::Cpu (Screen * sc) {
     _pc = START_ADDRESS;
     _I = 0;
     _sp = 0;
-    _delay_counter = 0;
-    _sound_counter = 0;
+    _delay_timer = 0;
+    _sound_timer = 0;
 
     _screen = sc;
+
+    srand (time (NULL));
 }
 
 void Cpu::start () {
@@ -35,24 +37,24 @@ Uint16 Cpu::_getNextOpCode () {
 }
 
 void Cpu::_count () {
-    if (_delay_counter > 0)
-	_delay_counter--;
-    if (_sound_counter > 0)
-	_sound_counter--;
+    if (_delay_timer > 0)
+	_delay_timer--;
+    if (_sound_timer > 0)
+	_sound_timer--;
 }
 
 Uint8 Cpu::_getRegV (Uint16 i) {
-    if (i < 1 || i > 16)
+    if (i > 16)
 	throw -1;
 
-    return _v_registers [i - 1];
+    return _v_registers [i];
 }
 
 void Cpu::_setRegV (Uint16 i, Uint8 val) {
-    if (i < 1 || i > 16)
+    if (i > 16)
 	throw -1;
 
-    _v_registers [i - 1] = val;
+    _v_registers [i] = val;
 }
 
 void Cpu::print () const {
@@ -78,7 +80,9 @@ param_t Cpu::_getParams (const Uint16 opcode) {
     return {(opcode & 0x0F00) >> 8, (opcode & 0x0F00) >> 4};
 }
 
-void Cpu::_op_sys (const Uint16 opcode) {}
+void Cpu::_op_sys (const Uint16 opcode) {
+    cout << "Op SYS : impossible !" << endl;
+}
 void Cpu::_op_cls (const Uint16 opcode) {
     _screen->clear ();
 }
@@ -169,7 +173,7 @@ void Cpu::_op_subn (const Uint16 opcode) {
     } else {
 	_setRegV (0xF, 0);
     }
-    _setRegV (p.vx, _getRegV (p.vy) - _getRegV (p.vx));    
+    _setRegV (p.vx, _getRegV (p.vy) - _getRegV (p.vx));
 }
 void Cpu::_op_shl (const Uint16 opcode) {
     param_t p = _getParams (opcode);
@@ -181,23 +185,61 @@ void Cpu::_op_shl (const Uint16 opcode) {
     _setRegV (p.vx, _getRegV (p.vx) * 2);
 }
 void Cpu::_op_sne_vx_vy (const Uint16 opcode) {
-    
+    param_t p = _getParams (opcode);
+    if (_getRegV (p.vx) != _getRegV (p.vy))
+	_pc += 2;
 }
-void Cpu::_op_ld_i_addr (const Uint16 opcode) {}
-void Cpu::_op_jp_v0_addr (const Uint16 opcode) {}
-void Cpu::_op_rnd (const Uint16 opcode) {}
+void Cpu::_op_ld_i_addr (const Uint16 opcode) {
+    _I = opcode & 0x0FFF;
+}
+void Cpu::_op_jp_v0_addr (const Uint16 opcode) {
+    _pc = (opcode & 0x0FFF) + _getRegV (0);
+    _pc -= 2;
+}
+void Cpu::_op_rnd (const Uint16 opcode) {
+    param_t p = _getParams (opcode);
+    Uint8 rnd = (Uint8) rand () % 255 + 1;
+    _setRegV (p.vx, rnd & (opcode & 0x00FF));
+}
 void Cpu::_op_drw (const Uint16 opcode) {}
 void Cpu::_op_skp (const Uint16 opcode) {}
 void Cpu::_op_sknp (const Uint16 opcode) {}
-void Cpu::_op_ld_vx_dt (const Uint16 opcode) {}
+void Cpu::_op_ld_vx_dt (const Uint16 opcode) {
+    param_t p = _getParams (opcode);
+    _setRegV (p.vx, _delay_timer);
+}
 void Cpu::_op_ld_vx_k (const Uint16 opcode) {}
-void Cpu::_op_ld_dt_vx (const Uint16 opcode) {}
-void Cpu::_op_ld_st_vx (const Uint16 opcode) {}
-void Cpu::_op_add_i_vx (const Uint16 opcode) {}
+void Cpu::_op_ld_dt_vx (const Uint16 opcode) {
+    param_t p = _getParams (opcode);
+    _delay_timer = _getRegV (p.vx);
+}
+void Cpu::_op_ld_st_vx (const Uint16 opcode) {
+    param_t p = _getParams (opcode);
+    _sound_timer = _getRegV (p.vx);
+}
+void Cpu::_op_add_i_vx (const Uint16 opcode) {
+    param_t p = _getParams (opcode);
+    _I = _I + _getRegV (p.vx);
+}
 void Cpu::_op_ld_f_vx (const Uint16 opcode) {}
-void Cpu::_op_ld_b_vx (const Uint16 opcode) {}
-void Cpu::_op_ld_i_vx (const Uint16 opcode) {}
-void Cpu::_op_ld_vx_i (const Uint16 opcode) {}
+void Cpu::_op_ld_b_vx (const Uint16 opcode) {
+    param_t p = _getParams(opcode);
+    _memory[_I] = (_getRegV (p.vx) - _getRegV (p.vx) % 100) / 100;
+    _memory[_I + 1] = ((_getRegV (p.vx) - _getRegV (p.vx) % 10) / 10) % 10;
+    _memory[_I + 2] = _getRegV (p.vx) - _memory[_I] * 100 - _memory[_I + 1] * 10;
+}
+void Cpu::_op_ld_i_vx (const Uint16 opcode) {
+    param_t p = _getParams (opcode);
+    for (Uint8 i = 0; i <= p.vx; i++) {
+	_memory[_I + i] = _getRegV (i);
+    }
+}
+void Cpu::_op_ld_vx_i (const Uint16 opcode) {
+    param_t p = _getParams (opcode);
+    for (Uint8 i = 0; i <= p.vx; i++) {
+	_setRegV (i) = _memory[_I + i];
+    }
+}
 
 void Cpu::_init_opcodes () {
     _opcode_list[0].id = 0x0FFF; _opcode_list[0].mask = 0x0000; _opcode_list[0].fun_ptr = &Cpu::_op_sys;           /* 0NNN */
