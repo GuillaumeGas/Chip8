@@ -4,6 +4,7 @@
 #include <cstring>
 #include <cstdint>
 #include <cstdlib>
+#include <cstdio>
 #include <SDL/SDL.h>
 
 #define MEM_SIZE 4096
@@ -33,6 +34,7 @@ public:
 
     void start ();
     void print () const;
+    void loadProgram (const char* file_name);
 
 private:
     void _count ();
@@ -43,6 +45,7 @@ private:
     param_t _getParams (const Uint16 opcode);
 
     void _init_opcodes ();
+    void _loadFont ();
 
     Uint8 _memory[MEM_SIZE];
     /* program counter */

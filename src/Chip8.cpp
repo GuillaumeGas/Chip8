@@ -2,9 +2,10 @@
 
 using namespace std;
 
-Chip8::Chip8 () {
+Chip8::Chip8 (const char * file_name) {
     _sc = new Screen ();
     _cpu = new Cpu (_sc);
+    _cpu->loadProgram (file_name);
 }
 
 Chip8::~Chip8 () {

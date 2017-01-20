@@ -17,6 +17,7 @@ Cpu::Cpu (Screen * sc) {
     _screen = sc;
 
     srand (time (NULL));
+    _loadFont ();
 }
 
 void Cpu::start () {
@@ -28,8 +29,22 @@ void Cpu::start () {
 	_exec_opcode (opcode);
 
 	_screen->update ();
+	_count ();
 	SDL_Delay (FPS);
     } while (!stop);
+}
+
+void Cpu::loadProgram (const char * file_name) {
+    FILE * game = NULL;
+    game = fopen (file_name, "rb");
+
+    if (game != NULL) {
+	fread (&_memory[START_ADDRESS], sizeof (Uint8) * (MEM_SIZE - START_ADDRESS), 1, game);
+	fclose (game);
+    } else {
+	cout << "Error, can't read program." << endl;
+	throw -1;
+    }
 }
 
 Uint16 Cpu::_getNextOpCode () {
@@ -239,7 +254,10 @@ void Cpu::_op_add_i_vx (const Uint16 opcode) {
     param_t p = _getParams (opcode);
     _I = _I + _getRegV (p.vx);
 }
-void Cpu::_op_ld_f_vx (const Uint16 opcode) {}
+void Cpu::_op_ld_f_vx (const Uint16 opcode) {
+    param_t p =_getParams (opcode);
+    _I = 5 * _getRegV (p.vx);
+}
 void Cpu::_op_ld_b_vx (const Uint16 opcode) {
     param_t p = _getParams(opcode);
     _memory[_I] = (_getRegV (p.vx) - _getRegV (p.vx) % 100) / 100;
@@ -295,4 +313,23 @@ void Cpu::_init_opcodes () {
     _opcode_list[32].id = 0xF033; _opcode_list[32].mask = 0xF0FF; _opcode_list[32].fun_ptr = &Cpu::_op_ld_b_vx;    /* FX33 */
     _opcode_list[33].id = 0xF055; _opcode_list[33].mask = 0xF0FF; _opcode_list[33].fun_ptr = &Cpu::_op_ld_i_vx;    /* FX55 */
     _opcode_list[34].id = 0xF065; _opcode_list[34].mask = 0xF0FF; _opcode_list[34].fun_ptr = &Cpu::_op_ld_vx_i;    /* FX65 */
+}
+
+void Cpu::_loadFont() { 
+    _memory[0]=0xF0;_memory[1]=0x90;_memory[2]=0x90;_memory[3]=0x90; _memory[4]=0xF0; // O 
+    _memory[5]=0x20;_memory[6]=0x60;_memory[7]=0x20;_memory[8]=0x20;_memory[9]=0x70; // 1 
+    _memory[10]=0xF0;_memory[11]=0x10;_memory[12]=0xF0;_memory[13]=0x80; _memory[14]=0xF0; // 2 
+    _memory[15]=0xF0;_memory[16]=0x10;_memory[17]=0xF0;_memory[18]=0x10;_memory[19]=0xF0; // 3 
+    _memory[20]=0x90;_memory[21]=0x90;_memory[22]=0xF0;_memory[23]=0x10;_memory[24]=0x10; // 4 
+    _memory[25]=0xF0;_memory[26]=0x80;_memory[27]=0xF0;_memory[28]=0x10;_memory[29]=0xF0; // 5 
+    _memory[30]=0xF0;_memory[31]=0x80;_memory[32]=0xF0;_memory[33]=0x90;_memory[34]=0xF0; // 6 
+    _memory[35]=0xF0;_memory[36]=0x10;_memory[37]=0x20;_memory[38]=0x40;_memory[39]=0x40; // 7 
+    _memory[40]=0xF0;_memory[41]=0x90;_memory[42]=0xF0;_memory[43]=0x90;_memory[44]=0xF0; // 8 
+    _memory[45]=0xF0;_memory[46]=0x90;_memory[47]=0xF0;_memory[48]=0x10;_memory[49]=0xF0; // 9 
+    _memory[50]=0xF0;_memory[51]=0x90;_memory[52]=0xF0;_memory[53]=0x90;_memory[54]=0x90; // A 
+    _memory[55]=0xE0;_memory[56]=0x90;_memory[57]=0xE0;_memory[58]=0x90;_memory[59]=0xE0; // B 
+    _memory[60]=0xF0;_memory[61]=0x80;_memory[62]=0x80;_memory[63]=0x80;_memory[64]=0xF0; // C 
+    _memory[65]=0xE0;_memory[66]=0x90;_memory[67]=0x90;_memory[68]=0x90;_memory[69]=0xE0; // D 
+    _memory[70]=0xF0;_memory[71]=0x80;_memory[72]=0xF0;_memory[73]=0x80;_memory[74]=0xF0; // E 
+    _memory[75]=0xF0;_memory[76]=0x80;_memory[77]=0xF0;_memory[78]=0x80;_memory[79]=0x80; // F 
 }

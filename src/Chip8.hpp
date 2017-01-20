@@ -8,7 +8,7 @@
 
 class Chip8 {
 public:
-    Chip8 ();
+    Chip8 (const char * file_name);
     ~Chip8 ();
 
     void start ();
