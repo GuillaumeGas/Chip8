@@ -25,6 +25,9 @@ public:
     void clear ();
     void update ();
 
+    Pixel getPixel (int x, int y);
+    void setColor (int x, int y, int color);
+
 private:
     void _init_sdl ();
     void _init_content ();

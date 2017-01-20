@@ -62,6 +62,14 @@ void Screen::update () {
     SDL_Flip (_screen_surf);
 }
 
+Pixel Screen::getPixel (int x, int y) {
+    return _content[x][y];
+}
+
+void Screen::setColor (int x, int y, int color) {
+    _content[x][y].color = color;
+}
+
 void Screen::_init_content () {
     for (int i = 0; i < SCREEN_WIDTH; i++) {
 	for (int j = 0; j < SCREEN_HEIGHT; j++) {

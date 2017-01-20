@@ -62,8 +62,8 @@ void Cpu::print () const {
     cout << "PC : " << _pc << endl;
     cout << "I : " << _I << endl;
     cout << "SP : " << _sp << endl;
-    cout << "Delay counter : " << _delay_counter << endl;
-    cout << "Sound counter : " << _sound_counter << endl;
+    cout << "Delay counter : " << _delay_timer << endl;
+    cout << "Sound counter : " << _sound_timer << endl;
 }
 
 void Cpu::_exec_opcode (const Uint16 opcode) {
@@ -77,7 +77,7 @@ void Cpu::_exec_opcode (const Uint16 opcode) {
 }
 
 param_t Cpu::_getParams (const Uint16 opcode) {
-    return {(opcode & 0x0F00) >> 8, (opcode & 0x0F00) >> 4};
+    return {static_cast<Uint16> ((opcode & 0x0F00) >> 8), static_cast<Uint16> ((opcode & 0x0F00) >> 4)};
 }
 
 void Cpu::_op_sys (const Uint16 opcode) {
@@ -164,7 +164,7 @@ void Cpu::_op_shr (const Uint16 opcode) {
     } else {
 	_setRegV (0xF, 0);
     }
-    _setRegV (p.vx, _getRegV (p.x) / 2);
+    _setRegV (p.vx, _getRegV (p.vx) / 2);
 }
 void Cpu::_op_subn (const Uint16 opcode) {
     param_t p = _getParams (opcode);
@@ -201,7 +201,25 @@ void Cpu::_op_rnd (const Uint16 opcode) {
     Uint8 rnd = (Uint8) rand () % 255 + 1;
     _setRegV (p.vx, rnd & (opcode & 0x00FF));
 }
-void Cpu::_op_drw (const Uint16 opcode) {}
+void Cpu::_op_drw (const Uint16 opcode) {
+    param_t p = _getParams (opcode);
+    Uint8 n = opcode & 0x000F;
+    Uint8 offset;
+
+    for (int i = 0; i < n; i++) {
+	for (int j = 0, offset = 8; j < 8; j++, offset--) {
+	    Uint8 mem_pixel = _memory[_I + i] & (0x1 << offset);
+	    if (mem_pixel != 0) {
+		if (_screen->getPixel (p.vx + j, p.vy + i).color == WHITE) {
+		    _screen->setColor (p.vx + j, p.vy + i, BLACK);
+		    _setRegV (0xF, 1);
+		} else {
+		    _screen->setColor (p.vx + j, p.vy + i, WHITE);
+		}
+	    }
+	}
+    }
+}
 void Cpu::_op_skp (const Uint16 opcode) {}
 void Cpu::_op_sknp (const Uint16 opcode) {}
 void Cpu::_op_ld_vx_dt (const Uint16 opcode) {
@@ -237,7 +255,7 @@ void Cpu::_op_ld_i_vx (const Uint16 opcode) {
 void Cpu::_op_ld_vx_i (const Uint16 opcode) {
     param_t p = _getParams (opcode);
     for (Uint8 i = 0; i <= p.vx; i++) {
-	_setRegV (i) = _memory[_I + i];
+	_setRegV (i, _memory[_I + i]);
     }
 }
 
