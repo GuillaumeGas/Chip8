@@ -15,11 +15,19 @@
 #define FPS 16
 #define NB_OPCODES 35
 
+enum OPCODE {
+    _00E0_, _00EE_, _0NNN_, _1NNN_, _2NNN_, _3XNN_, _4XNN_, _5XY0_, _6XNN_,
+    _7XNN_, _8XY0_, _8XY1_, _8XY2_, _8XY3_, _8XY4_, _8XY5_, _8XY6_, _8XY7_,
+    _8XYE_, _9XY0_, _ANNN_, _BNNN_, _CXNN_, _DXYN_, _EX9E_, _EXA1_, _FX07_,
+    _FX0A_, _FX15_, _FX18_, _FX1E_, _FX29_, _FX33_, _FX55_, _FX65_
+};
+
 class Screen;
 class Cpu;
 struct opcode_t {
     Uint16 id;
     Uint16 mask;
+    OPCODE code;
     typedef void (Cpu::* FunPtr) (const Uint16 opcode);
     FunPtr fun_ptr;
 };
@@ -30,41 +38,46 @@ struct param_t {
 
 class Cpu {
 public:
-    Cpu (Screen * sc);
+    Cpu (Screen * sc, bool debug);
 
     void start ();
-    void print () const;
+    void dump () const;
     void loadProgram (const char* file_name);
+    void shutdown ();
 
 private:
-    void _count ();
-    Uint8 _getRegV (Uint16 i);
-    void _setRegV (Uint16 i, Uint8 val);
-    Uint16 _getNextOpCode ();
-    void _exec_opcode (const Uint16 opcode);
-    param_t _getParams (const Uint16 opcode);
+    void count ();
+    Uint8 getRegV (Uint16 i);
+    void setRegV (Uint16 i, Uint8 val);
+    Uint16 getNextOpCode ();
+    void exec_opcode (const Uint16 opcode);
+    param_t getParams (const Uint16 opcode);
+    void debug_inst (opcode_t);
 
-    void _init_opcodes ();
-    void _loadFont ();
+    void init_opcodes ();
+    void loadFont ();
 
-    Uint8 _memory[MEM_SIZE];
+    bool started;
+    Uint8 memory[MEM_SIZE];
     /* program counter */
-    Uint16 _pc;
+    Uint16 pc;
     /* 16 registers V0 -> VF */
-    Uint8 _v_registers[V_REGISTERS_SIZE];
+    Uint8 v_registers[V_REGISTERS_SIZE];
     /* Usually used to store memory adresses */
-    Uint16 _I;
+    Uint16 I;
     /* Stack pointer */
-    Uint8 _sp;
-    Uint16 _stack[STACK_SIZE];
+    Uint8 sp;
+    Uint16 stack[STACK_SIZE];
     /* delay timer */
-    Uint8 _delay_timer;
+    Uint8 delay_timer;
     /* sound timer */
-    Uint8 _sound_timer;
+    Uint8 sound_timer;
     /* Pointer on the screen */
-    Screen * _screen;
+    Screen * screen;
     /* List of existing opcodes */
-    opcode_t _opcode_list[35];
+    opcode_t opcode_list[35];
+
+    bool debug;
 
     /* Operation's functions */
     void _op_sys (const Uint16 opcode);

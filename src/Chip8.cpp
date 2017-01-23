@@ -2,24 +2,26 @@
 
 using namespace std;
 
-Chip8::Chip8 (const char * file_name) {
-    _sc = new Screen ();
-    _cpu = new Cpu (_sc);
-    _cpu->loadProgram (file_name);
+Chip8::Chip8 (const char * file_name, bool debug) {
+    this->sc = new Screen ();
+    this->cpu = new Cpu (this->sc, debug);
+    this->cpu->loadProgram (file_name);
 }
 
 Chip8::~Chip8 () {
-    if (_sc) delete _sc;
-    if (_cpu) delete _cpu;
+    if (this->sc) delete this->sc;
+    if (this->cpu) delete this->cpu;
 }
 
 void Chip8::start () {
-    // _sc.update ();
-    // _handle_events ();
-    _cpu->start ();
+    cout << "> Chip8 starting..." << endl;
+    // this->sc.update ();
+    thread_events = new thread (&Chip8::handle_events, this);
+    this->cpu->start ();
 }
 
-void Chip8::_handle_events () {
+void Chip8::handle_events () {
+    cout << "> Thread events started." << endl;
     bool stop = false;
 
     do {
@@ -29,7 +31,14 @@ void Chip8::_handle_events () {
 	case SDL_QUIT:
 	    stop = true;
 	    break;
-	case SDL_KEYDOWN:
+	case SDL_KEYUP:
+	    // switch (_event.key.keysym.sym) {
+	    // case SDLK_ESCAPE:
+	    // 	break;
+	    // }
+	    cout << "> Stopping Chip8..." << endl;
+	    this->cpu->shutdown ();
+	    stop = true;
 	    break;
 	default: break;
 	}

@@ -1,6 +1,7 @@
 #pragma once
 
 #include <iostream>
+#include <thread>
 #include <SDL/SDL.h>
 
 #include "Screen.hpp"
@@ -8,16 +9,17 @@
 
 class Chip8 {
 public:
-    Chip8 (const char * file_name);
+    Chip8 (const char * file_name, bool debug);
     ~Chip8 ();
 
     void start ();
 
 private:
-    void _handle_events ();
+    void handle_events ();
 
-    Screen * _sc;
-    Cpu * _cpu;
+    Screen * sc;
+    Cpu * cpu;
 
     SDL_Event _event;
+    std::thread * thread_events;
 };
