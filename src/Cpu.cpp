@@ -39,22 +39,26 @@ bool Cpu::emulateCycle () {
     this->count ();
 }
 
-void Cpu::loadProgram (const char * file_name) {
-    cout << "> Loading binary file..." << endl;
-    FILE * game = NULL;
-    game = fopen (file_name, "rb");
-
-    if (game != NULL) {
-	fread (&this->memory[START_ADDRESS], sizeof (Uint8) * (MEM_SIZE - START_ADDRESS), 1, game);
-	fclose (game);
-    } else {
-	cout << "Error, can't read program." << endl;
-	throw -1;
-    }
+uint16_t Cpu::getNextOpCode () {
+    return (this->memory[this->pc] << 8) | this->memory[this->pc + 1];
 }
 
-Uint16 Cpu::getNextOpCode () {
-    return (this->memory[this->pc] << 8) | this->memory[this->pc + 1];
+void Cpu::exec_opcode (const uint16_t opcode) {
+    bool opcode_found = false;
+    for (int i = 0; i < NB_MASK; i++) {
+	auto it = Opcodes::instance ()->getList ()->find (opcode & mask[i]);
+
+	if (it != Opcodes::instance ()->getList ()->end ()) {
+	    if (this->debug)
+		this->debug_inst (opcode, it->second);
+	    it->second->execute (opcode, this, this->screen);
+	    opcode_found = true;
+	    break;
+	}
+    }
+
+    if (!opcode_found)
+	throw OpcodeNotFound (opcode);
 }
 
 void Cpu::count () {
@@ -63,6 +67,20 @@ void Cpu::count () {
     if (this->sound_timer > 0)
 	this->sound_timer--;
 }
+
+void Cpu::loadProgram (const char * file_name) {
+    cout << "> Loading binary file..." << endl;
+    FILE * game = NULL;
+    game = fopen (file_name, "rb");
+
+    if (game != NULL) {
+	fread (&this->memory[START_ADDRESS], sizeof (uint8_t) * (MEM_SIZE - START_ADDRESS), 1, game);
+	fclose (game);
+    } else {
+	throw LoadFileError (file_name);
+    }
+}
+
 
 void Cpu::dump () const {
     cout << "** Register **" << endl;
@@ -74,19 +92,6 @@ void Cpu::dump () const {
     printf ("Current instruction : %#04x\n", this->memory[this->pc]);
     for (int i = 0; i < V_REGISTERS_SIZE; i++)
 	cout << "V" << i << " = " << (int) this->reg[i] << endl;
-}
-
-void Cpu::exec_opcode (const Uint16 opcode) {
-    for (int i = 0; i < NB_MASK; i++) {
-	auto it = Opcodes::instance ()->getList ()->find (opcode & mask[i]);
-
-	if (it != Opcodes::instance ()->getList ()->end ()) {
-	    if (this->debug)
-		this->debug_inst (opcode, it->second);
-	    it->second->execute (opcode, this, this->screen);
-	    break;
-	}
-    }
 }
 
 void Cpu::loadFont() { 
@@ -112,11 +117,13 @@ void Cpu::debug_inst (uint16_t opcode, Opcode * op) {
     cout << "[" << this->pc << "] " << op->disassemble (opcode) << endl;
 
     char rep = -1;
-    while (rep != 'c') {
+    while (rep != 'c' && rep != 'q') {
 	cout << " >> ";
 	cin >> rep;
 	if (rep == 'p') {
 	    this->dump ();
+	} else if (rep == 'q') {
+	    this->debug = false;
 	}
     }
 }

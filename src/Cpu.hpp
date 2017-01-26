@@ -7,6 +7,7 @@
 #include <cstdio>
 #include <SDL/SDL.h>
 
+#include "Exceptions.hpp"
 #include "Opcodes.hpp"
 #include "Screen.hpp"
 
@@ -37,20 +38,20 @@ public:
     void loadFont ();
 
     bool started;
-    Uint8 memory[MEM_SIZE];
+    uint8_t memory[MEM_SIZE];
     /* program counter */
-    Uint16 pc;
+    uint16_t pc;
     /* 16 registers V0 -> VF */
-    Uint8 reg[V_REGISTERS_SIZE];
+    uint8_t reg[V_REGISTERS_SIZE];
     /* Usually used to store memory adresses */
-    Uint16 I;
+    uint16_t I;
     /* Stack pointer */
-    Uint8 sp;
-    Uint16 stack[STACK_SIZE];
+    uint8_t sp;
+    uint16_t stack[STACK_SIZE];
     /* delay timer */
-    Uint8 delay_timer;
+    uint8_t delay_timer;
     /* sound timer */
-    Uint8 sound_timer;
+    uint8_t sound_timer;
     /* Pointer on the screen */
     Screen * screen;
     /* Pointer on the controler */
