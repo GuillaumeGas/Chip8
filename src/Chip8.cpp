@@ -4,7 +4,7 @@ using namespace std;
 
 Chip8::Chip8 (const char * file_name, bool debug) {
     this->sc = new Screen ();
-    this->cpu = new Cpu (this->sc, debug);
+    this->cpu = new Cpu (this, this->sc, debug);
     this->cpu->loadProgram (file_name);
 }
 
@@ -15,32 +15,31 @@ Chip8::~Chip8 () {
 
 void Chip8::start () {
     cout << "> Chip8 starting..." << endl;
-    // this->sc.update ();
-    thread_events = new thread (&Chip8::handle_events, this);
-    this->cpu->start ();
-}
 
-void Chip8::handle_events () {
-    cout << "> Thread events started." << endl;
     bool stop = false;
+    while (!stop) {
+	cpu->emulateCycle ();
 
-    do {
-	SDL_WaitEvent (&_event);
-
-	switch (_event.type) {
-	case SDL_QUIT:
-	    stop = true;
-	    break;
-	case SDL_KEYUP:
-	    // switch (_event.key.keysym.sym) {
-	    // case SDLK_ESCAPE:
-	    // 	break;
-	    // }
-	    cout << "> Stopping Chip8..." << endl;
-	    this->cpu->shutdown ();
-	    stop = true;
-	    break;
-	default: break;
+	while (SDL_PollEvent (&_event)) {
+	    if (_event.type == SDL_QUIT) {
+		stop == true;
+	    } else if (_event.type == SDL_KEYDOWN) {
+		for (int i = 0; i < NB_KEYS; i++)
+		    if (keys[i] == _event.key.keysym.sym) {
+			this->cpu->keyboard[i] = 1;
+		    }
+	    } else if (_event.type == SDL_KEYUP) {
+		if (_event.key.keysym.sym == SDLK_ESCAPE) {
+		    stop = true;
+		} else {
+		    for (int i = 0; i < NB_KEYS; i++)
+			if (keys[i] == _event.key.keysym.sym)
+			    this->cpu->keyboard[i] = 0;
+		}
+	    }
 	}
-    } while (!stop);
+
+	this->sc->update ();
+	SDL_Delay (FPS);
+    }
 }

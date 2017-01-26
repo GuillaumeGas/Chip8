@@ -310,23 +310,25 @@ void OpDrwVxVy::execute (const uint16_t opcode, Cpu * cpu, Screen * screen) {
     }
 }
 
-string OpDrwVxVy::disassemble (const uint16_t opcode) { 
+string OpDrwVxVy::disassemble (const uint16_t opcode) {
     return "drw v" + std::to_string ((int) getX (opcode)) + " v" + std::to_string ((int) getY (opcode));
 }
 
 void OpSkpVx::execute (const uint16_t opcode, Cpu * cpu, Screen * screen) {
-    cout << "TODO SPK VX" << endl;
+    if (cpu->keyboard[cpu->reg[getX (opcode)]] == 1)
+	cpu->pc += 2;
 }
 
-string OpSkpVx::disassemble (const uint16_t opcode) { 
+string OpSkpVx::disassemble (const uint16_t opcode) {
     return "skp v" + std::to_string ((int) getX (opcode));
 }
 
 void OpSknpVx::execute (const uint16_t opcode, Cpu * cpu, Screen * screen) {
-    cout << "TODO SPNK VX" << endl;
+    if (cpu->keyboard[cpu->reg[getX (opcode)]] == 0)
+	cpu->pc += 2;
 }
 
-string OpSknpVx::disassemble (const uint16_t opcode) { 
+string OpSknpVx::disassemble (const uint16_t opcode) {
     return "sknp v" + std::to_string ((int) getX (opcode));
 }
 
@@ -334,15 +336,23 @@ void OpLdVxDt::execute (const uint16_t opcode, Cpu * cpu, Screen * screen) {
     cpu->reg[getX (opcode)] = cpu->delay_timer;
 }
 
-string OpLdVxDt::disassemble (const uint16_t opcode) { 
+string OpLdVxDt::disassemble (const uint16_t opcode) {
     return "ld v" + std::to_string ((int) getX (opcode)) + " dt";
 }
 
 void OpLdVxK::execute (const uint16_t opcode, Cpu * cpu, Screen * screen) {
-    cout << "TODO LD VX K" << endl;
+    bool found = false;
+    for (int i = 0; i < KEYBOARD_SIZE; i++) {
+	if (cpu->keyboard[i] == KEY_DOWN) {
+	    cpu->reg[getX (opcode)] = i;
+	    found = true;
+	}
+    }
+    if (!found)
+	cpu->pc -= 2;
 }
 
-string OpLdVxK::disassemble (const uint16_t opcode) { 
+string OpLdVxK::disassemble (const uint16_t opcode) {
     return "ld v" + std::to_string ((int) getX (opcode)) + " k";
 }
 
@@ -350,7 +360,7 @@ void OpLdDtVx::execute (const uint16_t opcode, Cpu * cpu, Screen * screen) {
     cpu->delay_timer = cpu->reg[getX (opcode)];
 }
 
-string OpLdDtVx::disassemble (const uint16_t opcode) { 
+string OpLdDtVx::disassemble (const uint16_t opcode) {
     return "ld dt v" + std::to_string ((int) getX (opcode));
 }
 

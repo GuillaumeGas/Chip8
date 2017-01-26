@@ -1,9 +1,9 @@
 #include "Cpu.hpp"
-#include "Screen.hpp"
+#include "Chip8.hpp"
 
 using namespace std;
 
-Cpu::Cpu (Screen * sc, bool debug) {
+Cpu::Cpu (Chip8 * ctrl, Screen * sc, bool debug) {
     this->debug = debug;
     this->started = true;
 
@@ -15,6 +15,7 @@ Cpu::Cpu (Screen * sc, bool debug) {
     memset (this->memory, 0, MEM_SIZE);
     memset (this->reg, 0, V_REGISTERS_SIZE);
     memset (this->stack, 0, STACK_SIZE);
+    memset (this->keyboard, 0, KEYBOARD_SIZE);
 
     this->pc = START_ADDRESS;
     this->I = 0;
@@ -22,31 +23,20 @@ Cpu::Cpu (Screen * sc, bool debug) {
     this->delay_timer = 0;
     this->sound_timer = 0;
 
+    this->ctrl = ctrl;
     this->screen = sc;
 
     srand (time (NULL));
     this->loadFont ();
 }
 
-void Cpu::start () {
-    do {
-	if (this->pc < (MEM_SIZE - 1)) {
-	    Uint16 opcode = getNextOpCode ();
-	    exec_opcode (opcode);
+bool Cpu::emulateCycle () {
+    if (this->pc >= (MEM_SIZE - 1))
+	return false;
 
-	    this->pc += 2;
-	    this->screen->update ();
-	    this->count ();
-	    SDL_Delay (FPS);
-	} else {
-	    this->started = false;
-	}
-    } while (this->started);
-}
-
-void Cpu::shutdown () {
-    cout << "> Stopping CPU..." << endl;
-    this->started = false;
+    this->exec_opcode (getNextOpCode ());
+    this->pc += 2;
+    this->count ();
 }
 
 void Cpu::loadProgram (const char * file_name) {
@@ -127,8 +117,6 @@ void Cpu::debug_inst (uint16_t opcode, Opcode * op) {
 	cin >> rep;
 	if (rep == 'p') {
 	    this->dump ();
-	} else if (rep == 'q') {
-	    this->shutdown ();
 	}
     }
 }
