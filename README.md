@@ -8,5 +8,5 @@ make
 
 # Usage
 ./chip8 [-d | -disass] rom_file
-* -d : debug mode (n : next instruction, c : continue, q : quit)
+* -d : debug mode (p : print memory dump, n : next instruction, c : continue, q : quit)
 * -disass : disassemble the rom
