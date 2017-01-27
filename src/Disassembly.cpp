@@ -25,12 +25,12 @@ void Disassembly::disass () {
 		break;		
 	    }
 	}
-	if (!opcode_found && opcode != 0)
+	if (!opcode_found)
 	    throw OpcodeNotFound (opcode, offset);
 
 	offset += 2;
 	i += 2;
-    } while (i < (BUF_SIZE - 1) && opcode != 0);
+    } while (i < (BUF_SIZE - 1));
 }
 
 void Disassembly::loadFile (const char * file_name) {

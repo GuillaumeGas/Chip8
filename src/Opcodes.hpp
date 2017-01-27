@@ -762,7 +762,7 @@ public:
 
     static struct _init_ {
 	_init_ () {
-	    (*(Opcodes::instance ()->getList ()))[0x0000] = new OpLdVxI ();
+	    (*(Opcodes::instance ()->getList ()))[0x0000] = new OpSys ();
 	}
     } _initializer;
 

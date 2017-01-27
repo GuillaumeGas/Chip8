@@ -420,9 +420,8 @@ string OpLdVxI::disassemble (const uint16_t opcode) {
     return "ld v" + std::to_string ((int) getX (opcode)) + " I";
 }
 
+void OpSys::execute (const uint16_t opcode, Cpu * cpu, Screen * screen) {}
 
-// void OpSys::execute (const uint16_t opcode, Cpu * cpu, Screen * screen) {}
-
-// string OpSys::disassemble (const uint16_t opcode) { 
-//     return "sys";
-// }
+string OpSys::disassemble (const uint16_t opcode) { 
+    return "sys";
+}
