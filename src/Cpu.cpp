@@ -45,20 +45,17 @@ uint16_t Cpu::getNextOpCode () {
 
 void Cpu::exec_opcode (const uint16_t opcode) {
     bool opcode_found = false;
-    for (int i = 0; i < NB_MASK; i++) {
-	auto it = Opcodes::instance ()->getList ()->find (opcode & mask[i]);
-
-	if (it != Opcodes::instance ()->getList ()->end ()) {
+    for (auto it : *(Opcodes::instance ()->getList ())) {
+	if ((opcode & it.second->mask) == it.first) {
 	    if (this->debug)
-		this->debug_inst (opcode, it->second);
-	    it->second->execute (opcode, this, this->screen);
+		this->debug_inst (opcode, it.second);
+	    it.second->execute (opcode, this, this->screen);
 	    opcode_found = true;
 	    break;
 	}
     }
-
     if (!opcode_found)
-	throw OpcodeNotFound (opcode);
+	throw OpcodeNotFound (opcode, this->pc);
 }
 
 void Cpu::count () {

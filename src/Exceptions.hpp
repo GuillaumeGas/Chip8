@@ -53,11 +53,11 @@ public:
 
 class OpcodeNotFound : public CpuException {
 public:
-    OpcodeNotFound (const uint16_t opcode) {
+    OpcodeNotFound (const uint16_t opcode, const uint16_t loc) {
 	std::stringstream ss;
 	ss << "Opcode not found : ";
 	ss << std::showbase << std::internal << std::setfill ('0');
-	ss << std::hex << std::setw (6) << opcode;
+	ss << std::hex << std::setw (6) << opcode << std::dec << " at location " << loc << " (" << std::hex << std::setw (6) << loc << ")";
 	msg = ss.str ();
     }
 };

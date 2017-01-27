@@ -38,6 +38,7 @@ OpLdFVx::_init_ OpLdFVx::_initializer;
 OpLdBVx::_init_ OpLdBVx::_initializer;
 OpLdIVx::_init_ OpLdIVx::_initializer;
 OpLdVxI::_init_ OpLdVxI::_initializer;
+OpSys::_init_ OpSys::_initializer;
 
 Opcodes * Opcodes::inst = NULL;
 
@@ -419,3 +420,9 @@ string OpLdVxI::disassemble (const uint16_t opcode) {
     return "ld v" + std::to_string ((int) getX (opcode)) + " I";
 }
 
+
+// void OpSys::execute (const uint16_t opcode, Cpu * cpu, Screen * screen) {}
+
+// string OpSys::disassemble (const uint16_t opcode) { 
+//     return "sys";
+// }

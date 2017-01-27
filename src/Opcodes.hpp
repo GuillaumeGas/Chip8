@@ -10,7 +10,7 @@
 #define NB_MASK 5
 
 // All the opcode ids can be determined using the following masks
-const uint16_t mask[NB_MASK] = {0x00F0, 0x00FF, 0xF000, 0xF00F, 0xF0FF};
+const uint16_t mask[NB_MASK] = {0x00F0, 0x00FF, 0xF00F, 0xF0FF, 0xF000};
 
 class Cpu;
 class Opcode;
@@ -35,6 +35,8 @@ public:
     uint16_t getY (const uint16_t opcode) const;
     uint16_t getZ (const uint16_t opcode) const;
     uint16_t getData (const uint16_t opcode) const;
+
+    uint16_t mask;
 };
 
 /**
@@ -43,14 +45,16 @@ public:
  */
 class OpCls : public Opcode {
 public:
+    OpCls () { mask  = 0x00F0; }
+
     static struct _init_ {
 	_init_ () {
-	    Opcodes::instance ()->getList ()->insert (std::pair<uint16_t, Opcode*> (0x00E0, new OpCls ()));
+	    (*(Opcodes::instance ()->getList ()))[0x00E0] = new OpCls ();
 	}
     } _initializer;
 
     void execute (const uint16_t opcode, Cpu * cpu, Screen * screen);
-    std::string disassemble (const uint16_t opcode);
+    std::string disassemble (const uint16_t opcode);    
 };
 
 
@@ -62,10 +66,11 @@ public:
  */
 class OpRet : public Opcode {
 public:
+    OpRet () { mask = 0x00FF; }
+    
     static struct _init_ {
 	_init_ () {
-	    Opcodes::instance ()->getList ()->insert (std::pair<uint16_t, Opcode*> (0x00EE, new OpRet ()));
-	}
+	    (*(Opcodes::instance ()->getList ()))[0x00EE] = new OpRet ();		}
     } _initializer;
 
     void execute (const uint16_t opcode, Cpu * cpu, Screen * screen);
@@ -81,6 +86,8 @@ public:
  */
 class OpJpAddr : public Opcode {
 public:
+    OpJpAddr () { mask = 0xF000; }
+    
     static struct _init_ {
 	_init_ () {
 	    (*(Opcodes::instance ()->getList ()))[0x1000] = new OpJpAddr ();
@@ -100,6 +107,8 @@ public:
  */
 class OpCallAddr : public Opcode {
 public:
+    OpCallAddr () { mask = 0xF000; }
+
     static struct _init_ {
 	_init_ () {
 	    (*(Opcodes::instance ()->getList ()))[0x2000] = new OpCallAddr ();
@@ -119,6 +128,8 @@ public:
  */
 class OpSeVxByte : public Opcode {
 public:
+    OpSeVxByte () { mask = 0xF000; }
+
     static struct _init_ {
 	_init_ () {
 	    (*(Opcodes::instance ()->getList ()))[0x3000] = new OpSeVxByte ();
@@ -138,6 +149,8 @@ public:
  */
 class OpSneVxByte : public Opcode {
 public:
+    OpSneVxByte () { mask = 0xF000; }
+
     static struct _init_ {
 	_init_ () {
 	    (*(Opcodes::instance ()->getList ()))[0x4000] = new OpSneVxByte ();
@@ -157,6 +170,8 @@ public:
  */
 class OpSeVxVy : public Opcode {
 public:
+    OpSeVxVy () { mask = 0xF00F; }
+
     static struct _init_ {
 	_init_ () {
 	    (*(Opcodes::instance ()->getList ()))[0x5000] = new OpSeVxVy ();
@@ -176,6 +191,8 @@ public:
  */
 class OpLdVxByte : public Opcode {
 public:
+    OpLdVxByte () { mask = 0xF000; }
+
     static struct _init_ {
 	_init_ () {
 	    (*(Opcodes::instance ()->getList ()))[0x6000] = new OpLdVxByte ();
@@ -195,6 +212,8 @@ public:
  */
 class OpAddVxByte : public Opcode {
 public:
+    OpAddVxByte () { mask = 0xF000; }
+
     static struct _init_ {
 	_init_ () {
 	    (*(Opcodes::instance ()->getList ()))[0x7000] = new OpAddVxByte ();
@@ -214,6 +233,8 @@ public:
  */
 class OpLdVxVy : public Opcode {
 public:
+    OpLdVxVy () { mask = 0xF00F; }
+
     static struct _init_ {
 	_init_ () {
 	    (*(Opcodes::instance ()->getList ()))[0x8000] = new OpLdVxVy ();
@@ -233,6 +254,8 @@ public:
  */
 class OpOrVxVy : public Opcode {
 public:
+    OpOrVxVy () { mask = 0xF00F; }
+
     static struct _init_ {
 	_init_ () {
 	    (*(Opcodes::instance ()->getList ()))[0x8001] = new OpOrVxVy ();
@@ -252,6 +275,8 @@ public:
  */
 class OpAndVxVy : public Opcode {
 public:
+    OpAndVxVy () { mask = 0xF00F; }
+
     static struct _init_ {
 	_init_ () {
 	    (*(Opcodes::instance ()->getList ()))[0x8002] = new OpAndVxVy ();
@@ -271,6 +296,8 @@ public:
  */
 class OpXorVxVy : public Opcode {
 public:
+    OpXorVxVy () { mask = 0xF00F; }
+
     static struct _init_ {
 	_init_ () {
 	    (*(Opcodes::instance ()->getList ()))[0x8003] = new OpXorVxVy ();
@@ -290,6 +317,8 @@ public:
  */
 class OpAddVxVy : public Opcode {
 public:
+    OpAddVxVy () { mask = 0xF00F; }
+
     static struct _init_ {
 	_init_ () {
 	    (*(Opcodes::instance ()->getList ()))[0x8004] = new OpAddVxVy ();
@@ -309,6 +338,8 @@ public:
  */
 class OpSubVxVy : public Opcode {
 public:
+    OpSubVxVy () { mask = 0xF00F; }
+
     static struct _init_ {
 	_init_ () {
 	    (*(Opcodes::instance ()->getList ()))[0x8005] = new OpSubVxVy ();
@@ -328,6 +359,8 @@ public:
  */
 class OpShrVxVy : public Opcode {
 public:
+    OpShrVxVy () { mask = 0xF00F; }
+
     static struct _init_ {
 	_init_ () {
 	    (*(Opcodes::instance ()->getList ()))[0x8006] = new OpShrVxVy ();
@@ -347,6 +380,8 @@ public:
  */
 class OpSubnVxVy : public Opcode {
 public:
+    OpSubnVxVy () { mask = 0xF00F; }
+
     static struct _init_ {
 	_init_ () {
 	    (*(Opcodes::instance ()->getList ()))[0x8007] = new OpSubnVxVy ();
@@ -366,6 +401,8 @@ public:
  */
 class OpShlVxVy : public Opcode {
 public:
+    OpShlVxVy () { mask = 0xF00F; }
+
     static struct _init_ {
 	_init_ () {
 	    (*(Opcodes::instance ()->getList ()))[0x800E] = new OpShlVxVy ();
@@ -385,6 +422,8 @@ public:
  */
 class OpSneVxVy : public Opcode {
 public:
+    OpSneVxVy () { mask = 0xF00F; }
+
     static struct _init_ {
 	_init_ () {
 	    (*(Opcodes::instance ()->getList ()))[0x9000] = new OpSneVxVy ();
@@ -404,6 +443,8 @@ public:
  */
 class OpLdIAddr : public Opcode {
 public:
+    OpLdIAddr () { mask = 0xF000; }
+
     static struct _init_ {
 	_init_ () {
 	    (*(Opcodes::instance ()->getList ()))[0xA000] = new OpLdIAddr ();
@@ -423,6 +464,8 @@ public:
  */
 class OpJpV0Addr : public Opcode {
 public:
+    OpJpV0Addr () { mask = 0xF000; }
+
     static struct _init_ {
 	_init_ () {
 	    (*(Opcodes::instance ()->getList ()))[0xB000] = new OpJpV0Addr ();
@@ -442,6 +485,8 @@ public:
  */
 class OpRndVxByte : public Opcode {
 public:
+    OpRndVxByte () { mask = 0xF000; }
+
     static struct _init_ {
 	_init_ () {
 	    (*(Opcodes::instance ()->getList ()))[0xC000] = new OpRndVxByte ();
@@ -461,6 +506,8 @@ public:
  */
 class OpDrwVxVy : public Opcode {
 public:
+    OpDrwVxVy () { mask = 0xF000; }
+
     static struct _init_ {
 	_init_ () {
 	    (*(Opcodes::instance ()->getList ()))[0xD000] = new OpDrwVxVy ();
@@ -480,6 +527,8 @@ public:
  */
 class OpSkpVx : public Opcode {
 public:
+    OpSkpVx () { mask = 0xF0FF; }
+
     static struct _init_ {
 	_init_ () {
 	    (*(Opcodes::instance ()->getList ()))[0xE09E] = new OpSkpVx ();
@@ -499,6 +548,8 @@ public:
  */
 class OpSknpVx : public Opcode {
 public:
+    OpSknpVx () { mask = 0xF0FF; }
+
     static struct _init_ {
 	_init_ () {
 	    (*(Opcodes::instance ()->getList ()))[0xE0A1] = new OpSknpVx ();
@@ -518,6 +569,8 @@ public:
  */
 class OpLdVxDt : public Opcode {
 public:
+    OpLdVxDt () { mask = 0xF0FF; }
+
     static struct _init_ {
 	_init_ () {
 	    (*(Opcodes::instance ()->getList ()))[0xF007] = new OpLdVxDt ();
@@ -537,6 +590,8 @@ public:
  */
 class OpLdVxK : public Opcode {
 public:
+    OpLdVxK () { mask = 0xF0FF; }
+
     static struct _init_ {
 	_init_ () {
 	    (*(Opcodes::instance ()->getList ()))[0xF00A] = new OpLdVxK ();
@@ -556,6 +611,8 @@ public:
  */
 class OpLdDtVx : public Opcode {
 public:
+    OpLdDtVx () { mask = 0xF0FF; }
+
     static struct _init_ {
 	_init_ () {
 	    (*(Opcodes::instance ()->getList ()))[0xF015] = new OpLdDtVx ();
@@ -575,6 +632,8 @@ public:
  */
 class OpLdStVx : public Opcode {
 public:
+    OpLdStVx () { mask = 0xF0FF; }
+
     static struct _init_ {
 	_init_ () {
 	    (*(Opcodes::instance ()->getList ()))[0xF018] = new OpLdStVx ();
@@ -594,6 +653,8 @@ public:
  */
 class OpAddIVx : public Opcode {
 public:
+    OpAddIVx () { mask = 0xF0FF; }
+
     static struct _init_ {
 	_init_ () {
 	    (*(Opcodes::instance ()->getList ()))[0xF01E] = new OpAddIVx ();
@@ -614,6 +675,8 @@ public:
  */
 class OpLdFVx : public Opcode {
 public:
+    OpLdFVx () { mask = 0xF0FF; }
+
     static struct _init_ {
 	_init_ () {
 	    (*(Opcodes::instance ()->getList ()))[0xF029] = new OpLdFVx ();
@@ -633,6 +696,8 @@ public:
  */
 class OpLdBVx : public Opcode {
 public:
+    OpLdBVx () { mask = 0xF0FF; }
+
     static struct _init_ {
 	_init_ () {
 	    (*(Opcodes::instance ()->getList ()))[0xF033] = new OpLdBVx ();
@@ -652,6 +717,8 @@ public:
  */
 class OpLdIVx : public Opcode {
 public:
+    OpLdIVx () { mask = 0xF0FF; }
+
     static struct _init_ {
 	_init_ () {
 	    (*(Opcodes::instance ()->getList ()))[0xF055] = new OpLdIVx ();
@@ -671,6 +738,8 @@ public:
  */
 class OpLdVxI : public Opcode {
 public:
+    OpLdVxI () { mask = 0xF0FF; }
+
     static struct _init_ {
 	_init_ () {
 	    (*(Opcodes::instance ()->getList ()))[0xF065] = new OpLdVxI ();
@@ -679,4 +748,24 @@ public:
 
     void execute (const uint16_t opcode, Cpu * cpu, Screen * screen);
     std::string disassemble (const uint16_t opcode);
+};
+
+/**
+   0nnn - Sys addr
+   Jump to a machine code routine at nnn.
+
+   This instruction is only used on the old computers on which Chip-8 was originally implemented. It is ignored by modern interpreters.
+*/
+class OpSys : public Opcode {
+public:
+    OpSys () { mask = 0xF000; }
+
+    static struct _init_ {
+	_init_ () {
+	    (*(Opcodes::instance ()->getList ()))[0x0000] = new OpLdVxI ();
+	}
+    } _initializer;
+
+    void execute (const uint16_t opcode, Cpu * cpu, Screen * screen);
+    std::string disassemble (const uint16_t opcode);    
 };
