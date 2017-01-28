@@ -14,9 +14,10 @@
 #define MEM_SIZE 4096
 #define START_ADDRESS 512
 #define V_REGISTERS_SIZE 16
+#define RPL_SIZE 8
 #define STACK_SIZE 16
 #define CPU_SPEED 4
-#define FPS 16
+#define FPS 0
 #define NB_OPCODES 35
 #define KEYBOARD_SIZE 16
 #define KEY_DOWN 1
@@ -34,15 +35,18 @@ public:
     void exec_opcode (const Uint16 opcode);
     void count ();
     void debug_inst (uint16_t opcode, Opcode * op);
-
+    bool isRunning () const;
     void loadFont ();
+    void shutdown ();
 
-    bool started;
+    bool running;
     uint8_t memory[MEM_SIZE];
     /* program counter */
     uint16_t pc;
     /* 16 registers V0 -> VF */
     uint8_t reg[V_REGISTERS_SIZE];
+    /* rpl registers */
+    uint8_t rpl[RPL_SIZE];
     /* Usually used to store memory adresses */
     uint16_t I;
     /* Stack pointer */

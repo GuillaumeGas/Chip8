@@ -39,6 +39,11 @@ OpLdBVx::_init_ OpLdBVx::_initializer;
 OpLdIVx::_init_ OpLdIVx::_initializer;
 OpLdVxI::_init_ OpLdVxI::_initializer;
 OpSys::_init_ OpSys::_initializer;
+OpDown::_init_ OpDown::_initializer;
+OpRight::_init_ OpRight::_initializer;
+OpLeft::_init_ OpLeft::_initializer;
+OpLow::_init_ OpLow::_initializer;
+OpHigh::_init_ OpHigh::_initializer;
 
 Opcodes * Opcodes::inst = NULL;
 
@@ -244,12 +249,8 @@ string OpSubnVxVy::disassemble (const uint16_t opcode) {
 
 void OpShlVxVy::execute (const uint16_t opcode, Cpu * cpu, Screen * screen) {
     uint16_t x = getX (opcode);
-    if (((cpu->reg[x] & 0xF000) >> 12) == 1) {
-	cpu->reg[0xF] = 1;
-    } else {
-	cpu->reg[0xF] = 0;
-    }
-    cpu->reg[x] = cpu->reg[x] * 2;
+    cpu->reg[0xF] = (cpu->reg[x] & 0x80) >> 7;
+    cpu->reg[x] <<= 1;
 }
 
 string OpShlVxVy::disassemble (const uint16_t opcode) { 
@@ -393,7 +394,7 @@ void OpLdBVx::execute (const uint16_t opcode, Cpu * cpu, Screen * screen) {
     uint16_t x = getX (opcode);
     cpu->memory[cpu->I] = cpu->reg[x] / 100;
     cpu->memory[cpu->I + 1] = (cpu->reg[x] / 10) % 10;
-    cpu->memory[cpu->I + 2] = (cpu->reg[x] % 100) % 10;
+    cpu->memory[cpu->I + 2] = (cpu->reg[x] % 10);
 }
 
 string OpLdBVx::disassemble (const uint16_t opcode) { 
@@ -420,8 +421,60 @@ string OpLdVxI::disassemble (const uint16_t opcode) {
     return "ld v" + std::to_string ((int) getX (opcode)) + " I";
 }
 
-void OpSys::execute (const uint16_t opcode, Cpu * cpu, Screen * screen) {}
+void OpSys::execute (const uint16_t opcode, Cpu * cpu, Screen * screen) {
+}
 
 string OpSys::disassemble (const uint16_t opcode) { 
     return "sys";
 }
+
+void OpDown::execute (const uint16_t opcode, Cpu * cpu, Screen * screen) {}
+
+string OpDown::disassemble (const uint16_t opcode) { 
+    return "down";
+}
+
+void OpRight::execute (const uint16_t opcode, Cpu * cpu, Screen * screen) {}
+
+string OpRight::disassemble (const uint16_t opcode) { 
+    return "right";
+}
+
+void OpLeft::execute (const uint16_t opcode, Cpu * cpu, Screen * screen) {}
+
+string OpLeft::disassemble (const uint16_t opcode) { 
+    return "left";
+}
+
+void OpLow::execute (const uint16_t opcode, Cpu * cpu, Screen * screen) {
+    cout << "[CPU] Low operation not implemented !" << endl;
+}
+
+string OpLow::disassemble (const uint16_t opcode) { 
+    return "low";
+}
+
+void OpHigh::execute (const uint16_t opcode, Cpu * cpu, Screen * screen) {
+    cout << "[CPU] High operation not implemented !" << endl;
+}
+
+string OpHigh::disassemble (const uint16_t opcode) { 
+    return "high";
+}
+
+void OpExit::execute (const uint16_t opcode, Cpu * cpu, Screen * screen) {
+    cpu->shutown ();
+}
+
+string OpExit::disassemble (const uint16_t opcode) { 
+    return "exit";
+}
+
+void OpLdHFVx::execute (const uint16_t opcode, Cpu * cpu, Screen * screen) {
+    cpu->I = (cpu->reg[getX (opcode)] * 10) + (16 * 5);
+}
+
+string OpLdHFVx::disassemble (const uint16_t opcode) { 
+    return "ld HF v" << std::to_string (getX (opcode));
+}
+

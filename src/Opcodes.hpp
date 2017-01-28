@@ -7,10 +7,15 @@
 #include "Screen.hpp"
 #include "utils.hpp"
 
-#define NB_MASK 5
+// JE ROX / I ROCK !! 
+#define STATIC_THIS(o)				\
+    static struct _init_ {			\
+    _init_ () {					\
+	o;					\
+	}					\
+    } _initializer;						
 
-// All the opcode ids can be determined using the following masks
-const uint16_t mask[NB_MASK] = {0x00F0, 0x00FF, 0xF00F, 0xF0FF, 0xF000};
+#define NB_MASK 5
 
 class Cpu;
 class Opcode;
@@ -35,8 +40,6 @@ public:
     uint16_t getY (const uint16_t opcode) const;
     uint16_t getZ (const uint16_t opcode) const;
     uint16_t getData (const uint16_t opcode) const;
-
-    uint16_t mask;
 };
 
 /**
@@ -45,13 +48,7 @@ public:
  */
 class OpCls : public Opcode {
 public:
-    OpCls () { mask  = 0x00F0; }
-
-    static struct _init_ {
-	_init_ () {
-	    (*(Opcodes::instance ()->getList ()))[0x00E0] = new OpCls ();
-	}
-    } _initializer;
+    STATIC_THIS ((*(Opcodes::instance ()->getList ()))[0x00E0] = new OpCls ());
 
     void execute (const uint16_t opcode, Cpu * cpu, Screen * screen);
     std::string disassemble (const uint16_t opcode);    
@@ -66,33 +63,21 @@ public:
  */
 class OpRet : public Opcode {
 public:
-    OpRet () { mask = 0x00FF; }
-    
-    static struct _init_ {
-	_init_ () {
-	    (*(Opcodes::instance ()->getList ()))[0x00EE] = new OpRet ();		}
-    } _initializer;
+    STATIC_THIS ((*(Opcodes::instance ()->getList ()))[0x00EE] = new OpRet ());
 
     void execute (const uint16_t opcode, Cpu * cpu, Screen * screen);
     std::string disassemble (const uint16_t opcode);
 };
 
-
 /**
-   1nnn - JP addr
+   1nnn - JP 5addr
    Jump to location nnn.
 
    The interpreter sets the program counter to nnn.
  */
 class OpJpAddr : public Opcode {
 public:
-    OpJpAddr () { mask = 0xF000; }
-    
-    static struct _init_ {
-	_init_ () {
-	    (*(Opcodes::instance ()->getList ()))[0x1000] = new OpJpAddr ();
-	}
-    } _initializer;
+    STATIC_THIS ((*(Opcodes::instance ()->getList ()))[0x1000] = new OpJpAddr ());
 
     void execute (const uint16_t opcode, Cpu * cpu, Screen * screen);
     std::string disassemble (const uint16_t opcode);
@@ -107,13 +92,7 @@ public:
  */
 class OpCallAddr : public Opcode {
 public:
-    OpCallAddr () { mask = 0xF000; }
-
-    static struct _init_ {
-	_init_ () {
-	    (*(Opcodes::instance ()->getList ()))[0x2000] = new OpCallAddr ();
-	}
-    } _initializer;
+    STATIC_THIS ((*(Opcodes::instance ()->getList ()))[0x2000] = new OpCallAddr ());
 
     void execute (const uint16_t opcode, Cpu * cpu, Screen * screen);
     std::string disassemble (const uint16_t opcode);
@@ -128,13 +107,7 @@ public:
  */
 class OpSeVxByte : public Opcode {
 public:
-    OpSeVxByte () { mask = 0xF000; }
-
-    static struct _init_ {
-	_init_ () {
-	    (*(Opcodes::instance ()->getList ()))[0x3000] = new OpSeVxByte ();
-	}
-    } _initializer;
+    STATIC_THIS ((*(Opcodes::instance ()->getList ()))[0x3000] = new OpSeVxByte ());
 
     void execute (const uint16_t opcode, Cpu * cpu, Screen * screen);
     std::string disassemble (const uint16_t opcode);
@@ -149,13 +122,7 @@ public:
  */
 class OpSneVxByte : public Opcode {
 public:
-    OpSneVxByte () { mask = 0xF000; }
-
-    static struct _init_ {
-	_init_ () {
-	    (*(Opcodes::instance ()->getList ()))[0x4000] = new OpSneVxByte ();
-	}
-    } _initializer;
+    STATIC_THIS ((*(Opcodes::instance ()->getList ()))[0x4000] = new OpSneVxByte ());
 
     void execute (const uint16_t opcode, Cpu * cpu, Screen * screen);
     std::string disassemble (const uint16_t opcode);
@@ -170,13 +137,7 @@ public:
  */
 class OpSeVxVy : public Opcode {
 public:
-    OpSeVxVy () { mask = 0xF00F; }
-
-    static struct _init_ {
-	_init_ () {
-	    (*(Opcodes::instance ()->getList ()))[0x5000] = new OpSeVxVy ();
-	}
-    } _initializer;
+    STATIC_THIS ((*(Opcodes::instance ()->getList ()))[0x5000] = new OpSeVxVy ());
 
     void execute (const uint16_t opcode, Cpu * cpu, Screen * screen);
     std::string disassemble (const uint16_t opcode);
@@ -191,13 +152,7 @@ public:
  */
 class OpLdVxByte : public Opcode {
 public:
-    OpLdVxByte () { mask = 0xF000; }
-
-    static struct _init_ {
-	_init_ () {
-	    (*(Opcodes::instance ()->getList ()))[0x6000] = new OpLdVxByte ();
-	}
-    } _initializer;
+    STATIC_THIS ((*(Opcodes::instance ()->getList ()))[0x6000] = new OpLdVxByte ());
 
     void execute (const uint16_t opcode, Cpu * cpu, Screen * screen);
     std::string disassemble (const uint16_t opcode);
@@ -212,13 +167,7 @@ public:
  */
 class OpAddVxByte : public Opcode {
 public:
-    OpAddVxByte () { mask = 0xF000; }
-
-    static struct _init_ {
-	_init_ () {
-	    (*(Opcodes::instance ()->getList ()))[0x7000] = new OpAddVxByte ();
-	}
-    } _initializer;
+    STATIC_THIS ((*(Opcodes::instance ()->getList ()))[0x7000] = new OpAddVxByte ());
 
     void execute (const uint16_t opcode, Cpu * cpu, Screen * screen);
     std::string disassemble (const uint16_t opcode);
@@ -233,13 +182,7 @@ public:
  */
 class OpLdVxVy : public Opcode {
 public:
-    OpLdVxVy () { mask = 0xF00F; }
-
-    static struct _init_ {
-	_init_ () {
-	    (*(Opcodes::instance ()->getList ()))[0x8000] = new OpLdVxVy ();
-	}
-    } _initializer;
+    STATIC_THIS ((*(Opcodes::instance ()->getList ()))[0x8000] = new OpLdVxVy ());
 
     void execute (const uint16_t opcode, Cpu * cpu, Screen * screen);
     std::string disassemble (const uint16_t opcode);
@@ -254,13 +197,7 @@ public:
  */
 class OpOrVxVy : public Opcode {
 public:
-    OpOrVxVy () { mask = 0xF00F; }
-
-    static struct _init_ {
-	_init_ () {
-	    (*(Opcodes::instance ()->getList ()))[0x8001] = new OpOrVxVy ();
-	}
-    } _initializer;
+    STATIC_THIS ((*(Opcodes::instance ()->getList ()))[0x8001] = new OpOrVxVy ());
 
     void execute (const uint16_t opcode, Cpu * cpu, Screen * screen);
     std::string disassemble (const uint16_t opcode);
@@ -275,13 +212,7 @@ public:
  */
 class OpAndVxVy : public Opcode {
 public:
-    OpAndVxVy () { mask = 0xF00F; }
-
-    static struct _init_ {
-	_init_ () {
-	    (*(Opcodes::instance ()->getList ()))[0x8002] = new OpAndVxVy ();
-	}
-    } _initializer;
+    STATIC_THIS ((*(Opcodes::instance ()->getList ()))[0x8002] = new OpAndVxVy ());
 
     void execute (const uint16_t opcode, Cpu * cpu, Screen * screen);
     std::string disassemble (const uint16_t opcode);
@@ -296,13 +227,7 @@ public:
  */
 class OpXorVxVy : public Opcode {
 public:
-    OpXorVxVy () { mask = 0xF00F; }
-
-    static struct _init_ {
-	_init_ () {
-	    (*(Opcodes::instance ()->getList ()))[0x8003] = new OpXorVxVy ();
-	}
-    } _initializer;
+    STATIC_THIS ((*(Opcodes::instance ()->getList ()))[0x8003] = new OpXorVxVy ());
 
     void execute (const uint16_t opcode, Cpu * cpu, Screen * screen);
     std::string disassemble (const uint16_t opcode);
@@ -317,13 +242,7 @@ public:
  */
 class OpAddVxVy : public Opcode {
 public:
-    OpAddVxVy () { mask = 0xF00F; }
-
-    static struct _init_ {
-	_init_ () {
-	    (*(Opcodes::instance ()->getList ()))[0x8004] = new OpAddVxVy ();
-	}
-    } _initializer;
+    STATIC_THIS ((*(Opcodes::instance ()->getList ()))[0x8004] = new OpAddVxVy ());
 
     void execute (const uint16_t opcode, Cpu * cpu, Screen * screen);
     std::string disassemble (const uint16_t opcode);
@@ -338,13 +257,7 @@ public:
  */
 class OpSubVxVy : public Opcode {
 public:
-    OpSubVxVy () { mask = 0xF00F; }
-
-    static struct _init_ {
-	_init_ () {
-	    (*(Opcodes::instance ()->getList ()))[0x8005] = new OpSubVxVy ();
-	}
-    } _initializer;
+    STATIC_THIS ((*(Opcodes::instance ()->getList ()))[0x8005] = new OpSubVxVy ());
 
     void execute (const uint16_t opcode, Cpu * cpu, Screen * screen);
     std::string disassemble (const uint16_t opcode);
@@ -359,13 +272,7 @@ public:
  */
 class OpShrVxVy : public Opcode {
 public:
-    OpShrVxVy () { mask = 0xF00F; }
-
-    static struct _init_ {
-	_init_ () {
-	    (*(Opcodes::instance ()->getList ()))[0x8006] = new OpShrVxVy ();
-	}
-    } _initializer;
+    STATIC_THIS ((*(Opcodes::instance ()->getList ()))[0x8006] = new OpShrVxVy ());
 
     void execute (const uint16_t opcode, Cpu * cpu, Screen * screen);
     std::string disassemble (const uint16_t opcode);
@@ -380,13 +287,7 @@ public:
  */
 class OpSubnVxVy : public Opcode {
 public:
-    OpSubnVxVy () { mask = 0xF00F; }
-
-    static struct _init_ {
-	_init_ () {
-	    (*(Opcodes::instance ()->getList ()))[0x8007] = new OpSubnVxVy ();
-	}
-    } _initializer;
+    STATIC_THIS ((*(Opcodes::instance ()->getList ()))[0x8007] = new OpSubnVxVy ());
 
     void execute (const uint16_t opcode, Cpu * cpu, Screen * screen);
     std::string disassemble (const uint16_t opcode);
@@ -401,13 +302,7 @@ public:
  */
 class OpShlVxVy : public Opcode {
 public:
-    OpShlVxVy () { mask = 0xF00F; }
-
-    static struct _init_ {
-	_init_ () {
-	    (*(Opcodes::instance ()->getList ()))[0x800E] = new OpShlVxVy ();
-	}
-    } _initializer;
+    STATIC_THIS ((*(Opcodes::instance ()->getList ()))[0x800E] = new OpShlVxVy ());
 
     void execute (const uint16_t opcode, Cpu * cpu, Screen * screen);
     std::string disassemble (const uint16_t opcode);
@@ -422,13 +317,7 @@ public:
  */
 class OpSneVxVy : public Opcode {
 public:
-    OpSneVxVy () { mask = 0xF00F; }
-
-    static struct _init_ {
-	_init_ () {
-	    (*(Opcodes::instance ()->getList ()))[0x9000] = new OpSneVxVy ();
-	}
-    } _initializer;
+    STATIC_THIS ((*(Opcodes::instance ()->getList ()))[0x9000] = new OpSneVxVy ());
 
     void execute (const uint16_t opcode, Cpu * cpu, Screen * screen);
     std::string disassemble (const uint16_t opcode);
@@ -443,13 +332,7 @@ public:
  */
 class OpLdIAddr : public Opcode {
 public:
-    OpLdIAddr () { mask = 0xF000; }
-
-    static struct _init_ {
-	_init_ () {
-	    (*(Opcodes::instance ()->getList ()))[0xA000] = new OpLdIAddr ();
-	}
-    } _initializer;
+    STATIC_THIS ((*(Opcodes::instance ()->getList ()))[0xA000] = new OpLdIAddr ());
 
     void execute (const uint16_t opcode, Cpu * cpu, Screen * screen);
     std::string disassemble (const uint16_t opcode);
@@ -464,13 +347,7 @@ public:
  */
 class OpJpV0Addr : public Opcode {
 public:
-    OpJpV0Addr () { mask = 0xF000; }
-
-    static struct _init_ {
-	_init_ () {
-	    (*(Opcodes::instance ()->getList ()))[0xB000] = new OpJpV0Addr ();
-	}
-    } _initializer;
+    STATIC_THIS ((*(Opcodes::instance ()->getList ()))[0xB000] = new OpJpV0Addr ());
 
     void execute (const uint16_t opcode, Cpu * cpu, Screen * screen);
     std::string disassemble (const uint16_t opcode);
@@ -485,13 +362,7 @@ public:
  */
 class OpRndVxByte : public Opcode {
 public:
-    OpRndVxByte () { mask = 0xF000; }
-
-    static struct _init_ {
-	_init_ () {
-	    (*(Opcodes::instance ()->getList ()))[0xC000] = new OpRndVxByte ();
-	}
-    } _initializer;
+    STATIC_THIS ((*(Opcodes::instance ()->getList ()))[0xC000] = new OpRndVxByte ());
 
     void execute (const uint16_t opcode, Cpu * cpu, Screen * screen);
     std::string disassemble (const uint16_t opcode);
@@ -506,13 +377,7 @@ public:
  */
 class OpDrwVxVy : public Opcode {
 public:
-    OpDrwVxVy () { mask = 0xF000; }
-
-    static struct _init_ {
-	_init_ () {
-	    (*(Opcodes::instance ()->getList ()))[0xD000] = new OpDrwVxVy ();
-	}
-    } _initializer;
+    STATIC_THIS ((*(Opcodes::instance ()->getList ()))[0xD000] = new OpDrwVxVy ());
 
     void execute (const uint16_t opcode, Cpu * cpu, Screen * screen);
     std::string disassemble (const uint16_t opcode);
@@ -527,13 +392,7 @@ public:
  */
 class OpSkpVx : public Opcode {
 public:
-    OpSkpVx () { mask = 0xF0FF; }
-
-    static struct _init_ {
-	_init_ () {
-	    (*(Opcodes::instance ()->getList ()))[0xE09E] = new OpSkpVx ();
-	}
-    } _initializer;
+    STATIC_THIS ((*(Opcodes::instance ()->getList ()))[0xE09E] = new OpSkpVx ());
 
     void execute (const uint16_t opcode, Cpu * cpu, Screen * screen);
     std::string disassemble (const uint16_t opcode);
@@ -548,13 +407,7 @@ public:
  */
 class OpSknpVx : public Opcode {
 public:
-    OpSknpVx () { mask = 0xF0FF; }
-
-    static struct _init_ {
-	_init_ () {
-	    (*(Opcodes::instance ()->getList ()))[0xE0A1] = new OpSknpVx ();
-	}
-    } _initializer;
+    STATIC_THIS ((*(Opcodes::instance ()->getList ()))[0xE0A1] = new OpSknpVx ());
 
     void execute (const uint16_t opcode, Cpu * cpu, Screen * screen);
     std::string disassemble (const uint16_t opcode);
@@ -569,13 +422,7 @@ public:
  */
 class OpLdVxDt : public Opcode {
 public:
-    OpLdVxDt () { mask = 0xF0FF; }
-
-    static struct _init_ {
-	_init_ () {
-	    (*(Opcodes::instance ()->getList ()))[0xF007] = new OpLdVxDt ();
-	}
-    } _initializer;
+    STATIC_THIS ((*(Opcodes::instance ()->getList ()))[0xF007] = new OpLdVxDt ());
 
     void execute (const uint16_t opcode, Cpu * cpu, Screen * screen);
     std::string disassemble (const uint16_t opcode);
@@ -590,14 +437,8 @@ public:
  */
 class OpLdVxK : public Opcode {
 public:
-    OpLdVxK () { mask = 0xF0FF; }
-
-    static struct _init_ {
-	_init_ () {
-	    (*(Opcodes::instance ()->getList ()))[0xF00A] = new OpLdVxK ();
-	}
-    } _initializer;
-
+    STATIC_THIS ((*(Opcodes::instance ()->getList ()))[0xF00A] = new OpLdVxK ());
+    
     void execute (const uint16_t opcode, Cpu * cpu, Screen * screen);
     std::string disassemble (const uint16_t opcode);
 };
@@ -611,13 +452,7 @@ public:
  */
 class OpLdDtVx : public Opcode {
 public:
-    OpLdDtVx () { mask = 0xF0FF; }
-
-    static struct _init_ {
-	_init_ () {
-	    (*(Opcodes::instance ()->getList ()))[0xF015] = new OpLdDtVx ();
-	}
-    } _initializer;
+    STATIC_THIS ((*(Opcodes::instance ()->getList ()))[0xF015] = new OpLdDtVx ());
 
     void execute (const uint16_t opcode, Cpu * cpu, Screen * screen);
     std::string disassemble (const uint16_t opcode);
@@ -632,13 +467,7 @@ public:
  */
 class OpLdStVx : public Opcode {
 public:
-    OpLdStVx () { mask = 0xF0FF; }
-
-    static struct _init_ {
-	_init_ () {
-	    (*(Opcodes::instance ()->getList ()))[0xF018] = new OpLdStVx ();
-	}
-    } _initializer;
+    STATIC_THIS ((*(Opcodes::instance ()->getList ()))[0xF018] = new OpLdStVx ());
 
     void execute (const uint16_t opcode, Cpu * cpu, Screen * screen);
     std::string disassemble (const uint16_t opcode);
@@ -653,13 +482,7 @@ public:
  */
 class OpAddIVx : public Opcode {
 public:
-    OpAddIVx () { mask = 0xF0FF; }
-
-    static struct _init_ {
-	_init_ () {
-	    (*(Opcodes::instance ()->getList ()))[0xF01E] = new OpAddIVx ();
-	}
-    } _initializer;
+    STATIC_THIS ((*(Opcodes::instance ()->getList ()))[0xF01E] = new OpAddIVx ());
 
     void execute (const uint16_t opcode, Cpu * cpu, Screen * screen);
     std::string disassemble (const uint16_t opcode);
@@ -675,13 +498,7 @@ public:
  */
 class OpLdFVx : public Opcode {
 public:
-    OpLdFVx () { mask = 0xF0FF; }
-
-    static struct _init_ {
-	_init_ () {
-	    (*(Opcodes::instance ()->getList ()))[0xF029] = new OpLdFVx ();
-	}
-    } _initializer;
+    STATIC_THIS ((*(Opcodes::instance ()->getList ()))[0xF029] = new OpLdFVx ());
 
     void execute (const uint16_t opcode, Cpu * cpu, Screen * screen);
     std::string disassemble (const uint16_t opcode);
@@ -696,13 +513,7 @@ public:
  */
 class OpLdBVx : public Opcode {
 public:
-    OpLdBVx () { mask = 0xF0FF; }
-
-    static struct _init_ {
-	_init_ () {
-	    (*(Opcodes::instance ()->getList ()))[0xF033] = new OpLdBVx ();
-	}
-    } _initializer;
+    STATIC_THIS ((*(Opcodes::instance ()->getList ()))[0xF033] = new OpLdBVx ());
 
     void execute (const uint16_t opcode, Cpu * cpu, Screen * screen);
     std::string disassemble (const uint16_t opcode);
@@ -717,13 +528,7 @@ public:
  */
 class OpLdIVx : public Opcode {
 public:
-    OpLdIVx () { mask = 0xF0FF; }
-
-    static struct _init_ {
-	_init_ () {
-	    (*(Opcodes::instance ()->getList ()))[0xF055] = new OpLdIVx ();
-	}
-    } _initializer;
+    STATIC_THIS ((*(Opcodes::instance ()->getList ()))[0xF055] = new OpLdIVx ());
 
     void execute (const uint16_t opcode, Cpu * cpu, Screen * screen);
     std::string disassemble (const uint16_t opcode);
@@ -738,14 +543,8 @@ public:
  */
 class OpLdVxI : public Opcode {
 public:
-    OpLdVxI () { mask = 0xF0FF; }
-
-    static struct _init_ {
-	_init_ () {
-	    (*(Opcodes::instance ()->getList ()))[0xF065] = new OpLdVxI ();
-	}
-    } _initializer;
-
+    STATIC_THIS ((*(Opcodes::instance ()->getList ()))[0xF065] = new OpLdVxI ());
+    
     void execute (const uint16_t opcode, Cpu * cpu, Screen * screen);
     std::string disassemble (const uint16_t opcode);
 };
@@ -758,13 +557,98 @@ public:
 */
 class OpSys : public Opcode {
 public:
-    OpSys () { mask = 0xF000; }
+    STATIC_THIS ((*(Opcodes::instance ()->getList ()))[0x0000] = new OpSys ());
 
-    static struct _init_ {
-	_init_ () {
-	    (*(Opcodes::instance ()->getList ()))[0x0000] = new OpSys ();
-	}
-    } _initializer;
+    void execute (const uint16_t opcode, Cpu * cpu, Screen * screen);
+    std::string disassemble (const uint16_t opcode);    
+};
+
+/**
+   SUPER CHIP 8
+   
+   00CX - Scroll down X lines
+ */
+class OpDown : public Opcode {
+public:
+    STATIC_THIS ((*(Opcodes::instance ()->getList ()))[0x00C0] = new OpDown ());
+
+    void execute (const uint16_t opcode, Cpu * cpu, Screen * screen);
+    std::string disassemble (const uint16_t opcode);    
+};
+
+/**
+   SUPER CHIP 8
+   
+   00FB - Scroll right 4 pixels
+ */
+class OpRight : public Opcode {
+public:
+    STATIC_THIS ((*(Opcodes::instance ()->getList ()))[0x00FB] = new OpRight ());
+
+    void execute (const uint16_t opcode, Cpu * cpu, Screen * screen);
+    std::string disassemble (const uint16_t opcode);    
+};
+
+/**
+   SUPER CHIP 8
+   
+   00FC - Scroll left 4 pixels
+ */
+class OpLeft : public Opcode {
+public:
+    STATIC_THIS ((*(Opcodes::instance ()->getList ()))[0x00FC] = new OpLeft ());
+
+    void execute (const uint16_t opcode, Cpu * cpu, Screen * screen);
+    std::string disassemble (const uint16_t opcode);    
+};
+
+/**
+   SUPER CHIP 8
+   
+   00FE - disable extended screen mode
+ */
+class OpLow : public Opcode {
+public:
+    STATIC_THIS ((*(Opcodes::instance ()->getList ()))[0x00FE] = new OpLow ());
+
+    void execute (const uint16_t opcode, Cpu * cpu, Screen * screen);
+    std::string disassemble (const uint16_t opcode);    
+};
+
+/**
+   SUPER CHIP 8
+   
+   00FF - enable extended screen mode
+ */
+class OpHigh : public Opcode {
+public:
+    STATIC_THIS ((*(Opcodes::instance ()->getList ()))[0x00FF] = new OpHigh ());
+
+    void execute (const uint16_t opcode, Cpu * cpu, Screen * screen);
+    std::string disassemble (const uint16_t opcode);    
+};
+
+/**
+   SUPER CHIP 8
+
+   00FD - exit
+ */
+class OpExit : public Opcode {
+public:
+    STATIC_THIS ((*(Opcodes::instance ()->getList ()))[0x00FD] = new OpExit ());
+
+    void execute (const uint16_t opcode, Cpu * cpu, Screen * screen);
+    std::string disassemble (const uint16_t opcode);    
+};
+
+/**
+   SUPER CHIP 8
+
+   F030 - LD HF Vx
+ */
+class OpLdHFVx : public Opcode {
+public:
+    STATIC_THIS ((*(Opcodes::instance ()->getList ()))[0xF033] = new OpLdHFVx ());
 
     void execute (const uint16_t opcode, Cpu * cpu, Screen * screen);
     std::string disassemble (const uint16_t opcode);    

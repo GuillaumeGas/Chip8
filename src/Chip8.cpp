@@ -17,7 +17,7 @@ void Chip8::start () {
     cout << "> Chip8 starting..." << endl;
 
     bool stop = false;
-    while (!stop) {
+    while (!stop && cpu->isRunning ()) {
 	cpu->emulateCycle ();
 
 	while (SDL_PollEvent (&_event)) {
