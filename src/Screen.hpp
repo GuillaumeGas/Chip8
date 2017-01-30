@@ -7,7 +7,7 @@
 
 #define SCREEN_WIDTH 64  // Pixels
 #define SCREEN_HEIGHT 32 // Pixels
-#define PIXEL_DIM 8   // real pixels
+#define PIXEL_DIM 10   // real pixels
 
 #define BLACK 0
 #define WHITE 1

@@ -6,6 +6,7 @@ Chip8::Chip8 (const char * file_name, bool debug) {
     this->sc = new Screen ();
     this->cpu = new Cpu (this, this->sc, debug);
     this->cpu->loadProgram (file_name);
+    this->running = true;
 }
 
 Chip8::~Chip8 () {
@@ -15,6 +16,8 @@ Chip8::~Chip8 () {
 
 void Chip8::start () {
     cout << "> Chip8 starting..." << endl;
+
+    thread loop_screen (&Chip8::loop_screen, this);
 
     bool stop = false;
     while (!stop && cpu->isRunning ()) {
@@ -39,7 +42,17 @@ void Chip8::start () {
 	    }
 	}
 
-	this->sc->update ();
+	// this->sc->update ();
 	SDL_Delay (FPS);
+    }
+
+    this->running = false;
+    loop_screen.join ();
+}
+
+void Chip8::loop_screen () {
+    int i = 0;
+    while (this->running) {
+	this->sc->update ();
     }
 }

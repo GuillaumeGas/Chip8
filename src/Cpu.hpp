@@ -16,8 +16,8 @@
 #define V_REGISTERS_SIZE 16
 #define RPL_SIZE 8
 #define STACK_SIZE 16
-#define CPU_SPEED 4
-#define FPS 0
+#define CPU_SPEED 20
+#define FPS 6
 #define NB_OPCODES 35
 #define KEYBOARD_SIZE 16
 #define KEY_DOWN 1

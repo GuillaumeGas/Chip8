@@ -18,10 +18,11 @@ public:
     void start ();
 
 private:
-    void handle_events ();
+    void loop_screen ();
 
     Screen * sc;
     Cpu * cpu;
+    bool running;
 
     SDL_Event _event;
 

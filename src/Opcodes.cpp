@@ -440,7 +440,9 @@ string OpRight::disassemble (const uint16_t opcode) {
     return "right";
 }
 
-void OpLeft::execute (const uint16_t opcode, Cpu * cpu, Screen * screen) {}
+void OpLeft::execute (const uint16_t opcode, Cpu * cpu, Screen * screen) {
+    
+}
 
 string OpLeft::disassemble (const uint16_t opcode) { 
     return "left";
@@ -463,7 +465,7 @@ string OpHigh::disassemble (const uint16_t opcode) {
 }
 
 void OpExit::execute (const uint16_t opcode, Cpu * cpu, Screen * screen) {
-    cpu->shutown ();
+    cpu->shutdown ();
 }
 
 string OpExit::disassemble (const uint16_t opcode) { 
@@ -475,6 +477,6 @@ void OpLdHFVx::execute (const uint16_t opcode, Cpu * cpu, Screen * screen) {
 }
 
 string OpLdHFVx::disassemble (const uint16_t opcode) { 
-    return "ld HF v" << std::to_string (getX (opcode));
+    return "ld HF v" + std::to_string (getX (opcode));
 }
 
