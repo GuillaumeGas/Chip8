@@ -69,3 +69,13 @@ public:
 	return "Error while loading file : " + msg;
     }
 };
+
+class SoundErrorException : public Chip8Exception {
+public:
+    SoundErrorException (const char * str) {
+	std::stringstream ss;
+	ss << "Sound error : ";
+	ss << str;
+	msg = ss.str ();
+    }
+};

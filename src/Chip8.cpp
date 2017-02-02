@@ -42,7 +42,11 @@ void Chip8::start () {
 	    }
 	}
 
-	// this->sc->update ();
+	if (this->cpu->sound_timer) {
+	    sound.play ();
+	    this->cpu->sound_timer = 0;
+	}
+
 	SDL_Delay (FPS);
     }
 

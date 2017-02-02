@@ -7,6 +7,7 @@
 
 #include "Screen.hpp"
 #include "Cpu.hpp"
+#include "Sound.hpp"
 
 #define NB_KEYS 16
 
@@ -22,6 +23,7 @@ private:
 
     Screen * sc;
     Cpu * cpu;
+    Sound sound;
     bool running;
 
     SDL_Event _event;
