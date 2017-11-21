@@ -7,6 +7,7 @@
 
 #include "Screen.hpp"
 #include "Cpu.hpp"
+#include "CpuDebug.hpp"
 #include "Sound.hpp"
 
 #define NB_KEYS 16

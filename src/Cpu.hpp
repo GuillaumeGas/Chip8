@@ -26,18 +26,17 @@
 class Chip8;
 class Cpu {
 public:
-    Cpu (Chip8 * ctrl, Screen * sc, bool debug);
+    Cpu (Chip8 * ctrl, Screen * sc);
 
-    void dump () const;
     void loadProgram (const char* file_name);
-    bool emulateCycle ();
+    virtual bool emulateCycle (); // virtual because it is overrided in the CpuDebug class
     Uint16 getNextOpCode ();
-    void exec_opcode (const Uint16 opcode);
+    void execOpcode (const Uint16 opcode);
     void count ();
-    void debug_inst (uint16_t opcode, Opcode * op);
     bool isRunning () const;
     void loadFont ();
     void shutdown ();
+    uint16_t GetOpcodeId (uint16_t opcode);
 
     bool running;
     uint8_t memory[MEM_SIZE];
@@ -60,8 +59,6 @@ public:
     Screen * screen;
     /* Pointer on the controler */
     Chip8 * ctrl;
-
-    bool debug;
 
     /**
        Keyboard 4x4

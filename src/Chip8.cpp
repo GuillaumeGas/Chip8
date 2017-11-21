@@ -4,7 +4,7 @@ using namespace std;
 
 Chip8::Chip8 (const char * file_name, bool debug) {
     this->sc = new Screen ();
-    this->cpu = new Cpu (this, this->sc, debug);
+    this->cpu = debug ? new CpuDebug (this, this->sc) : new Cpu (this, this->sc);
     this->cpu->loadProgram (file_name);
     this->running = true;
 }

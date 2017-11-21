@@ -3,15 +3,11 @@
 
 using namespace std;
 
-Cpu::Cpu (Chip8 * ctrl, Screen * sc, bool debug) {
-    this->debug = debug;
+Cpu::Cpu (Chip8 * ctrl, Screen * sc) {
     this->running = true;
 
-    if (debug) {
-	cout << "> CPU starting on debug mode..." << endl;
-    } else {
-	cout << "> CPU starting..." << endl;
-    }
+    cout << "> CPU is starting..." << endl;
+
     memset (this->memory, 0, MEM_SIZE);
     memset (this->reg, 0, V_REGISTERS_SIZE);
     memset (this->rpl, 0, RPL_SIZE);
@@ -28,16 +24,16 @@ Cpu::Cpu (Chip8 * ctrl, Screen * sc, bool debug) {
     this->screen = sc;
 
     srand (time (NULL));
-    this->loadFont ();
+    loadFont ();
 }
 
 bool Cpu::emulateCycle () {
     if (this->pc >= (MEM_SIZE - 1) || !this->running)
 	return false;
 
-    this->exec_opcode (getNextOpCode ());
+    execOpcode (getNextOpCode ());
     this->pc += 2;
-    this->count ();
+    count ();
 }
 
 uint16_t Cpu::getNextOpCode () {
@@ -64,20 +60,6 @@ void Cpu::loadProgram (const char * file_name) {
     }
 }
 
-
-void Cpu::dump () const {
-    cout << "> [Debug] Memory dump" << endl;
-    cout << "** Register **" << endl;
-    cout << "PC : " << this->pc << endl;
-    cout << "I : " << this->I << endl;
-    cout << "SP : " << (int) this->sp << endl;
-    cout << "Delay counter : " << (int) this->delay_timer << endl;
-    cout << "Sound counter : " << (int) this->sound_timer << endl;
-    printf ("Current instruction : %#04x\n", this->memory[this->pc]);
-    for (int i = 0; i < V_REGISTERS_SIZE; i++)
-	cout << "V" << i << " = " << (int) this->reg[i] << endl;
-}
-
 bool Cpu::isRunning () const {
     return this->running;
 }
@@ -101,62 +83,52 @@ void Cpu::loadFont() {
     this->memory[75]=0xF0;this->memory[76]=0x80;this->memory[77]=0xF0;this->memory[78]=0x80;this->memory[79]=0x80;  // F 
 }
 
-void Cpu::debug_inst (uint16_t opcode, Opcode * op) {
-    cout << "[" << this->pc << "] " << op->disassemble (opcode) << endl;
-
-    char rep = 'p';
-    while (rep == 'p') {
-	cout << " >> ";
-	cin >> rep;
-	if (rep == 'p') {
-	    this->dump ();
-	} else if (rep == 'c') {
-	    cout << "> [Debug] Continuing..." << endl;
-	    this->debug = false;
-	} else if (rep == 'q') {
-	    this->running = false;
-	}
-    }
+void Cpu::execOpcode (const uint16_t opcode) {
+    uint16_t opcode_id = GetOpcodeId (opcode);;
+    auto opcodes = Opcodes::instance ()->getList ();
+    (*opcodes)[opcode_id]->execute (opcode, this, this->screen);
 }
 
-void Cpu::exec_opcode (const uint16_t opcode) {
-    uint16_t opcode_id;
+void Cpu::shutdown () {
+    this->running = false;
+}
 
+uint16_t Cpu::GetOpcodeId (const uint16_t opcode) {
     switch (opcode & 0xF000) {
     case 0x0:
 	switch (opcode) {
 	case 0x00E0:
 	    /* CLS */
-	    opcode_id = 0x00E0;
+	    return 0x00E0;
 	    break;
 	case 0x00EE:
 	    /* RET */
-	    opcode_id = 0x00EE;
+	    return 0x00EE;
 	    break;
 	case 0x00FB:
 	    /* SCRR */
-	    opcode_id = 0x00FB;
+	    return 0x00FB;
 	    break;
 	case 0x00FC:
 	    /* SCRL */
-	    opcode_id = 0x00FC;
+	    return 0x00FC;
 	    break;
 	case 0x00FD:
 	    /* EXIT */
-	    opcode_id = 0x00FD;
+	    return 0x00FD;
 	    break;
 	case 0x00FE:
 	    /* MODE 1 */
-	    opcode_id = 0x00FE;
+	    return 0x00FE;
 	    break;
 	case 0x00FF:
 	    /* MODE 2 */
-	    opcode_id = 0x00FF;
+	    return 0x00FF;
 	    break;
 	default:
 	    if ((opcode & 0x0FFF ) & 0x0C0) {
 		/* SCD */
-		opcode_id = 0x00C0;
+		return 0x00C0;
 	    } else {
 		throw OpcodeNotFound (opcode, this->pc);
 	    }
@@ -164,69 +136,69 @@ void Cpu::exec_opcode (const uint16_t opcode) {
 	break;
     case 0x1000:
 	/* JP addr */
-	opcode_id = 0x1000;
+	return 0x1000;
 	break;
     case 0x2000:
 	/* CALL addr */
-	opcode_id = 0x2000;
+	return 0x2000;
 	break;
     case 0x3000:
 	/* SE Vx, byte */
-	opcode_id = 0x3000;
+	return 0x3000;
 	break;
     case 0x4000:
 	/* SNE Vx, byte */
-	opcode_id = 0x4000;
+	return 0x4000;
 	break;
     case 0x5000:
 	/* SE Vx, Vy */
-	opcode_id = 0x5000;
+	return 0x5000;
 	break;
     case 0x6000:
 	/* LD Vx, byte */
-	opcode_id = 0x6000;
+	return 0x6000;
 	break;
     case 0x7000:
 	/* ADD Vx, byte */
-	opcode_id = 0x7000;
+	return 0x7000;
 	break;
     case 0x8000:
 	switch (opcode & 0x000F) {
 	case 0x0:
 	    /* LD Vx, Vy */
-	    opcode_id = 0x8000;
+	    return 0x8000;
 	    break;
 	case 0x1:
 	    /* OR Vx, Vy */
-	    opcode_id = 0x8001;
+	    return 0x8001;
 	    break;
 	case 0x2:
 	    /* AND Vx, Vy */
-	    opcode_id = 0x8002;
+	    return 0x8002;
 	    break;
 	case 0x3:
 	    /* XOR Vx, Vy */
-	    opcode_id = 0x8003;
+	    return 0x8003;
 	    break;
 	case 0x4:
 	    /* ADD Vx, Vy */
-	    opcode_id = 0x8004;
+	    return 0x8004;
 	    break;
 	case 0x5:
 	    /* SUB Vx, Vy */
-	    opcode_id = 0x8005;
+	    return 0x8005;
 	    break;
 	case 0x6:
 	    /* SHR Vx, Vy */
-	    opcode_id = 0x8006;
+	    return 0x8006;
 	    break;
 	case 0x7:
 	    /* SUBN Vx, Vy */
-	    opcode_id = 0x8007;
+	    return 0x8007;
 	    break;
 	case 0xE:
 	    /* SHL Vx, Vy */
-	    opcode_id = 0x800E;
+	    return 0x800E;
 	    break;
 	default:
 	    throw OpcodeNotFound (opcode, this->pc);
@@ -234,33 +206,33 @@ void Cpu::exec_opcode (const uint16_t opcode) {
 	break;
     case 0x9000:
 	/* SNE Vx, Vy */
-	opcode_id = 0x9000;
+	return 0x9000;
 	break;
     case 0xA000:
 	/* LD I, addr */
-	opcode_id = 0xA000;
+	return 0xA000;
 	break;
     case 0xB000:
 	/* JP V0, addr */
-	opcode_id = 0xB000;
+	return 0xB000;
 	break;
     case 0xC000:
 	/* RND Vx, byte */
-	opcode_id = 0xC000;
+	return 0xC000;
 	break;
     case 0xD000:
 	/* DRW Vx, Vy */
-	opcode_id = 0xD000;
+	return 0xD000;
 	break;
     case 0xE000:
 	switch (opcode & 0x00FF) {
 	case 0x9E:
 	    /* SKP Vx */
-	    opcode_id = 0xE09E;
+	    return 0xE09E;
 	    break;
 	case 0xA1:
 	    /* SKNP Vx */
-	    opcode_id = 0xE0A1;
+	    return 0xE0A1;
 	    break;
 	default:
 	    throw OpcodeNotFound (opcode, this->pc);
@@ -270,51 +242,51 @@ void Cpu::exec_opcode (const uint16_t opcode) {
 	switch (opcode & 0x00FF) {
 	case 0x07:
 	    /* LD Vx, DT */
-	    opcode_id = 0xF007;
+	    return 0xF007;
 	    break;
 	case 0x0A:
 	    /* LD Vx, K */
-	    opcode_id = 0xF00A;
+	    return 0xF00A;
 	    break;
 	case 0x15:
 	    /* LD DT, Vx */
-	    opcode_id = 0xF015;
+	    return 0xF015;
 	    break;
 	case 0x18:
 	    /* LD ST, Vx */
-	    opcode_id = 0xF018;
+	    return 0xF018;
 	    break;
 	case 0x1E:
 	    /* ADD I, Vx */
-	    opcode_id = 0xF01E;
+	    return 0xF01E;
 	    break;
 	case 0x29:
 	    /* LD F, Vx */
-	    opcode_id = 0xF029;
+	    return 0xF029;
 	    break;
 	case 0x30:
 	    /* LD HF, Vx */
-	    opcode_id = 0xF030;
+	    return 0xF030;
 	    break;
 	case 0x33:
 	    /* LD B, Vx */
-	    opcode_id = 0xF033;
+	    return 0xF033;
 	    break;
 	case 0x55:
 	    /* LD [I] Vx */
-	    opcode_id = 0xF055;
+	    return 0xF055;
 	    break;
 	case 0x65:
 	    /* LD Vx, [I] */
-	    opcode_id = 0xF065;
+	    return 0xF065;
 	    break;
 	case 0x75:
 	    /* LD R, Vx */
-	    opcode_id = 0xF075;
+	    return 0xF075;
 	    break;
 	case 0x85:
 	    /* LD Vx, R */
-	    opcode_id = 0xF075;
+	    return 0xF075;
 	    break;
 	default:
 	    throw OpcodeNotFound (opcode, this->pc);	    
@@ -323,13 +295,4 @@ void Cpu::exec_opcode (const uint16_t opcode) {
     default:
 	throw OpcodeNotFound (opcode, this->pc);
     }
-
-    auto opcodes = Opcodes::instance ()->getList ();
-    if (this->debug)
-	this->debug_inst (opcode, (*opcodes)[opcode_id]);
-    (*opcodes)[opcode_id]->execute (opcode, this, this->screen);
-}
-
-void Cpu::shutdown () {
-    this->running = false;
 }

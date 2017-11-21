@@ -42,7 +42,7 @@ int main(int argc, char** argv)
 	    cout << "Usage : chip8 [-d] file" << endl;
 	} else {
 	    cout << "Missing program." << endl;
-	    cout << "Usage : chip8 [-d] file" << endl;
+	    cout << "Usage : chip8 [-d | -disass] file" << endl;
 	}
 	return -1;
     }    
