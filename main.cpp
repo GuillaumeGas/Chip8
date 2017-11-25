@@ -6,60 +6,70 @@
 #include "src/Chip8.hpp"
 #include "src/Disassembly.hpp"
 
+#define DEFAULT_ROM "welcome.ch8"
+
 using namespace std;
+
+void printUsage();
 
 int main(int argc, char** argv)
 {
 	try {
-		if (argc == 3) {
-			if (string(argv[1]) == "-d") {
-				try {
-					Chip8 c(argv[2], true);
-					c.start();
-				}
-				catch (const Chip8Exception & e) {
-					cout << e.toString() << endl;
-				}
-			}
-			else if (string(argv[1]) == "-disass") {
-				try {
-					Disassembly d(argv[2]);
-					d.disass();
-				}
-				catch (const Chip8Exception & e) {
-					cout << e.toString() << endl;
-				}
-			}
-			else {
-				cout << "Parameters must be before the binary file name." << endl;
-				cout << "Usage : chip8 [-d | -disass] file" << endl;
-				return -1;
-			}
+		if (argc == 1) 
+		{
+			Chip8 c(DEFAULT_ROM);
+			c.start();
 		}
-		else if (argc == 2) {
-			try {
-				Chip8 c(argv[1], false);
+		else if (argc == 2) 
+		{
+			Chip8 c(argv[1]);
+			c.start();
+		}
+		else if (argc == 3) 
+		{
+			string cmd = argv[1];
+
+			if (cmd == "-d") 
+			{
+				Chip8 c(argv[2], true);
 				c.start();
 			}
-			catch (const Chip8Exception & e) {
-				cout << e.toString() << endl;
+			else if (cmd == "-disass") 
+			{
+				Disassembly d(argv[2]);
+				d.disass();
+			}
+			else 
+			{
+				throw UnknownCommandArgsException(argv[1]);
 			}
 		}
-		else {
-			if (argc > 3) {
-				cout << "Too many arguments !" << endl;
-				cout << "Usage : chip8 [-d | -disass] file" << endl;
-			}
-			else {
-				cout << "Missing program." << endl;
-				cout << "Usage : chip8 [-d | -disass] file" << endl;
-			}
-			return -1;
+		else 
+		{
+			throw TooManyArgsException();
 		}
 	}
-	catch (const exception & e) {
+	catch (const ArgsException & e)
+	{
+		cout << e.toString() << endl;
+		printUsage();
+	}
+	catch (const Chip8Exception & e) 
+	{
+		cout << e.toString() << endl;
+	}
+	catch (const exception & e) 
+	{
 		cout << "An error occured ! (" << e.what() << ")" << endl;
 		return -1;
 	}
 	return 0;
+}
+
+void printUsage()
+{
+	cout << "Usage :" << endl;
+	cout << "  chip8.exe [[-d | -disass] rom_path.ch8]" << endl << endl;
+	cout << "  -d : enable debug mode" << endl;
+	cout << "  -disass : disassemble the rom" << endl;
 }

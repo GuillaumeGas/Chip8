@@ -5,11 +5,45 @@
 #include <sstream>
 #include <iomanip>
 
-class Chip8Exception {
+class ArgsException
+{
+public:
+	ArgsException() {}
+	ArgsException(const char * str) : msg(str) {}
+	virtual std::string toString() const 
+	{
+		return msg;
+	}
+protected:
+	std::string msg;
+};
+
+class UnknownCommandArgsException : public ArgsException
+{
+public:
+	UnknownCommandArgsException(const char * cmd) : ArgsException(cmd) {}
+	std::string toString() const
+	{
+		return "Unknown command \"" + msg + "\"";
+	}
+};
+
+class TooManyArgsException : public ArgsException
+{
+public:
+	std::string toString() const
+	{
+		return "Too many arguments !";
+	}
+};
+
+class Chip8Exception 
+{
 public:
 	Chip8Exception() {}
 	Chip8Exception(const char * str) : msg(str) {}
-	virtual std::string toString() const {
+	virtual std::string toString() const 
+	{
 		return msg;
 	}
 protected:

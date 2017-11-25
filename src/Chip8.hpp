@@ -13,7 +13,7 @@
 
 class Chip8 {
 public:
-    Chip8 (const char * file_name, bool debug);
+    Chip8 (const char * file_name, bool debug = false);
     ~Chip8 ();
 
     void start ();
