@@ -17,8 +17,6 @@ Chip8::~Chip8() {
 void Chip8::start() {
 	cout << "> Chip8 starting..." << endl;
 
-	thread loop_screen(&Chip8::loop_screen, this);
-
 	bool stop = false;
 	while (!stop && cpu->isRunning()) {
 		cpu->emulateCycle();
@@ -45,6 +43,8 @@ void Chip8::start() {
 			}
 		}
 
+		this->sc->update();
+
 		if (this->cpu->sound_timer) {
 			sound.play();
 			this->cpu->sound_timer = 0;
@@ -54,11 +54,4 @@ void Chip8::start() {
 	}
 
 	this->running = false;
-	loop_screen.join();
-}
-
-void Chip8::loop_screen() {
-	while (this->running) {
-		this->sc->update();
-	}
 }
