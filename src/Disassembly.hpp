@@ -10,13 +10,13 @@
 
 class Disassembly {
 public:
-    Disassembly (const char * file_name);
+	Disassembly(const char * file_name);
 
-    void disass ();
+	void disass();
 
 private:
-    void loadFile (const char * file_name);
-    void _disass (const uint16_t opcode, const int offset);
+	void loadFile(const char * file_name);
+	void _disass(const uint16_t opcode, const int offset);
 
-    uint8_t buffer[BUF_SIZE];
+	uint8_t buffer[BUF_SIZE];
 };

@@ -1,7 +1,8 @@
 #pragma once
 
 #include <iostream>
-#include <SDL/SDL.h>
+#include <SDL2/SDL.h>
+#include <mutex>
 
 #include "Exceptions.hpp"
 
@@ -10,30 +11,30 @@
 #define PIXEL_DIM 10   // real pixels
 
 #define BLACK 0
-#define WHITE 1
+#define WHITE 255
 
 struct Pixel {
-    SDL_Rect pos;
-    Uint8 color;
+	SDL_Rect pos;
+	Uint8 color;
 };
 
 class Screen {
 public:
-    Screen ();
-    ~Screen ();
+	Screen();
+	~Screen();
 
-    void clear ();
-    void update ();
+	void clear();
+	void update();
 
-    Pixel getPixel (int x, int y);
-    void setColor (int x, int y, int color);
+	Pixel getPixel(int x, int y);
+	void setColor(int x, int y, int color);
 
 private:
-    void _init_sdl ();
-    void _init_content ();
-    void _draw_pixel (Pixel pixel);
+	void _init_sdl();
+	void _init_content();
+	void _draw_pixel(Pixel pixel);
 
-    Pixel _content[SCREEN_WIDTH][SCREEN_HEIGHT];
-    SDL_Surface * _screen_surf;
-    SDL_Surface * _pixel_surf[2]; // pixel black and white
+	Pixel _content[SCREEN_WIDTH][SCREEN_HEIGHT];
+	SDL_Window * _window;
+	SDL_Renderer * _renderer;
 };

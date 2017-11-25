@@ -3,7 +3,7 @@
 #include <iostream>
 #include <cstdint>
 #include <thread>
-#include <SDL/SDL.h>
+#include <SDL2/SDL.h>
 
 #include "Screen.hpp"
 #include "Cpu.hpp"
@@ -29,8 +29,8 @@ private:
 
     SDL_Event _event;
 
-    const unsigned int keys[16] = { SDLK_KP7, SDLK_KP8, SDLK_KP9, SDLK_ASTERISK,
-				    SDLK_KP4, SDLK_KP5, SDLK_KP6, SDLK_MINUS,
-				    SDLK_KP1, SDLK_KP2, SDLK_KP3, SDLK_PLUS,
-				    SDLK_RIGHT, SDLK_KP0, SDLK_PERIOD, SDLK_RETURN };
+    const unsigned int keys[16] = { SDLK_KP_7, SDLK_KP_8, SDLK_KP_9, SDLK_ASTERISK,
+				    SDLK_KP_4, SDLK_KP_5, SDLK_KP_6, SDLK_MINUS,
+				    SDLK_KP_1, SDLK_KP_2, SDLK_KP_3, SDLK_PLUS,
+				    SDLK_RIGHT, SDLK_KP_0, SDLK_PERIOD, SDLK_RETURN };
 };

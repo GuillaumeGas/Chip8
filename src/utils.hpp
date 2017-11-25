@@ -4,4 +4,4 @@
 #include <cstdint>
 #include <string>
 
-std::string htos (uint16_t n);
+std::string htos(uint16_t n);

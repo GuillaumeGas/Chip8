@@ -1,17 +1,17 @@
 #pragma once
 
 #include <iostream>
-#include <SDL/SDL_mixer.h>
+#include <SDL2/SDL_mixer.h>
 
 #include "Exceptions.hpp"
 
 class Sound {
 public:
-    Sound ();
-    ~Sound ();
+	Sound();
+	~Sound();
 
-    void play ();
+	void play();
 
 private:
-    Mix_Chunk * sound;
+	Mix_Chunk * sound;
 };
