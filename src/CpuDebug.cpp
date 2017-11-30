@@ -16,12 +16,16 @@ bool CpuDebug::emulateCycle() {
 		return false;
 
 	uint16_t opcode = getNextOpCode();
-	bool hasBp = false; //hasBreakPoint (this->pc);
+	auto it = _bpMap.find(this->pc);
+	bool hasBp = (it != _bpMap.end()) && it->second;
+
 	if (this->_stepMode || hasBp)
 		_debugInst(opcode, hasBp);
+	
 	execOpcode(opcode);
 	this->pc += 2;
 	count();
+	
 	return true;
 }
 
@@ -60,18 +64,34 @@ void CpuDebug::_debugInst(uint16_t opcode, bool hasBp) {
 		if (cmd.size() == 0 || cmd.empty())
 			cmd = _lastCmd;
 
-		if (_debugCommand.find(cmd) == _debugCommand.end())
-			cmd = UNKNOWN_COMMAND;
+		std::pair<string, string> cmdAndParam = _parseCommand(cmd);
 
-		continueExecution = _debugCommand[cmd](cmd);
+		if (_debugCommand.find(cmdAndParam.first) == _debugCommand.end())
+			cmdAndParam.first = UNKNOWN_COMMAND;
+
+		continueExecution = _debugCommand[cmdAndParam.first](cmdAndParam.second);
 		_lastCmd = cmd;
 	}
+}
+
+std::pair<string, string> CpuDebug::_parseCommand(string command)
+{
+	size_t indexSpace = command.find_first_of(' ');
+	string cmd = command.substr(0, indexSpace);
+	string param = indexSpace == string::npos ? "" : command.substr(indexSpace + 1);
+
+	return std::pair<string, string>(cmd, param);
 }
 
 void CpuDebug::_initDebugCommandMap()
 {
 	_debugCommand[STEP_COMMAND] = std::bind(&CpuDebug::_stepCommand, this, std::placeholders::_1);
 	_debugCommand[REG_COMMAND] = std::bind(&CpuDebug::_regCommand, this, std::placeholders::_1);
+	_debugCommand[BP_COMMAND] = std::bind(&CpuDebug::_bpCommand, this, std::placeholders::_1);
+	_debugCommand[BL_COMMAND] = std::bind(&CpuDebug::_blCommand, this, std::placeholders::_1);
+	_debugCommand[BD_COMMAND] = std::bind(&CpuDebug::_bdCommand, this, std::placeholders::_1);
+	_debugCommand[BE_COMMAND] = std::bind(&CpuDebug::_beCommand, this, std::placeholders::_1);
+	_debugCommand[BC_COMMAND] = std::bind(&CpuDebug::_bcCommand, this, std::placeholders::_1);
 	_debugCommand[QUIT_COMMAND] = std::bind(&CpuDebug::_quitCommand, this, std::placeholders::_1);
 	_debugCommand[CONTINUE_COMMAND] = std::bind(&CpuDebug::_continueCommand, this, std::placeholders::_1);
 	_debugCommand[PRINT_HELP_COMMAND] = std::bind(&CpuDebug::_helpCommand, this, std::placeholders::_1);
@@ -80,12 +100,80 @@ void CpuDebug::_initDebugCommandMap()
 
 bool CpuDebug::_stepCommand(string & param)
 {
+	_stepMode = true;
 	return true;
 }
 
 bool CpuDebug::_regCommand(string & param)
 {
 	_memoryDump();
+	return false;
+}
+
+bool CpuDebug::_bpCommand(string & param)
+{
+	uint16_t addr = Utils::StringToUint16(param);
+	if (_bpMap.find(addr) != _bpMap.end())
+	{
+		cout << "Enabled breakpoint on [" << param << "]" << endl;
+	}
+	else
+	{
+		cout << "Added breakpoint on " << param << endl;
+	}
+	_bpMap[addr] = true;
+	return false;
+}
+
+bool CpuDebug::_blCommand(string & param)
+{
+	for (auto bp : _bpMap)
+		cout << "[" << bp.first << "] : " << (bp.second ? "Enabled" : "Disabled") << endl;
+	return false;
+}
+
+bool CpuDebug::_bdCommand(string & param)
+{
+	uint16_t addr = Utils::StringToUint16(param);
+	if (_bpMap.find(addr) != _bpMap.end())
+	{
+		_bpMap[addr] = false;
+		cout << "Disabled breakpoint on [" << param << "]" << endl;
+	}
+	else
+	{
+		cout << "No breakpoint found on [" << param << "]" << endl;
+	}
+	return false;
+}
+
+bool CpuDebug::_beCommand(string & param)
+{
+	uint16_t addr = Utils::StringToUint16(param);
+	if (_bpMap.find(addr) != _bpMap.end())
+	{
+		_bpMap[addr] = true;
+		cout << "Enabled breakpoint on [" << param << "]" << endl;
+	}
+	else
+	{
+		cout << "No breakpoint found on [" << param << "]" << endl;
+	}
+	return false;
+}
+
+bool CpuDebug::_bcCommand(string & param)
+{
+	uint16_t addr = Utils::StringToUint16(param);
+	if (_bpMap.find(addr) != _bpMap.end())
+	{
+		_bpMap.erase(addr);
+		cout << "Cleared breakpoint on [" << param << "]" << endl;
+	}
+	else
+	{
+		cout << "No breakpoint found on [" << param << "]" << endl;
+	}
 	return false;
 }
 
@@ -108,8 +196,14 @@ bool CpuDebug::_helpCommand(string & param)
 	cout << "   - p : step (executes one instruction and break)" << endl;
 	cout << "   - r : reg (display all the registrers)" << endl;
 	cout << "   - c : continue the execution" << endl;
-	cout << "   - q : quit the emulator" << endl;
-	cout << "   - h : display the help" << endl << endl;
+	cout << "   - b* breakpoint commands :" << endl;
+	cout << "      - bp addr : adds a breakpoint on [addr]" << endl;
+	cout << "      - bl : breakpoint list." << endl;
+	cout << "      - bd addr : disables the breakpoint on this address." << endl;
+	cout << "      - be addr : enables the breakpoint on this address." << endl;
+	cout << "      - bc addr : clears the breakpoint on this address." << endl;
+	cout << "   - q : quits the emulator." << endl;
+	cout << "   - h : displays the help." << endl << endl;
 	return false;
 }
 
