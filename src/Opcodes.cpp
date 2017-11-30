@@ -98,7 +98,7 @@ void OpJpAddr::execute(const uint16_t opcode, Cpu * cpu, Screen * screen) {
 }
 
 string OpJpAddr::disassemble(const uint16_t opcode) {
-	return "jp " + htos(opcode & 0x0FFF);
+	return "jp " + Utils::htos(opcode & 0x0FFF);
 }
 
 void OpCallAddr::execute(const uint16_t opcode, Cpu * cpu, Screen * screen) {
@@ -109,7 +109,7 @@ void OpCallAddr::execute(const uint16_t opcode, Cpu * cpu, Screen * screen) {
 }
 
 string OpCallAddr::disassemble(const uint16_t opcode) {
-	return "call " + htos(opcode & 0x0FFF);
+	return "call " + Utils::htos(opcode & 0x0FFF);
 }
 
 void OpSeVxByte::execute(const uint16_t opcode, Cpu * cpu, Screen * screen) {

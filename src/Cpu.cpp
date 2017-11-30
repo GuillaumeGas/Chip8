@@ -23,7 +23,7 @@ Cpu::Cpu(Chip8 * ctrl, Screen * sc) {
 	this->ctrl = ctrl;
 	this->screen = sc;
 
-	srand(time(NULL));
+	srand((unsigned int)(time(NULL)));
 	loadFont();
 }
 
@@ -89,7 +89,6 @@ void Cpu::execOpcode(const uint16_t opcode) {
 	uint16_t opcode_id = GetOpcodeId(opcode);;
 	auto opcodes = Opcodes::instance()->getList();
 	(*opcodes)[opcode_id]->execute(opcode, this, this->screen);
-	cout << (*opcodes)[opcode_id]->disassemble(opcode) << endl;
 }
 
 void Cpu::shutdown() {

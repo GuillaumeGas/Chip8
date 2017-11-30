@@ -5,7 +5,7 @@
 #include <cstdint>
 
 #include "Screen.hpp"
-#include "utils.hpp"
+#include "utils/Utils.hpp"
 
 // JE ROX / I ROCK !! 
 #define STATIC_THIS(o)				\
