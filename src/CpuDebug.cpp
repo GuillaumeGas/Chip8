@@ -193,17 +193,17 @@ bool CpuDebug::_continueCommand(string & param)
 bool CpuDebug::_helpCommand(string & param)
 {
 	cout << "> Help :" << endl;
-	cout << "   - p : step (executes one instruction and break)" << endl;
-	cout << "   - r : reg (display all the registrers)" << endl;
-	cout << "   - c : continue the execution" << endl;
+	cout << "   - p : step (executes one instruction and break)." << endl;
+	cout << "   - r : reg (displays all the registrers)." << endl;
+	cout << "   - c : continues the execution." << endl;
 	cout << "   - b* breakpoint commands :" << endl;
 	cout << "      - bp addr : adds a breakpoint on [addr]" << endl;
-	cout << "      - bl : breakpoint list." << endl;
+	cout << "      - bl : breakpoints list." << endl;
 	cout << "      - bd addr : disables the breakpoint on this address." << endl;
 	cout << "      - be addr : enables the breakpoint on this address." << endl;
 	cout << "      - bc addr : clears the breakpoint on this address." << endl;
 	cout << "   - q : quits the emulator." << endl;
-	cout << "   - h : displays the help." << endl << endl;
+	cout << "   - h : displays this help." << endl << endl;
 	return false;
 }
 
