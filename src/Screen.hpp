@@ -2,7 +2,6 @@
 
 #include <iostream>
 #include <SDL2/SDL.h>
-#include <mutex>
 
 #include "Exceptions.hpp"
 

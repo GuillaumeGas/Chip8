@@ -5,7 +5,6 @@
 #include "src/Exceptions.hpp"
 #include "src/Chip8.hpp"
 #include "src/Disassembly.hpp"
-#include "src/utils/Directory.hpp"
 
 #define DEFAULT_ROM "welcome.ch8"
 
