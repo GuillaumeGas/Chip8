@@ -1,21 +1,19 @@
 #pragma once
 
 #include <iostream>
+#include <vector>
 #include <SDL2/SDL.h>
 
+#include "Drawable.hpp"
 #include "Exceptions.hpp"
 
 #define SCREEN_WIDTH 64  // Pixels
 #define SCREEN_HEIGHT 32 // Pixels
+
 #define PIXEL_DIM 10   // real pixels
 
 #define BLACK 0
 #define WHITE 255
-
-struct Pixel {
-	SDL_Rect pos;
-	Uint8 color;
-};
 
 class Screen {
 public:
@@ -25,15 +23,14 @@ public:
 	void clear();
 	void update();
 
-	Pixel getPixel(int x, int y);
-	void setColor(int x, int y, int color);
+	void addDrawable(Drawable * drawable);
 
 private:
-	void _init_sdl();
-	void _init_content();
-	void _draw_pixel(Pixel pixel);
+	void _initSdl();
+	void _initContent();
+	//void _drawTest();
 
-	Pixel _content[SCREEN_WIDTH][SCREEN_HEIGHT];
 	SDL_Window * _window;
 	SDL_Renderer * _renderer;
+	std::vector<Drawable*> _vecDrawables;
 };

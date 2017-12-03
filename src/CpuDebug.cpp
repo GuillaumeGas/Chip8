@@ -1,9 +1,11 @@
 #include "CpuDebug.hpp"
+#include "Cpu.hpp"
 #include "Chip8.hpp"
 
 using namespace std;
 
-CpuDebug::CpuDebug(Chip8 * ctrl, Screen * sc) : Cpu(ctrl, sc) {
+CpuDebug::CpuDebug(Chip8 * ctrl) : Cpu(ctrl) 
+{
 	cout << "> Debug mode enabled !" << endl;
 
 	_initDebugCommandMap();
@@ -11,7 +13,8 @@ CpuDebug::CpuDebug(Chip8 * ctrl, Screen * sc) : Cpu(ctrl, sc) {
 	this->_stepMode = true;
 }
 
-bool CpuDebug::emulateCycle() {
+bool CpuDebug::emulateCycle() 
+{
 	if (this->pc >= (MEM_SIZE - 1) || !this->running)
 		return false;
 
@@ -29,7 +32,8 @@ bool CpuDebug::emulateCycle() {
 	return true;
 }
 
-void CpuDebug::_memoryDump() const {
+void CpuDebug::_memoryDump() const 
+{
 	cout << "> Memory dump" << endl;
 	cout << "** Register **" << endl;
 	cout << "PC : " << this->pc << endl;
@@ -42,7 +46,8 @@ void CpuDebug::_memoryDump() const {
 		cout << "V" << i << " = " << (int) this->reg[i] << endl;
 }
 
-void CpuDebug::_debugInst(uint16_t opcode, bool hasBp) {
+void CpuDebug::_debugInst(uint16_t opcode, bool hasBp) 
+{
 	auto opcodes = Opcodes::instance()->getList();
 	Opcode * op = (*opcodes)[GetOpcodeId(opcode)];
 

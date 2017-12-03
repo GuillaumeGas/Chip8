@@ -26,7 +26,7 @@
 class Chip8;
 class Cpu {
 public:
-	Cpu(Chip8 * ctrl, Screen * sc);
+	Cpu(Chip8 * ctrl);
 
 	void loadProgram(const char* file_name);
 	virtual bool emulateCycle(); // virtual because it is overrided in the CpuDebug class
@@ -55,8 +55,6 @@ public:
 	uint8_t delay_timer;
 	/* sound timer */
 	uint8_t sound_timer;
-	/* Pointer on the screen */
-	Screen * screen;
 	/* Pointer on the controler */
 	Chip8 * ctrl;
 

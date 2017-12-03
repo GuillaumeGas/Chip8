@@ -1,20 +1,34 @@
 #include "Chip8.hpp"
+#include "GameScreen.hpp"
 
 using namespace std;
 
-Chip8::Chip8(const char * file_name, bool debug) {
-	this->sc = new Screen();
-	this->cpu = debug ? new CpuDebug(this, this->sc) : new Cpu(this, this->sc);
-	this->cpu->loadProgram(file_name);
-	this->running = true;
+Chip8::Chip8(const char * file_name, bool debug) 
+{
+	screen = new Screen();
+	gameScreen = new GameScreen();
+	sound = new Sound();
+
+	screen->addDrawable(gameScreen);
+
+	cpu = debug ? new CpuDebug(this) : new Cpu(this);
+	cpu->loadProgram(file_name);
+	_running = true;
 }
 
-Chip8::~Chip8() {
-	if (this->sc) delete this->sc;
-	if (this->cpu) delete this->cpu;
+Chip8::~Chip8() 
+{
+	// We don't need to free the gameScreen because it is freed in the Screen class
+	if (screen)
+		delete screen;
+	if (cpu) 
+		delete cpu;
+	if (sound)
+		delete sound;
 }
 
-void Chip8::start() {
+void Chip8::start() 
+{
 	cout << "> Chip8 starting..." << endl;
 
 	bool stop = false;
@@ -27,8 +41,8 @@ void Chip8::start() {
 			}
 			else if (_event.type == SDL_KEYDOWN) {
 				for (int i = 0; i < NB_KEYS; i++)
-					if (keys[i] == _event.key.keysym.sym) {
-						this->cpu->keyboard[i] = 1;
+					if (_keys[i] == _event.key.keysym.sym) {
+						cpu->keyboard[i] = 1;
 					}
 			}
 			else if (_event.type == SDL_KEYUP) {
@@ -37,21 +51,21 @@ void Chip8::start() {
 				}
 				else {
 					for (int i = 0; i < NB_KEYS; i++)
-						if (keys[i] == _event.key.keysym.sym)
-							this->cpu->keyboard[i] = 0;
+						if (_keys[i] == _event.key.keysym.sym)
+							cpu->keyboard[i] = 0;
 				}
 			}
 		}
 
-		this->sc->update();
+		screen->update();
 
-		if (this->cpu->sound_timer) {
-			sound.play();
-			this->cpu->sound_timer = 0;
+		if (cpu->sound_timer) {
+			sound->play();
+			cpu->sound_timer = 0;
 		}
 
 		SDL_Delay(FPS);
 	}
 
-	this->running = false;
+	_running = false;
 }

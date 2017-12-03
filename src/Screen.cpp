@@ -1,17 +1,27 @@
 #include "Screen.hpp"
 
-Screen::Screen() {
-	_init_sdl();
-	_init_content();
+Screen::Screen()
+{
+	_initSdl();
 }
 
-Screen::~Screen() {
+Screen::~Screen()
+{
+	for (Drawable * elem : _vecDrawables)
+		delete elem;
+
 	SDL_DestroyRenderer(_renderer);
 	SDL_DestroyWindow(_window);
 	SDL_Quit();
 }
 
-void Screen::_init_sdl() {
+void Screen::addDrawable(Drawable * drawable)
+{
+	_vecDrawables.push_back(drawable);
+}
+
+void Screen::_initSdl()
+{
 	if (SDL_Init(SDL_INIT_VIDEO) != 0)
 		throw SDLInitException(SDL_GetError());
 
@@ -27,48 +37,29 @@ void Screen::_init_sdl() {
 	SDL_RenderSetLogicalSize(_renderer, SCREEN_WIDTH*PIXEL_DIM, SCREEN_HEIGHT*PIXEL_DIM);
 }
 
-void Screen::_draw_pixel(Pixel pixel) {
-	SDL_SetRenderDrawColor(_renderer, pixel.color, pixel.color, pixel.color, 255);
-	SDL_RenderFillRect(_renderer, &pixel.pos);
-}
+//void Screen::_drawTest()
+//{
+//	SDL_SetRenderDrawBlendMode(_renderer, SDL_BLENDMODE_BLEND);
+//	SDL_SetRenderDrawColor(_renderer, 255, 0, 0, 100);
+//	SDL_Rect rect;
+//	rect.h = rect.w = 300;
+//	rect.x = rect.y = 10;
+//	SDL_RenderFillRect(_renderer, &rect);
+//}
 
-void Screen::clear() {
-	for (int i = 0; i < SCREEN_WIDTH; i++) {
-		for (int j = 0; j < SCREEN_HEIGHT; j++) {
-			_content[i][j].color = BLACK;
-		}
-	}
+void Screen::clear()
+{
+	for (Drawable * elem : _vecDrawables)
+		elem->clear(_renderer);
 
 	SDL_RenderClear(_renderer);
 	SDL_RenderPresent(_renderer);
 }
 
-void Screen::update() {
-	for (int i = 0; i < SCREEN_WIDTH; i++) {
-		for (int j = 0; j < SCREEN_HEIGHT; j++) {
-			_draw_pixel(_content[i][j]);
-		}
-	}
+void Screen::update()
+{
+	for (Drawable * elem : _vecDrawables)
+		elem->draw(_renderer);
 
 	SDL_RenderPresent(_renderer);
-}
-
-Pixel Screen::getPixel(int x, int y) {
-	return _content[x][y];
-}
-
-void Screen::setColor(int x, int y, int color) {
-	_content[x][y].color = color;
-}
-
-void Screen::_init_content() {
-	for (int i = 0; i < SCREEN_WIDTH; i++) {
-		for (int j = 0; j < SCREEN_HEIGHT; j++) {
-			_content[i][j].pos.x = i * PIXEL_DIM;
-			_content[i][j].pos.y = j * PIXEL_DIM;
-			_content[i][j].pos.w = PIXEL_DIM;
-			_content[i][j].pos.h = PIXEL_DIM;
-			_content[i][j].color = BLACK;
-		}
-	}
 }

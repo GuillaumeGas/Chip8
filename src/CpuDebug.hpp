@@ -7,7 +7,6 @@
 
 #include "Cpu.hpp"
 #include "Opcodes.hpp"
-#include "Screen.hpp"
 
 #define STEP_COMMAND       "p"
 #define REG_COMMAND        "r"
@@ -24,7 +23,7 @@
 class Chip8;
 class CpuDebug : public Cpu {
 public:
-	CpuDebug(Chip8 * ctrl, Screen * sc);
+	CpuDebug(Chip8 * ctrl);
 
 	virtual bool emulateCycle();
 

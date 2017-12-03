@@ -3,7 +3,8 @@
 
 using namespace std;
 
-Cpu::Cpu(Chip8 * ctrl, Screen * sc) {
+Cpu::Cpu(Chip8 * ctrl) 
+{
 	this->running = true;
 
 	cout << "> CPU is starting..." << endl;
@@ -21,13 +22,13 @@ Cpu::Cpu(Chip8 * ctrl, Screen * sc) {
 	this->sound_timer = 0;
 
 	this->ctrl = ctrl;
-	this->screen = sc;
 
 	srand((unsigned int)(time(NULL)));
 	loadFont();
 }
 
-bool Cpu::emulateCycle() {
+bool Cpu::emulateCycle() 
+{
 	if (this->pc >= (MEM_SIZE - 1) || !this->running)
 		return false;
 
@@ -37,18 +38,21 @@ bool Cpu::emulateCycle() {
 	return true;
 }
 
-uint16_t Cpu::getNextOpCode() {
+uint16_t Cpu::getNextOpCode() 
+{
 	return (this->memory[this->pc] << 8) | this->memory[this->pc + 1];
 }
 
-void Cpu::count() {
+void Cpu::count() 
+{
 	if (this->delay_timer > 0)
 		this->delay_timer--;
 	if (this->sound_timer > 0)
 		this->sound_timer--;
 }
 
-void Cpu::loadProgram(const char * file_name) {
+void Cpu::loadProgram(const char * file_name) 
+{
 	cout << "> Loading binary file..." << endl;
 	FILE * game = NULL;
 	fopen_s(&game, file_name, "rb");
@@ -62,11 +66,13 @@ void Cpu::loadProgram(const char * file_name) {
 	}
 }
 
-bool Cpu::isRunning() const {
+bool Cpu::isRunning() const 
+{
 	return this->running;
 }
 
-void Cpu::loadFont() {
+void Cpu::loadFont() 
+{
 	this->memory[0] = 0xF0; this->memory[1] = 0x90; this->memory[2] = 0x90; this->memory[3] = 0x90; this->memory[4] = 0xF0;      // O 
 	this->memory[5] = 0x20; this->memory[6] = 0x60; this->memory[7] = 0x20; this->memory[8] = 0x20; this->memory[9] = 0x70;       // 1 
 	this->memory[10] = 0xF0; this->memory[11] = 0x10; this->memory[12] = 0xF0; this->memory[13] = 0x80; this->memory[14] = 0xF0; // 2 
@@ -85,18 +91,22 @@ void Cpu::loadFont() {
 	this->memory[75] = 0xF0; this->memory[76] = 0x80; this->memory[77] = 0xF0; this->memory[78] = 0x80; this->memory[79] = 0x80;  // F 
 }
 
-void Cpu::execOpcode(const uint16_t opcode) {
+void Cpu::execOpcode(const uint16_t opcode) 
+{
 	uint16_t opcode_id = GetOpcodeId(opcode);;
 	auto opcodes = Opcodes::instance()->getList();
-	(*opcodes)[opcode_id]->execute(opcode, this, this->screen);
+	(*opcodes)[opcode_id]->execute(opcode, ctrl);
 }
 
-void Cpu::shutdown() {
+void Cpu::shutdown() 
+{
 	this->running = false;
 }
 
-uint16_t Cpu::GetOpcodeId(const uint16_t opcode) {
-	switch (opcode & 0xF000) {
+uint16_t Cpu::GetOpcodeId(const uint16_t opcode) 
+{
+	switch (opcode & 0xF000) 
+	{
 	case 0x0:
 		switch (opcode) {
 		case 0x00E0:
@@ -128,11 +138,13 @@ uint16_t Cpu::GetOpcodeId(const uint16_t opcode) {
 			return 0x00FF;
 			break;
 		default:
-			if ((opcode & 0x0FFF) & 0x0C0) {
+			if ((opcode & 0x0FFF) & 0x0C0) 
+			{
 				/* SCD */
 				return 0x00C0;
 			}
-			else {
+			else 
+			{
 				throw OpcodeNotFound(opcode, this->pc);
 			}
 		}
@@ -166,7 +178,8 @@ uint16_t Cpu::GetOpcodeId(const uint16_t opcode) {
 		return 0x7000;
 		break;
 	case 0x8000:
-		switch (opcode & 0x000F) {
+		switch (opcode & 0x000F) 
+		{
 		case 0x0:
 			/* LD Vx, Vy */
 			return 0x8000;
@@ -228,7 +241,8 @@ uint16_t Cpu::GetOpcodeId(const uint16_t opcode) {
 		return 0xD000;
 		break;
 	case 0xE000:
-		switch (opcode & 0x00FF) {
+		switch (opcode & 0x00FF) 
+		{
 		case 0x9E:
 			/* SKP Vx */
 			return 0xE09E;
@@ -242,7 +256,8 @@ uint16_t Cpu::GetOpcodeId(const uint16_t opcode) {
 		}
 		break;
 	case 0xF000:
-		switch (opcode & 0x00FF) {
+		switch (opcode & 0x00FF) 
+		{
 		case 0x07:
 			/* LD Vx, DT */
 			return 0xF007;
