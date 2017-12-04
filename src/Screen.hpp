@@ -27,8 +27,6 @@ public:
 
 private:
 	void _initSdl();
-	void _initContent();
-	//void _drawTest();
 
 	SDL_Window * _window;
 	SDL_Renderer * _renderer;

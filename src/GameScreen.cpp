@@ -5,7 +5,7 @@ GameScreen::GameScreen()
 	_initContent();
 }
 
-void GameScreen::draw(SDL_Renderer * renderer)
+void GameScreen::drawElement(SDL_Renderer * renderer)
 {
 	for (int i = 0; i < SCREEN_WIDTH; i++) 
 	{
@@ -16,7 +16,7 @@ void GameScreen::draw(SDL_Renderer * renderer)
 	}
 }
 
-void GameScreen::clear(SDL_Renderer * renderer)
+void GameScreen::clearElement(SDL_Renderer * renderer)
 {
 	for (int i = 0; i < SCREEN_WIDTH; i++) 
 	{

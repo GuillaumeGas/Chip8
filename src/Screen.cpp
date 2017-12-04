@@ -37,16 +37,6 @@ void Screen::_initSdl()
 	SDL_RenderSetLogicalSize(_renderer, SCREEN_WIDTH*PIXEL_DIM, SCREEN_HEIGHT*PIXEL_DIM);
 }
 
-//void Screen::_drawTest()
-//{
-//	SDL_SetRenderDrawBlendMode(_renderer, SDL_BLENDMODE_BLEND);
-//	SDL_SetRenderDrawColor(_renderer, 255, 0, 0, 100);
-//	SDL_Rect rect;
-//	rect.h = rect.w = 300;
-//	rect.x = rect.y = 10;
-//	SDL_RenderFillRect(_renderer, &rect);
-//}
-
 void Screen::clear()
 {
 	for (Drawable * elem : _vecDrawables)

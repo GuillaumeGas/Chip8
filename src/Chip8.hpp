@@ -6,11 +6,18 @@
 
 #include "Screen.hpp"
 #include "GameScreen.hpp"
+#include "PauseScreen.hpp"
 #include "Cpu.hpp"
 #include "CpuDebug.hpp"
 #include "Sound.hpp"
 
 #define NB_KEYS 16
+
+enum ScreenType
+{
+	GAME_SCREEN,
+	PAUSE_SCREEN,
+};
 
 class Chip8 {
 public:
@@ -21,11 +28,13 @@ public:
 
 	Screen * screen;
 	GameScreen * gameScreen;
+	PauseScreen * pauseScreen;
 	Cpu * cpu;
 	Sound * sound;
 
 private:
     bool _running;
+	ScreenType _screenType;
 
     SDL_Event _event;
 

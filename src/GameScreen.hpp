@@ -16,8 +16,8 @@ class GameScreen : public Drawable
 public:
 	GameScreen();
 
-	void draw(SDL_Renderer * renderer);
-	void clear(SDL_Renderer * renderer);
+	void drawElement(SDL_Renderer * renderer);
+	void clearElement(SDL_Renderer * renderer);
 
 	Pixel getPixel(int x, int y);
 	void setColor(int x, int y, int color);
