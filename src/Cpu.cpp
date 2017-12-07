@@ -3,7 +3,7 @@
 
 using namespace std;
 
-Cpu::Cpu(Chip8 * ctrl) 
+Cpu::Cpu(GameScreen * screen) 
 {
 	this->running = true;
 
@@ -21,7 +21,7 @@ Cpu::Cpu(Chip8 * ctrl)
 	this->delay_timer = 0;
 	this->sound_timer = 0;
 
-	this->ctrl = ctrl;
+	this->screen = screen;
 
 	srand((unsigned int)(time(NULL)));
 	loadFont();
@@ -95,7 +95,7 @@ void Cpu::execOpcode(const uint16_t opcode)
 {
 	uint16_t opcode_id = GetOpcodeId(opcode);;
 	auto opcodes = Opcodes::instance()->getList();
-	(*opcodes)[opcode_id]->execute(opcode, ctrl);
+	(*opcodes)[opcode_id]->execute(opcode, this, screen);
 }
 
 void Cpu::shutdown() 

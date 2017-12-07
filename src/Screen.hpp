@@ -12,18 +12,16 @@
 
 #define PIXEL_DIM 10   // real pixels
 
-#define BLACK 0
-#define WHITE 255
-
-class Screen {
+class Screen 
+{
 public:
 	Screen();
 	~Screen();
 
-	void clear();
 	void update();
-
 	void addDrawable(Drawable * drawable);
+
+	SDL_Renderer * getRenderer() const;
 
 private:
 	void _initSdl();

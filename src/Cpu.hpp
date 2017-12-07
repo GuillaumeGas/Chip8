@@ -9,7 +9,7 @@
 
 #include "Exceptions.hpp"
 #include "Opcodes.hpp"
-#include "Screen.hpp"
+#include "GameScreen.hpp"
 
 #define MEM_SIZE 4096
 #define START_ADDRESS 512
@@ -23,10 +23,9 @@
 #define KEY_DOWN 1
 #define KEY_UP 0
 
-class Chip8;
 class Cpu {
 public:
-	Cpu(Chip8 * ctrl);
+	Cpu(GameScreen * screen);
 
 	void loadProgram(const char* file_name);
 	virtual bool emulateCycle(); // virtual because it is overrided in the CpuDebug class
@@ -55,8 +54,8 @@ public:
 	uint8_t delay_timer;
 	/* sound timer */
 	uint8_t sound_timer;
-	/* Pointer on the controler */
-	Chip8 * ctrl;
+	/* Pointer on the screen */
+	GameScreen * screen;
 
 	/**
 	   Keyboard 4x4

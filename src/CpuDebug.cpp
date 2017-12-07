@@ -1,10 +1,9 @@
 #include "CpuDebug.hpp"
 #include "Cpu.hpp"
-#include "Chip8.hpp"
 
 using namespace std;
 
-CpuDebug::CpuDebug(Chip8 * ctrl) : Cpu(ctrl) 
+CpuDebug::CpuDebug(GameScreen * screen) : Cpu(screen)
 {
 	cout << "> Debug mode enabled !" << endl;
 

@@ -8,19 +8,21 @@
 struct Pixel 
 {
 	SDL_Rect pos;
-	Uint8 color;
+	bool isEnabled;
 };
 
 class GameScreen : public Drawable
 {
 public:
-	GameScreen();
+	GameScreen(SDL_Renderer * renderer);
 
-	void drawElement(SDL_Renderer * renderer);
-	void clearElement(SDL_Renderer * renderer);
+	void drawElement();
+	void clear();
 
-	Pixel getPixel(int x, int y);
-	void setColor(int x, int y, int color);
+	Pixel & getPixel(int x, int y);
+
+	static const SDL_Color EnabledPixelColor;
+	static const SDL_Color DisabledPixelColor;
 
 private:
 	void _initContent();

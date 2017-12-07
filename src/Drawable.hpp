@@ -5,16 +5,16 @@
 class Drawable
 {
 public:
+	Drawable(SDL_Renderer * renderer);
+
 	/* Call drawElement if _visible is true */
-	void draw(SDL_Renderer * renderer);
-	/* Call clearElement if _visible is true */
-	void clear(SDL_Renderer * renderer);
-	virtual void drawElement(SDL_Renderer * renderer) = 0;
-	virtual void clearElement(SDL_Renderer * renderer);
+	void draw();
+	virtual void drawElement() = 0;
 
 	bool isVisible() const;
 	void setVisible(bool value);
 
 protected:
 	bool _visible;
+	SDL_Renderer * _renderer;
 };

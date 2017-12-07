@@ -5,6 +5,7 @@
 #include <cstdint>
 
 #include "utils/Utils.hpp"
+#include "GameScreen.hpp"
 
 // JE ROX / I ROCK !! 
 #define STATIC_THIS(o)				\
@@ -18,7 +19,6 @@
 
 class Cpu;
 class Opcode;
-class Chip8;
 
 class Opcodes {
 public:
@@ -33,7 +33,7 @@ private:
 
 class Opcode {
 public:
-	virtual void execute(const uint16_t opcode, Chip8 * chip) = 0;
+	virtual void execute(const uint16_t opcode, Cpu * cpu, GameScreen * screen) = 0;
 	virtual std::string disassemble(const uint16_t opcode) = 0;
 
 	uint16_t getX(const uint16_t opcode) const;
@@ -50,7 +50,7 @@ class OpCls : public Opcode {
 public:
 	STATIC_THIS((*(Opcodes::instance()->getList()))[0x00E0] = new OpCls());
 
-	void execute(const uint16_t opcode, Chip8 * chip);
+	void execute(const uint16_t opcode, Cpu * cpu, GameScreen * screen);
 	std::string disassemble(const uint16_t opcode);
 };
 
@@ -65,7 +65,7 @@ class OpRet : public Opcode {
 public:
 	STATIC_THIS((*(Opcodes::instance()->getList()))[0x00EE] = new OpRet());
 
-	void execute(const uint16_t opcode, Chip8 * chip);
+	void execute(const uint16_t opcode, Cpu * cpu, GameScreen * screen);
 	std::string disassemble(const uint16_t opcode);
 };
 
@@ -79,7 +79,7 @@ class OpJpAddr : public Opcode {
 public:
 	STATIC_THIS((*(Opcodes::instance()->getList()))[0x1000] = new OpJpAddr());
 
-	void execute(const uint16_t opcode, Chip8 * chip);
+	void execute(const uint16_t opcode, Cpu * cpu, GameScreen * screen);
 	std::string disassemble(const uint16_t opcode);
 };
 
@@ -94,7 +94,7 @@ class OpCallAddr : public Opcode {
 public:
 	STATIC_THIS((*(Opcodes::instance()->getList()))[0x2000] = new OpCallAddr());
 
-	void execute(const uint16_t opcode, Chip8 * chip);
+	void execute(const uint16_t opcode, Cpu * cpu, GameScreen * screen);
 	std::string disassemble(const uint16_t opcode);
 };
 
@@ -109,7 +109,7 @@ class OpSeVxByte : public Opcode {
 public:
 	STATIC_THIS((*(Opcodes::instance()->getList()))[0x3000] = new OpSeVxByte());
 
-	void execute(const uint16_t opcode, Chip8 * chip);
+	void execute(const uint16_t opcode, Cpu * cpu, GameScreen * screen);
 	std::string disassemble(const uint16_t opcode);
 };
 
@@ -124,7 +124,7 @@ class OpSneVxByte : public Opcode {
 public:
 	STATIC_THIS((*(Opcodes::instance()->getList()))[0x4000] = new OpSneVxByte());
 
-	void execute(const uint16_t opcode, Chip8 * chip);
+	void execute(const uint16_t opcode, Cpu * cpu, GameScreen * screen);
 	std::string disassemble(const uint16_t opcode);
 };
 
@@ -139,7 +139,7 @@ class OpSeVxVy : public Opcode {
 public:
 	STATIC_THIS((*(Opcodes::instance()->getList()))[0x5000] = new OpSeVxVy());
 
-	void execute(const uint16_t opcode, Chip8 * chip);
+	void execute(const uint16_t opcode, Cpu * cpu, GameScreen * screen);
 	std::string disassemble(const uint16_t opcode);
 };
 
@@ -154,7 +154,7 @@ class OpLdVxByte : public Opcode {
 public:
 	STATIC_THIS((*(Opcodes::instance()->getList()))[0x6000] = new OpLdVxByte());
 
-	void execute(const uint16_t opcode, Chip8 * chip);
+	void execute(const uint16_t opcode, Cpu * cpu, GameScreen * screen);
 	std::string disassemble(const uint16_t opcode);
 };
 
@@ -169,7 +169,7 @@ class OpAddVxByte : public Opcode {
 public:
 	STATIC_THIS((*(Opcodes::instance()->getList()))[0x7000] = new OpAddVxByte());
 
-	void execute(const uint16_t opcode, Chip8 * chip);
+	void execute(const uint16_t opcode, Cpu * cpu, GameScreen * screen);
 	std::string disassemble(const uint16_t opcode);
 };
 
@@ -184,7 +184,7 @@ class OpLdVxVy : public Opcode {
 public:
 	STATIC_THIS((*(Opcodes::instance()->getList()))[0x8000] = new OpLdVxVy());
 
-	void execute(const uint16_t opcode, Chip8 * chip);
+	void execute(const uint16_t opcode, Cpu * cpu, GameScreen * screen);
 	std::string disassemble(const uint16_t opcode);
 };
 
@@ -199,7 +199,7 @@ class OpOrVxVy : public Opcode {
 public:
 	STATIC_THIS((*(Opcodes::instance()->getList()))[0x8001] = new OpOrVxVy());
 
-	void execute(const uint16_t opcode, Chip8 * chip);
+	void execute(const uint16_t opcode, Cpu * cpu, GameScreen * screen);
 	std::string disassemble(const uint16_t opcode);
 };
 
@@ -214,7 +214,7 @@ class OpAndVxVy : public Opcode {
 public:
 	STATIC_THIS((*(Opcodes::instance()->getList()))[0x8002] = new OpAndVxVy());
 
-	void execute(const uint16_t opcode, Chip8 * chip);
+	void execute(const uint16_t opcode, Cpu * cpu, GameScreen * screen);
 	std::string disassemble(const uint16_t opcode);
 };
 
@@ -229,7 +229,7 @@ class OpXorVxVy : public Opcode {
 public:
 	STATIC_THIS((*(Opcodes::instance()->getList()))[0x8003] = new OpXorVxVy());
 
-	void execute(const uint16_t opcode, Chip8 * chip);
+	void execute(const uint16_t opcode, Cpu * cpu, GameScreen * screen);
 	std::string disassemble(const uint16_t opcode);
 };
 
@@ -244,7 +244,7 @@ class OpAddVxVy : public Opcode {
 public:
 	STATIC_THIS((*(Opcodes::instance()->getList()))[0x8004] = new OpAddVxVy());
 
-	void execute(const uint16_t opcode, Chip8 * chip);
+	void execute(const uint16_t opcode, Cpu * cpu, GameScreen * screen);
 	std::string disassemble(const uint16_t opcode);
 };
 
@@ -259,7 +259,7 @@ class OpSubVxVy : public Opcode {
 public:
 	STATIC_THIS((*(Opcodes::instance()->getList()))[0x8005] = new OpSubVxVy());
 
-	void execute(const uint16_t opcode, Chip8 * chip);
+	void execute(const uint16_t opcode, Cpu * cpu, GameScreen * screen);
 	std::string disassemble(const uint16_t opcode);
 };
 
@@ -274,7 +274,7 @@ class OpShrVxVy : public Opcode {
 public:
 	STATIC_THIS((*(Opcodes::instance()->getList()))[0x8006] = new OpShrVxVy());
 
-	void execute(const uint16_t opcode, Chip8 * chip);
+	void execute(const uint16_t opcode, Cpu * cpu, GameScreen * screen);
 	std::string disassemble(const uint16_t opcode);
 };
 
@@ -289,7 +289,7 @@ class OpSubnVxVy : public Opcode {
 public:
 	STATIC_THIS((*(Opcodes::instance()->getList()))[0x8007] = new OpSubnVxVy());
 
-	void execute(const uint16_t opcode, Chip8 * chip);
+	void execute(const uint16_t opcode, Cpu * cpu, GameScreen * screen);
 	std::string disassemble(const uint16_t opcode);
 };
 
@@ -304,7 +304,7 @@ class OpShlVxVy : public Opcode {
 public:
 	STATIC_THIS((*(Opcodes::instance()->getList()))[0x800E] = new OpShlVxVy());
 
-	void execute(const uint16_t opcode, Chip8 * chip);
+	void execute(const uint16_t opcode, Cpu * cpu, GameScreen * screen);
 	std::string disassemble(const uint16_t opcode);
 };
 
@@ -319,7 +319,7 @@ class OpSneVxVy : public Opcode {
 public:
 	STATIC_THIS((*(Opcodes::instance()->getList()))[0x9000] = new OpSneVxVy());
 
-	void execute(const uint16_t opcode, Chip8 * chip);
+	void execute(const uint16_t opcode, Cpu * cpu, GameScreen * screen);
 	std::string disassemble(const uint16_t opcode);
 };
 
@@ -334,7 +334,7 @@ class OpLdIAddr : public Opcode {
 public:
 	STATIC_THIS((*(Opcodes::instance()->getList()))[0xA000] = new OpLdIAddr());
 
-	void execute(const uint16_t opcode, Chip8 * chip);
+	void execute(const uint16_t opcode, Cpu * cpu, GameScreen * screen);
 	std::string disassemble(const uint16_t opcode);
 };
 
@@ -349,7 +349,7 @@ class OpJpV0Addr : public Opcode {
 public:
 	STATIC_THIS((*(Opcodes::instance()->getList()))[0xB000] = new OpJpV0Addr());
 
-	void execute(const uint16_t opcode, Chip8 * chip);
+	void execute(const uint16_t opcode, Cpu * cpu, GameScreen * screen);
 	std::string disassemble(const uint16_t opcode);
 };
 
@@ -364,7 +364,7 @@ class OpRndVxByte : public Opcode {
 public:
 	STATIC_THIS((*(Opcodes::instance()->getList()))[0xC000] = new OpRndVxByte());
 
-	void execute(const uint16_t opcode, Chip8 * chip);
+	void execute(const uint16_t opcode, Cpu * cpu, GameScreen * screen);
 	std::string disassemble(const uint16_t opcode);
 };
 
@@ -379,7 +379,7 @@ class OpDrwVxVy : public Opcode {
 public:
 	STATIC_THIS((*(Opcodes::instance()->getList()))[0xD000] = new OpDrwVxVy());
 
-	void execute(const uint16_t opcode, Chip8 * chip);
+	void execute(const uint16_t opcode, Cpu * cpu, GameScreen * screen);
 	std::string disassemble(const uint16_t opcode);
 };
 
@@ -394,7 +394,7 @@ class OpSkpVx : public Opcode {
 public:
 	STATIC_THIS((*(Opcodes::instance()->getList()))[0xE09E] = new OpSkpVx());
 
-	void execute(const uint16_t opcode, Chip8 * chip);
+	void execute(const uint16_t opcode, Cpu * cpu, GameScreen * screen);
 	std::string disassemble(const uint16_t opcode);
 };
 
@@ -409,7 +409,7 @@ class OpSknpVx : public Opcode {
 public:
 	STATIC_THIS((*(Opcodes::instance()->getList()))[0xE0A1] = new OpSknpVx());
 
-	void execute(const uint16_t opcode, Chip8 * chip);
+	void execute(const uint16_t opcode, Cpu * cpu, GameScreen * screen);
 	std::string disassemble(const uint16_t opcode);
 };
 
@@ -424,7 +424,7 @@ class OpLdVxDt : public Opcode {
 public:
 	STATIC_THIS((*(Opcodes::instance()->getList()))[0xF007] = new OpLdVxDt());
 
-	void execute(const uint16_t opcode, Chip8 * chip);
+	void execute(const uint16_t opcode, Cpu * cpu, GameScreen * screen);
 	std::string disassemble(const uint16_t opcode);
 };
 
@@ -439,7 +439,7 @@ class OpLdVxK : public Opcode {
 public:
 	STATIC_THIS((*(Opcodes::instance()->getList()))[0xF00A] = new OpLdVxK());
 
-	void execute(const uint16_t opcode, Chip8 * chip);
+	void execute(const uint16_t opcode, Cpu * cpu, GameScreen * screen);
 	std::string disassemble(const uint16_t opcode);
 };
 
@@ -454,7 +454,7 @@ class OpLdDtVx : public Opcode {
 public:
 	STATIC_THIS((*(Opcodes::instance()->getList()))[0xF015] = new OpLdDtVx());
 
-	void execute(const uint16_t opcode, Chip8 * chip);
+	void execute(const uint16_t opcode, Cpu * cpu, GameScreen * screen);
 	std::string disassemble(const uint16_t opcode);
 };
 
@@ -469,7 +469,7 @@ class OpLdStVx : public Opcode {
 public:
 	STATIC_THIS((*(Opcodes::instance()->getList()))[0xF018] = new OpLdStVx());
 
-	void execute(const uint16_t opcode, Chip8 * chip);
+	void execute(const uint16_t opcode, Cpu * cpu, GameScreen * screen);
 	std::string disassemble(const uint16_t opcode);
 };
 
@@ -484,7 +484,7 @@ class OpAddIVx : public Opcode {
 public:
 	STATIC_THIS((*(Opcodes::instance()->getList()))[0xF01E] = new OpAddIVx());
 
-	void execute(const uint16_t opcode, Chip8 * chip);
+	void execute(const uint16_t opcode, Cpu * cpu, GameScreen * screen);
 	std::string disassemble(const uint16_t opcode);
 };
 
@@ -500,7 +500,7 @@ class OpLdFVx : public Opcode {
 public:
 	STATIC_THIS((*(Opcodes::instance()->getList()))[0xF029] = new OpLdFVx());
 
-	void execute(const uint16_t opcode, Chip8 * chip);
+	void execute(const uint16_t opcode, Cpu * cpu, GameScreen * screen);
 	std::string disassemble(const uint16_t opcode);
 };
 
@@ -515,7 +515,7 @@ class OpLdBVx : public Opcode {
 public:
 	STATIC_THIS((*(Opcodes::instance()->getList()))[0xF033] = new OpLdBVx());
 
-	void execute(const uint16_t opcode, Chip8 * chip);
+	void execute(const uint16_t opcode, Cpu * cpu, GameScreen * screen);
 	std::string disassemble(const uint16_t opcode);
 };
 
@@ -530,7 +530,7 @@ class OpLdIVx : public Opcode {
 public:
 	STATIC_THIS((*(Opcodes::instance()->getList()))[0xF055] = new OpLdIVx());
 
-	void execute(const uint16_t opcode, Chip8 * chip);
+	void execute(const uint16_t opcode, Cpu * cpu, GameScreen * screen);
 	std::string disassemble(const uint16_t opcode);
 };
 
@@ -545,7 +545,7 @@ class OpLdVxI : public Opcode {
 public:
 	STATIC_THIS((*(Opcodes::instance()->getList()))[0xF065] = new OpLdVxI());
 
-	void execute(const uint16_t opcode, Chip8 * chip);
+	void execute(const uint16_t opcode, Cpu * cpu, GameScreen * screen);
 	std::string disassemble(const uint16_t opcode);
 };
 
@@ -559,7 +559,7 @@ class OpSys : public Opcode {
 public:
 	STATIC_THIS((*(Opcodes::instance()->getList()))[0x0000] = new OpSys());
 
-	void execute(const uint16_t opcode, Chip8 * chip);
+	void execute(const uint16_t opcode, Cpu * cpu, GameScreen * screen);
 	std::string disassemble(const uint16_t opcode);
 };
 
@@ -572,7 +572,7 @@ class OpDown : public Opcode {
 public:
 	STATIC_THIS((*(Opcodes::instance()->getList()))[0x00C0] = new OpDown());
 
-	void execute(const uint16_t opcode, Chip8 * chip);
+	void execute(const uint16_t opcode, Cpu * cpu, GameScreen * screen);
 	std::string disassemble(const uint16_t opcode);
 };
 
@@ -585,7 +585,7 @@ class OpRight : public Opcode {
 public:
 	STATIC_THIS((*(Opcodes::instance()->getList()))[0x00FB] = new OpRight());
 
-	void execute(const uint16_t opcode, Chip8 * chip);
+	void execute(const uint16_t opcode, Cpu * cpu, GameScreen * screen);
 	std::string disassemble(const uint16_t opcode);
 };
 
@@ -598,7 +598,7 @@ class OpLeft : public Opcode {
 public:
 	STATIC_THIS((*(Opcodes::instance()->getList()))[0x00FC] = new OpLeft());
 
-	void execute(const uint16_t opcode, Chip8 * chip);
+	void execute(const uint16_t opcode, Cpu * cpu, GameScreen * screen);
 	std::string disassemble(const uint16_t opcode);
 };
 
@@ -611,7 +611,7 @@ class OpLow : public Opcode {
 public:
 	STATIC_THIS((*(Opcodes::instance()->getList()))[0x00FE] = new OpLow());
 
-	void execute(const uint16_t opcode, Chip8 * chip);
+	void execute(const uint16_t opcode, Cpu * cpu, GameScreen * screen);
 	std::string disassemble(const uint16_t opcode);
 };
 
@@ -624,7 +624,7 @@ class OpHigh : public Opcode {
 public:
 	STATIC_THIS((*(Opcodes::instance()->getList()))[0x00FF] = new OpHigh());
 
-	void execute(const uint16_t opcode, Chip8 * chip);
+	void execute(const uint16_t opcode, Cpu * cpu, GameScreen * screen);
 	std::string disassemble(const uint16_t opcode);
 };
 
@@ -637,7 +637,7 @@ class OpExit : public Opcode {
 public:
 	STATIC_THIS((*(Opcodes::instance()->getList()))[0x00FD] = new OpExit());
 
-	void execute(const uint16_t opcode, Chip8 * chip);
+	void execute(const uint16_t opcode, Cpu * cpu, GameScreen * screen);
 	std::string disassemble(const uint16_t opcode);
 };
 
@@ -650,6 +650,6 @@ class OpLdHFVx : public Opcode {
 public:
 	STATIC_THIS((*(Opcodes::instance()->getList()))[0xF033] = new OpLdHFVx());
 
-	void execute(const uint16_t opcode, Chip8 * chip);
+	void execute(const uint16_t opcode, Cpu * cpu, GameScreen * screen);
 	std::string disassemble(const uint16_t opcode);
 };

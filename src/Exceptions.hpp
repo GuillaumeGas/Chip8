@@ -79,6 +79,16 @@ public:
 	}
 };
 
+class TextFontException : SDLException
+{
+public:
+	TextFontException(const char * str) : SDLException(str) {}
+	std::string toString() const
+	{
+		return "SDL_ttf erro : " + msg;
+	}
+};
+
 class CpuException : public Chip8Exception {
 public:
 	CpuException() {}

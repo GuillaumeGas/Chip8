@@ -1,19 +1,11 @@
 #include "Drawable.hpp"
 
-void Drawable::draw(SDL_Renderer * renderer)
+Drawable::Drawable(SDL_Renderer * renderer) : _renderer(renderer), _visible(true) {}
+
+void Drawable::draw()
 {
 	if (_visible)
-		drawElement(renderer);
-}
-
-void Drawable::clear(SDL_Renderer * renderer)
-{
-	if (_visible)
-		clearElement(renderer);
-}
-
-void Drawable::clearElement(SDL_Renderer * renderer)
-{
+		drawElement();
 }
 
 bool Drawable::isVisible() const

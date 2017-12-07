@@ -1,33 +1,34 @@
 #include "Chip8.hpp"
+#include "Utils\Directory.hpp"
 
 using namespace std;
 
-Chip8::Chip8(const char * file_name, bool debug)
+Chip8::Chip8(const char * fileName, bool debug)
 {
-	screen = new Screen();
-	gameScreen = new GameScreen();
-	pauseScreen = new PauseScreen();
-	pauseScreen->setVisible(false);
+	_screen = new Screen();
+	_sound = new Sound();
 
-	sound = new Sound();
+	_gameController = new GameController(this);
+	_pauseController = new PauseController(this);
+	_pauseController->setRomePath(Directory::GetFullFilePath(string(fileName)));
 
-	screen->addDrawable(gameScreen);
-	screen->addDrawable(pauseScreen);
+	_screen->addDrawable(static_cast<Drawable*>(_gameController->getScreen()));
+	_screen->addDrawable(static_cast<Drawable*>(_pauseController->getScreen()));
 
-	cpu = debug ? new CpuDebug(this) : new Cpu(this);
-	cpu->loadProgram(file_name);
+	_cpu = debug ? new CpuDebug(_gameController->getScreen()) : new Cpu(_gameController->getScreen());
+	_cpu->loadProgram(fileName);
 	_running = true;
 }
 
 Chip8::~Chip8()
 {
 	// We don't need to free the gameScreen because it is freed in the Screen class
-	if (screen)
-		delete screen;
-	if (cpu)
-		delete cpu;
-	if (sound)
-		delete sound;
+	if (_screen)
+		delete _screen;
+	if (_cpu)
+		delete _cpu;
+	if (_sound)
+		delete _sound;
 }
 
 void Chip8::start()
@@ -35,10 +36,10 @@ void Chip8::start()
 	cout << "> Chip8 starting..." << endl;
 
 	bool stop = false, pause = false;
-	while (!stop && cpu->isRunning())
+	while (!stop && _cpu->isRunning())
 	{
 		if (!pause)
-			cpu->emulateCycle();
+			_cpu->emulateCycle();
 
 		while (SDL_PollEvent(&_event))
 		{
@@ -48,51 +49,72 @@ void Chip8::start()
 			}
 			else if (_event.type == SDL_KEYDOWN)
 			{
-				for (int i = 0; i < NB_KEYS; i++)
-					if (_keys[i] == _event.key.keysym.sym)
-						cpu->keyboard[i] = 1;
+				_gameController->handleKeyboard(_event.type, _event.key.keysym.sym);
 			}
 			else if (_event.type == SDL_KEYUP)
 			{
-				if (_screenType == ScreenType::GAME_SCREEN)
+				if (_event.key.keysym.sym == SDLK_ESCAPE)
 				{
-					if (_event.key.keysym.sym == SDLK_ESCAPE)
-					{
-						stop = true;
-					}
-					else if (_event.key.keysym.sym == SDLK_p)
-					{
-						pauseScreen->setVisible(true);
-						_screenType = ScreenType::PAUSE_SCREEN;
-						pause = true;
-					}
-					else {
-						for (int i = 0; i < NB_KEYS; i++)
-							if (_keys[i] == _event.key.keysym.sym)
-								cpu->keyboard[i] = 0;
-					}
+					stop = true;
 				}
 				else
 				{
-					if (_event.key.keysym.sym == SDLK_p)
+					if (_screenType == ScreenType::GAME_SCREEN)
 					{
-						pauseScreen->setVisible(false);
-						_screenType = ScreenType::GAME_SCREEN;
-						pause = false;
+						if (_event.key.keysym.sym == SDLK_p)
+						{
+							_pauseController->handleKeyboard(_event.type, _event.key.keysym.sym);
+							_screenType = ScreenType::PAUSE_SCREEN;
+							pause = true;
+						}
+						else 
+						{
+							_gameController->handleKeyboard(_event.type, _event.key.keysym.sym);
+						}
+					}
+					else
+					{
+						if (_event.key.keysym.sym == SDLK_p)
+						{
+							_pauseController->handleKeyboard(_event.type, _event.key.keysym.sym);
+							_screenType = ScreenType::GAME_SCREEN;
+							pause = false;
+						}
 					}
 				}
 			}
 		}
 
-		screen->update();
+		_screen->update();
 
-		if (cpu->sound_timer) {
-			sound->play();
-			cpu->sound_timer = 0;
+		if (_cpu->sound_timer) 
+		{
+			_sound->play();
+			_cpu->sound_timer = 0;
 		}
 
 		SDL_Delay(FPS);
 	}
 
 	_running = false;
+}
+
+Screen * Chip8::getScreen() const
+{
+	return _screen;
+}
+
+Cpu * Chip8::getCpu() const
+{
+	return _cpu;
+}
+
+Sound * Chip8::getSound() const
+{
+	return _sound;
+}
+
+string Chip8::getRomFilePath() const
+{
+	return _romFilePath;
 }

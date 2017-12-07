@@ -7,9 +7,6 @@ Screen::Screen()
 
 Screen::~Screen()
 {
-	for (Drawable * elem : _vecDrawables)
-		delete elem;
-
 	SDL_DestroyRenderer(_renderer);
 	SDL_DestroyWindow(_window);
 	SDL_Quit();
@@ -18,6 +15,19 @@ Screen::~Screen()
 void Screen::addDrawable(Drawable * drawable)
 {
 	_vecDrawables.push_back(drawable);
+}
+
+void Screen::update()
+{
+	for (Drawable * elem : _vecDrawables)
+		elem->draw();
+
+	SDL_RenderPresent(_renderer);
+}
+
+SDL_Renderer * Screen::getRenderer() const
+{
+	return _renderer;
 }
 
 void Screen::_initSdl()
@@ -35,21 +45,4 @@ void Screen::_initSdl()
 		throw PixelInitException(SDL_GetError());
 
 	SDL_RenderSetLogicalSize(_renderer, SCREEN_WIDTH*PIXEL_DIM, SCREEN_HEIGHT*PIXEL_DIM);
-}
-
-void Screen::clear()
-{
-	for (Drawable * elem : _vecDrawables)
-		elem->clear(_renderer);
-
-	SDL_RenderClear(_renderer);
-	SDL_RenderPresent(_renderer);
-}
-
-void Screen::update()
-{
-	for (Drawable * elem : _vecDrawables)
-		elem->draw(_renderer);
-
-	SDL_RenderPresent(_renderer);
 }

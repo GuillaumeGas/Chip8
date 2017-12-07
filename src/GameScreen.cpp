@@ -1,45 +1,44 @@
 #include "GameScreen.hpp"
 
-GameScreen::GameScreen()
+const SDL_Color GameScreen::EnabledPixelColor = { 51, 102, 0 };
+const SDL_Color GameScreen::DisabledPixelColor = { 0, 0, 0 };
+
+GameScreen::GameScreen(SDL_Renderer * renderer) : Drawable(renderer)
 {
 	_initContent();
 }
 
-void GameScreen::drawElement(SDL_Renderer * renderer)
+void GameScreen::drawElement()
 {
 	for (int i = 0; i < SCREEN_WIDTH; i++) 
 	{
 		for (int j = 0; j < SCREEN_HEIGHT; j++) 
 		{
-			_drawPixel(renderer, _content[i][j]);
+			_drawPixel(_renderer, _content[i][j]);
 		}
 	}
 }
 
-void GameScreen::clearElement(SDL_Renderer * renderer)
+void GameScreen::clear()
 {
 	for (int i = 0; i < SCREEN_WIDTH; i++) 
 	{
 		for (int j = 0; j < SCREEN_HEIGHT; j++) 
 		{
-			_content[i][j].color = BLACK;
+			_content[i][j].isEnabled = false;
 		}
 	}
 }
 
-Pixel GameScreen::getPixel(int x, int y)
+Pixel & GameScreen::getPixel(int x, int y)
 {
 	return _content[x][y];
 }
 
-void GameScreen::setColor(int x, int y, int color) 
-{
-	_content[x][y].color = color;
-}
-
 void GameScreen::_drawPixel(SDL_Renderer * renderer, Pixel pixel) 
 {
-	SDL_SetRenderDrawColor(renderer, pixel.color, pixel.color, pixel.color, 255);
+	const SDL_Color & color = (pixel.isEnabled) ? EnabledPixelColor : DisabledPixelColor;
+	SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b, color.a);
 	SDL_RenderFillRect(renderer, &pixel.pos);
 }
 
@@ -53,7 +52,7 @@ void GameScreen::_initContent()
 			_content[i][j].pos.y = j * PIXEL_DIM;
 			_content[i][j].pos.w = PIXEL_DIM;
 			_content[i][j].pos.h = PIXEL_DIM;
-			_content[i][j].color = BLACK;
+			_content[i][j].isEnabled = false;
 		}
 	}
 }

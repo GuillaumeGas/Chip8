@@ -5,6 +5,7 @@
 #include <sstream>
 #include <functional>
 
+#include "GameScreen.hpp"
 #include "Cpu.hpp"
 #include "Opcodes.hpp"
 
@@ -20,10 +21,10 @@
 #define PRINT_HELP_COMMAND "h" // can't use HELP_COMMAND macro because already use by winuser.h...
 #define UNKNOWN_COMMAND    "unknown"
 
-class Chip8;
-class CpuDebug : public Cpu {
+class CpuDebug : public Cpu 
+{
 public:
-	CpuDebug(Chip8 * ctrl);
+	CpuDebug(GameScreen * screen);
 
 	virtual bool emulateCycle();
 
