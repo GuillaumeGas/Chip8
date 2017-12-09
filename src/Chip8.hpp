@@ -11,11 +11,8 @@
 #include "CpuDebug.hpp"
 #include "Sound.hpp"
 
-enum ScreenType
-{
-	GAME_SCREEN,
-	PAUSE_SCREEN,
-};
+#define FPS 6
+#define OP_PER_FRAME 1
 
 class Chip8 {
 public:
@@ -28,6 +25,10 @@ public:
 	Cpu * getCpu() const;
 	Sound * getSound() const;
 	std::string getRomFilePath() const;
+	Uint32 getFps() const;
+	void setFps(Uint32 value);
+	Uint32 getOpPerFrame() const;
+	void setOpPerFrame(Uint32 value);
 
 private:
 	Screen * _screen;
@@ -38,7 +39,9 @@ private:
 	
 	std::string _romFilePath;
 	bool _running;
-	ScreenType _screenType;
+	Screen::ScreenType _screenType;
+	Uint32 _fps;
+	Uint32 _OpPerFrame;
 
     SDL_Event _event;
 };

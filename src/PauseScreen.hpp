@@ -17,14 +17,25 @@ public:
 	PauseScreen(SDL_Renderer * renderer);
 	~PauseScreen();
 
+	enum ScreenType
+	{
+		BROWSE_SCREEN,
+		OPTION_SCREEN,
+	};
+
 	void drawElement();
 	void setRomPath(std::string newPath);
+	void setScreenType(ScreenType type);
 
 private:
 	void _initText();
+	void _drawBackground();
+	void _drawBrowser();
+	void _drawOption();
 	void _buildTexture(std::string & str, SDL_Texture * texture);
 	std::string _getShortPath(std::string & path);
 
+	ScreenType _screenType;
 	TTF_Font * _font;
 	SDL_Surface * _surface;
 	SDL_Texture * _textureDir;

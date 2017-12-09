@@ -23,6 +23,12 @@ public:
 
 	SDL_Renderer * getRenderer() const;
 
+	enum ScreenType
+	{
+		GAME_SCREEN,
+		PAUSE_SCREEN,
+	};
+
 private:
 	void _initSdl();
 

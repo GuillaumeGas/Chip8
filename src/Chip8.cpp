@@ -18,11 +18,16 @@ Chip8::Chip8(const char * fileName, bool debug)
 	_cpu = debug ? new CpuDebug(_gameController->getScreen()) : new Cpu(_gameController->getScreen());
 	_cpu->loadProgram(fileName);
 	_running = true;
+	_fps = FPS;
+	_OpPerFrame = OP_PER_FRAME;
 }
 
 Chip8::~Chip8()
 {
-	// We don't need to free the gameScreen because it is freed in the Screen class
+	if (_gameController)
+		delete _gameController;
+	if (_pauseController)
+		delete _pauseController;
 	if (_screen)
 		delete _screen;
 	if (_cpu)
@@ -39,7 +44,10 @@ void Chip8::start()
 	while (!stop && _cpu->isRunning())
 	{
 		if (!pause)
-			_cpu->emulateCycle();
+		{
+			for(Uint32 i = 0; i < _OpPerFrame; i++)
+				stop = !_cpu->emulateCycle();
+		}
 
 		while (SDL_PollEvent(&_event))
 		{
@@ -59,12 +67,12 @@ void Chip8::start()
 				}
 				else
 				{
-					if (_screenType == ScreenType::GAME_SCREEN)
+					if (_screenType == Screen::ScreenType::GAME_SCREEN)
 					{
 						if (_event.key.keysym.sym == SDLK_p)
 						{
 							_pauseController->handleKeyboard(_event.type, _event.key.keysym.sym);
-							_screenType = ScreenType::PAUSE_SCREEN;
+							_screenType = Screen::ScreenType::PAUSE_SCREEN;
 							pause = true;
 						}
 						else 
@@ -74,10 +82,10 @@ void Chip8::start()
 					}
 					else
 					{
+						_pauseController->handleKeyboard(_event.type, _event.key.keysym.sym);
 						if (_event.key.keysym.sym == SDLK_p)
 						{
-							_pauseController->handleKeyboard(_event.type, _event.key.keysym.sym);
-							_screenType = ScreenType::GAME_SCREEN;
+							_screenType = Screen::ScreenType::GAME_SCREEN;
 							pause = false;
 						}
 					}
@@ -93,7 +101,7 @@ void Chip8::start()
 			_cpu->sound_timer = 0;
 		}
 
-		SDL_Delay(FPS);
+		SDL_Delay(_fps);
 	}
 
 	_running = false;
@@ -117,4 +125,24 @@ Sound * Chip8::getSound() const
 string Chip8::getRomFilePath() const
 {
 	return _romFilePath;
+}
+
+Uint32 Chip8::getFps() const
+{
+	return _fps;
+}
+
+void Chip8::setFps(Uint32 value)
+{
+	_fps = value;
+}
+
+Uint32 Chip8::getOpPerFrame() const
+{
+	return _OpPerFrame;
+}
+
+void Chip8::setOpPerFrame(Uint32 value)
+{
+	_OpPerFrame = value;
 }

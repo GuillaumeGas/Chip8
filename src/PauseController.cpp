@@ -1,28 +1,54 @@
 #include "PauseController.hpp"
 #include "Chip8.hpp"
 
-PauseController::PauseController(Chip8 * mainController) : _mainController(mainController)
+PauseController::PauseController(Chip8 * mainController) 
+	: BaseController<PauseScreen>(mainController)
 {
 	_screen = new PauseScreen(_mainController->getScreen()->getRenderer());
 	_screen->setVisible(false);
 	_screen->setRomPath(mainController->getRomFilePath());
+
+	_screenType = PauseScreen::ScreenType::BROWSE_SCREEN;
+
+	_browseController = new BrowserController(_mainController, _screen);
+	_optionController = new OptionController(_mainController, _screen);
 }
 
 PauseController::~PauseController()
 {
-	if (_screen == nullptr)
+	if (_browseController != nullptr)
+		delete _browseController;
+	if (_optionController != nullptr)
+		delete _optionController;
+	if (_screen != nullptr)
 		delete _screen;
-}
-
-PauseScreen * PauseController::getScreen() const
-{
-	return _screen;
 }
 
 void PauseController::handleKeyboard(Uint32 eventType, SDL_Keycode keyCode)
 {
-	if (keyCode == SDLK_p)
+	switch (keyCode)
+	{
+	case SDLK_p:
 		_screen->setVisible(!_screen->isVisible());
+		break;
+	case SDLK_F1:
+		_screen->setScreenType(PauseScreen::ScreenType::BROWSE_SCREEN);
+		_screenType = PauseScreen::ScreenType::BROWSE_SCREEN;
+		break;
+	case SDLK_F2:
+		_screen->setScreenType(PauseScreen::ScreenType::OPTION_SCREEN);
+		_screenType = PauseScreen::ScreenType::OPTION_SCREEN;
+		break;
+	default:
+		if (_screenType == PauseScreen::ScreenType::BROWSE_SCREEN)
+		{
+			_browseController->handleKeyboard(eventType, keyCode);
+		}
+		else
+		{
+			_optionController->handleKeyboard(eventType, keyCode);
+		}
+	}
 }
 
 void PauseController::setRomePath(std::string newPath)

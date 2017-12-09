@@ -4,7 +4,8 @@
 
 using namespace std;
 
-PauseScreen::PauseScreen(SDL_Renderer * renderer) : Drawable(renderer), _font(nullptr), _surface(nullptr), _textureDir(nullptr)
+PauseScreen::PauseScreen(SDL_Renderer * renderer) 
+	: Drawable(renderer), _screenType(ScreenType::BROWSE_SCREEN), _font(nullptr), _surface(nullptr), _textureDir(nullptr)
 {
 	TTF_Init();
 	_initText();
@@ -19,7 +20,26 @@ PauseScreen::~PauseScreen()
 	TTF_Quit();
 }
 
+void PauseScreen::setScreenType(ScreenType type)
+{
+	_screenType = type;
+}
+
 void PauseScreen::drawElement()
+{
+	_drawBackground();
+
+	if (_screenType == ScreenType::BROWSE_SCREEN)
+	{
+		_drawBrowser();
+	}
+	else
+	{
+		_drawOption();
+	}
+}
+
+void PauseScreen::_drawBackground()
 {
 	SDL_SetRenderDrawBlendMode(_renderer, SDL_BLENDMODE_BLEND);
 
@@ -38,8 +58,16 @@ void PauseScreen::drawElement()
 	SDL_RenderDrawRect(_renderer, &_footerRect);
 
 	SDL_SetRenderDrawBlendMode(_renderer, SDL_BLENDMODE_NONE);
+}
 
+void PauseScreen::_drawBrowser()
+{
 	SDL_RenderCopy(_renderer, _textureDir, NULL, &_rectDir);
+}
+
+void PauseScreen::_drawOption()
+{
+
 }
 
 void PauseScreen::setRomPath(string newPath)
