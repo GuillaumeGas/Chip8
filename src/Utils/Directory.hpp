@@ -29,6 +29,8 @@ public:
 	std::vector<File> getFiles() const;
 	std::string getPath() const;
 	std::wstring getPathW() const;
+	void enter(std::string directoryName);
+	void exit();
 
 	static std::string GetFullFilePath(const std::string filePath);
 	static std::string GetCurrentPath();

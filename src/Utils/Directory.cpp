@@ -1,3 +1,5 @@
+#include <Shlwapi.h>
+
 #include "Directory.hpp"
 #include "ScopeGuard.hpp"
 
@@ -38,6 +40,22 @@ string Directory::getPath() const
 wstring Directory::getPathW() const
 {
 	return _wpath;
+}
+
+void Directory::enter(string directoryName)
+{
+	stringstream ss;
+	ss << _path;
+	if (_path[_path.length() - 1] != '\\')
+		ss << '\\';
+	ss << directoryName;
+
+	wstring res = Utils::StringToWString(ss.str());
+	if (!PathFileExists(res.c_str()))
+		throw DirectoryException("Can't enter in directory, path not found !", GetLastError());
+
+	_wpath = res;
+	_path = ss.str();
 }
 
 string Directory::GetFullFilePath(const string filePath)
