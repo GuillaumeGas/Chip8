@@ -19,6 +19,6 @@ public:
 private:
 	PauseScreen::ScreenType _screenType;
 
-	BrowserController * _browseController;
+	BrowserController * _browserController;
 	OptionController * _optionController;
 };

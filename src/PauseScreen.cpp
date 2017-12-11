@@ -1,11 +1,10 @@
 #include "PauseScreen.hpp"
 #include <string>
-#include "Utils\Directory.hpp"
 
 using namespace std;
 
 PauseScreen::PauseScreen(SDL_Renderer * renderer) 
-	: Drawable(renderer), _screenType(ScreenType::BROWSE_SCREEN), _font(nullptr), _surface(nullptr), _textureDir(nullptr)
+	: Drawable(renderer), _screenType(ScreenType::BROWSE_SCREEN), _font(nullptr), _textureDir(nullptr) /*, _indexLineSelected(0)*/
 {
 	TTF_Init();
 	_initText();
@@ -15,7 +14,6 @@ PauseScreen::~PauseScreen()
 {
 	if (_textureDir != nullptr)
 		SDL_DestroyTexture(_textureDir);
-	SDL_FreeSurface(_surface);
 	TTF_CloseFont(_font);
 	TTF_Quit();
 }
@@ -27,6 +25,8 @@ void PauseScreen::setScreenType(ScreenType type)
 
 void PauseScreen::drawElement()
 {
+    SDL_SetRenderDrawBlendMode(_renderer, SDL_BLENDMODE_BLEND);
+
 	_drawBackground();
 
 	if (_screenType == ScreenType::BROWSE_SCREEN)
@@ -37,12 +37,12 @@ void PauseScreen::drawElement()
 	{
 		_drawOption();
 	}
+
+    SDL_SetRenderDrawBlendMode(_renderer, SDL_BLENDMODE_NONE);
 }
 
 void PauseScreen::_drawBackground()
 {
-	SDL_SetRenderDrawBlendMode(_renderer, SDL_BLENDMODE_BLEND);
-
 	SDL_SetRenderDrawColor(_renderer, _backgroundColor.r, _backgroundColor.g, _backgroundColor.b, _backgroundColor.a);
 	SDL_RenderFillRect(_renderer, &_backgroudRect);
 
@@ -56,13 +56,22 @@ void PauseScreen::_drawBackground()
 	SDL_SetRenderDrawColor(_renderer, _borderColor.r, _borderColor.g, _borderColor.b, _borderColor.a);
 	SDL_RenderDrawRect(_renderer, &_headerRect);
 	SDL_RenderDrawRect(_renderer, &_footerRect);
-
-	SDL_SetRenderDrawBlendMode(_renderer, SDL_BLENDMODE_NONE);
 }
 
 void PauseScreen::_drawBrowser()
 {
 	SDL_RenderCopy(_renderer, _textureDir, NULL, &_rectDir);
+
+    int line = 0;
+    for (std::pair<SDL_Rect, SDL_Texture*> & file : _filesList)
+    {
+        /*if (line == _indexLineSelected)
+        {
+            SDL_SetRenderDrawColor(_renderer, _selectedLineBackgroundColor.r, _selectedLineBackgroundColor.g, _selectedLineBackgroundColor.b, _selectedLineBackgroundColor.a);
+            SDL_RenderFillRect(_renderer, &_selectedLineBackground);
+        }*/
+        SDL_RenderCopy(_renderer, file.second, NULL, &file.first);
+    }
 }
 
 void PauseScreen::_drawOption()
@@ -75,7 +84,22 @@ void PauseScreen::setRomPath(string newPath)
 	stringstream ss;
 	ss << "Dir : " << newPath;
 	string str = _getShortPath(ss.str());
-	_buildTexture(str, _textureDir);
+    _rectDir.x = PAUSE_SCREEN_OFFSET + 4;
+    _rectDir.y = (PAUSE_SCREEN_OFFSET / 2) + 6;
+	_buildTexture(str, &_textureDir, &_rectDir);
+}
+
+void PauseScreen::setFilesList(const vector<File> & list)
+{
+    int offset = 20;
+    for (const File & file : list)
+    {
+        SDL_Rect rect = { PAUSE_SCREEN_OFFSET + 4,  ((PAUSE_SCREEN_OFFSET / 2) + 6) + offset, 0, 0 };
+        SDL_Texture * texture = nullptr;
+        _buildTexture(file.fileName, &texture, &rect);
+        _filesList.push_back(pair<SDL_Rect, SDL_Texture*>(rect, texture));
+        offset += 20;
+    }
 }
 
 void PauseScreen::_initText()
@@ -88,17 +112,18 @@ void PauseScreen::_initText()
 	setRomPath("");
 }
 
-void PauseScreen::_buildTexture(string & str, SDL_Texture * texture)
+void PauseScreen::_buildTexture(const string & str, SDL_Texture ** texture, SDL_Rect * rec)
 {
-	if (texture != nullptr)
-		SDL_DestroyTexture(_textureDir);
-	_textureDir = nullptr;
+	if (*texture != nullptr)
+		SDL_DestroyTexture(*texture);
+    *texture = nullptr;
 
-	_surface = TTF_RenderText_Solid(_font, str.c_str(), { 255, 255, 255 });
-	_textureDir = SDL_CreateTextureFromSurface(_renderer, _surface);
+	SDL_Surface * surface = TTF_RenderText_Solid(_font, str.c_str(), { 255, 255, 255 });
+	*texture = SDL_CreateTextureFromSurface(_renderer, surface);
 	int w, h;
-	SDL_QueryTexture(_textureDir, NULL, NULL, &w, &h);
-	_rectDir = { PAUSE_SCREEN_OFFSET + 4, (PAUSE_SCREEN_OFFSET / 2) + 6, w, h };
+	SDL_QueryTexture(*texture, NULL, NULL, &w, &h);
+	*rec = { rec->x, rec->y, w, h };
+    SDL_FreeSurface(surface);
 }
 
 string PauseScreen::_getShortPath(string & path)

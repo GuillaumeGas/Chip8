@@ -24,15 +24,17 @@ struct File
 class Directory
 {
 public:
+    Directory();
 	Directory(std::string path);
 
 	std::vector<File> getFiles() const;
 	std::string getPath() const;
-	std::wstring getPathW() const;
 	void enter(std::string directoryName);
 	void exit();
+    void setCurrent(std::string dirPath);
 
-	static std::string GetFullFilePath(const std::string filePath);
+	static std::string GetFullFilePath(const std::string & filePath);
+    static std::string RemoveFileName(const std::string & filePath);
 	static std::string GetCurrentPath();
 	static Directory GetCurrent();
 
@@ -40,5 +42,4 @@ private:
 	File _getFileFromWin32FileData(WIN32_FIND_DATA * dataFile) const;
 
 	std::string _path;
-	std::wstring _wpath;
 };

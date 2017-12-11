@@ -10,14 +10,14 @@ PauseController::PauseController(Chip8 * mainController)
 
 	_screenType = PauseScreen::ScreenType::BROWSE_SCREEN;
 
-	_browseController = new BrowserController(_mainController, _screen);
+	_browserController = new BrowserController(_mainController, _screen);
 	_optionController = new OptionController(_mainController, _screen);
 }
 
 PauseController::~PauseController()
 {
-	if (_browseController != nullptr)
-		delete _browseController;
+	if (_browserController != nullptr)
+		delete _browserController;
 	if (_optionController != nullptr)
 		delete _optionController;
 	if (_screen != nullptr)
@@ -42,7 +42,7 @@ void PauseController::handleKeyboard(Uint32 eventType, SDL_Keycode keyCode)
 	default:
 		if (_screenType == PauseScreen::ScreenType::BROWSE_SCREEN)
 		{
-			_browseController->handleKeyboard(eventType, keyCode);
+			_browserController->handleKeyboard(eventType, keyCode);
 		}
 		else
 		{
@@ -53,5 +53,5 @@ void PauseController::handleKeyboard(Uint32 eventType, SDL_Keycode keyCode)
 
 void PauseController::setRomePath(std::string newPath)
 {
-	_screen->setRomPath(newPath);
+    _browserController->setRomPath(newPath);
 }

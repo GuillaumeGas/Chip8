@@ -3,12 +3,16 @@
 #include "Directory.hpp"
 #include "ScopeGuard.hpp"
 
+// TODO : check if the given directory path exists
+
 using namespace std;
 
-Directory::Directory(string path) : _path(path) 
+Directory::Directory()
 {
-	_wpath = Utils::StringToWString(_path);
+    _path = GetCurrentPath();
 }
+
+Directory::Directory(string path) : _path(path) {}
 
 vector<File> Directory::getFiles() const
 {
@@ -16,7 +20,7 @@ vector<File> Directory::getFiles() const
 	HANDLE fileHandle;
 	WIN32_FIND_DATA dataFile;
 
-	wstring newPath = _wpath + L'\\' + L'*';
+	wstring newPath = Utils::StringToWString(_path + '\\' + '*');
 	LPTSTR currentDir = (LPTSTR)newPath.c_str();
 
 	if ((fileHandle = FindFirstFile(currentDir, &dataFile)) == INVALID_HANDLE_VALUE)
@@ -37,11 +41,6 @@ string Directory::getPath() const
 	return _path;
 }
 
-wstring Directory::getPathW() const
-{
-	return _wpath;
-}
-
 void Directory::enter(string directoryName)
 {
 	stringstream ss;
@@ -54,11 +53,15 @@ void Directory::enter(string directoryName)
 	if (!PathFileExists(res.c_str()))
 		throw DirectoryException("Can't enter in directory, path not found !", GetLastError());
 
-	_wpath = res;
 	_path = ss.str();
 }
 
-string Directory::GetFullFilePath(const string filePath)
+void Directory::setCurrent(string dirPath)
+{
+    _path = dirPath;
+}
+
+string Directory::GetFullFilePath(const string & filePath)
 {
 	wstring wfilePath = Utils::StringToWString(filePath);
 	LPTSTR resPath = NULL;
@@ -80,6 +83,15 @@ string Directory::GetFullFilePath(const string filePath)
 		throw DirectoryException("Directory!GetDirectoryPath on GetFullPathName", GetLastError());
 
 	return Utils::WStringToString(wstring(resPath));
+}
+
+string Directory::RemoveFileName(const string & filePath)
+{
+    wstring test = Utils::StringToWString(filePath);
+    const wchar_t * str = test.c_str();
+    PathRemoveFileSpec((LPWSTR)str);
+    string res = Utils::WStringToString(wstring(str));
+    return res;
 }
 
 string Directory::GetCurrentPath()
