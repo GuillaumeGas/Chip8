@@ -5,9 +5,19 @@ using namespace std;
 
 Cpu::Cpu(GameScreen * screen) 
 {
-	this->running = true;
-
 	cout << "> CPU is starting..." << endl;
+
+	_init();
+
+	this->screen = screen;
+
+	srand((unsigned int)(time(NULL)));
+	loadFont();
+}
+
+void Cpu::_init()
+{
+	this->running = true;
 
 	memset(this->memory, 0, MEM_SIZE);
 	memset(this->reg, 0, V_REGISTERS_SIZE);
@@ -20,11 +30,6 @@ Cpu::Cpu(GameScreen * screen)
 	this->sp = 0;
 	this->delay_timer = 0;
 	this->sound_timer = 0;
-
-	this->screen = screen;
-
-	srand((unsigned int)(time(NULL)));
-	loadFont();
 }
 
 bool Cpu::emulateCycle() 
@@ -53,6 +58,7 @@ void Cpu::count()
 
 void Cpu::loadProgram(const char * file_name) 
 {
+	_init();
 	cout << "> Loading binary file..." << endl;
 	FILE * game = NULL;
 	fopen_s(&game, file_name, "rb");

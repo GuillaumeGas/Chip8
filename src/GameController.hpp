@@ -14,6 +14,7 @@ public:
 	~GameController();
 
 	void handleKeyboard(Uint32 eventType, SDL_Keycode keyCode) override;
+	void reset();
 
 private:
 	const unsigned int _keys[16] = { SDLK_KP_7, SDLK_KP_8, SDLK_KP_9, SDLK_ASTERISK,

@@ -29,6 +29,7 @@ public:
 	void setFps(Uint32 value);
 	Uint32 getOpPerFrame() const;
 	void setOpPerFrame(Uint32 value);
+	void loadRom(std::string filePath);
 
 private:
 	Screen * _screen;
@@ -39,6 +40,7 @@ private:
 	
 	std::string _romFilePath;
 	bool _running;
+	bool _pause;
 	Screen::ScreenType _screenType;
 	Uint32 _fps;
 	Uint32 _OpPerFrame;

@@ -15,5 +15,9 @@ public:
     void setRomPath(std::string newPath);
 
 private:
+	void _updateScreen(std::string newPath = "");
+
     Directory _romDir;
+	int _fileIndex;
+	int _screenFileLineIndex;
 };

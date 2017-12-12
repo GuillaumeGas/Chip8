@@ -18,8 +18,19 @@ Chip8::Chip8(const char * fileName, bool debug)
 	_cpu = debug ? new CpuDebug(_gameController->getScreen()) : new Cpu(_gameController->getScreen());
 	_cpu->loadProgram(fileName);
 	_running = true;
+	_pause = false;
+	_screenType = Screen::ScreenType::GAME_SCREEN;
 	_fps = FPS;
 	_OpPerFrame = OP_PER_FRAME;
+}
+
+void Chip8::loadRom(string filePath)
+{
+	_gameController->reset();
+	_pauseController->setRomePath(filePath);
+	_cpu->loadProgram(filePath.c_str());
+	_pause = false;
+	_screenType = Screen::ScreenType::GAME_SCREEN;
 }
 
 Chip8::~Chip8()
@@ -40,10 +51,10 @@ void Chip8::start()
 {
 	cout << "> Chip8 starting..." << endl;
 
-	bool stop = false, pause = false;
+	bool stop = false;
 	while (!stop && _cpu->isRunning())
 	{
-		if (!pause)
+		if (!_pause)
 		{
 			for(Uint32 i = 0; i < _OpPerFrame; i++)
 				stop = !_cpu->emulateCycle();
@@ -73,7 +84,7 @@ void Chip8::start()
 						{
 							_pauseController->handleKeyboard(_event.type, _event.key.keysym.sym);
 							_screenType = Screen::ScreenType::PAUSE_SCREEN;
-							pause = true;
+							_pause = true;
 						}
 						else 
 						{
@@ -86,7 +97,7 @@ void Chip8::start()
 						if (_event.key.keysym.sym == SDLK_p)
 						{
 							_screenType = Screen::ScreenType::GAME_SCREEN;
-							pause = false;
+							_pause = false;
 						}
 					}
 				}

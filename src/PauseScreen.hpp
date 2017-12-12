@@ -28,6 +28,8 @@ public:
 	void setRomPath(std::string newPath);
     void setFilesList(const std::vector<File> & list);
 	void setScreenType(ScreenType type);
+	int getSelectedLineIndex() const;
+	void setSelectedLineIndex(int value);
 
 protected:
 	void _initText();
@@ -42,7 +44,7 @@ protected:
 	SDL_Texture * _textureDir;
 	SDL_Rect _rectDir;
     std::vector<std::pair<SDL_Rect, SDL_Texture*>> _filesList;
-    //int _indexLineSelected;
+    int _selectedLineIndex;
 
 	const SDL_Rect _backgroudRect
 	{
@@ -68,16 +70,16 @@ protected:
 		HEADER_HEIGHT,
 	};
 
-    /*const SDL_Rect _selectedLineBackground
+    const SDL_Rect _selectedLineBackground
     {
         PAUSE_SCREEN_OFFSET + 2,
-        ((PAUSE_SCREEN_OFFSET / 2) + 6) + 40,
+        ((PAUSE_SCREEN_OFFSET / 2) + 6) + 30,
         ((SCREEN_WIDTH * PIXEL_DIM) - PAUSE_SCREEN_OFFSET * 2) - 2,
         HEADER_HEIGHT / 2,
     };
-*/
+
 	const SDL_Color _backgroundColor { 0, 102, 0, 150 };
 	const SDL_Color _borderColor { 0, 153, 0, 255 };
 	const SDL_Color _headerColor{ 2, 73, 2, 170 };
-    //const SDL_Color _selectedLineBackgroundColor { 255, 0, 0, 50 };
+    const SDL_Color _selectedLineBackgroundColor { 0, 153, 0, 100 };
 };

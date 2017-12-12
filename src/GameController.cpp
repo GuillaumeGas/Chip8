@@ -18,3 +18,8 @@ void GameController::handleKeyboard(Uint32 eventType, SDL_Keycode keyCode)
 		if (_keys[i] == keyCode)
 			_mainController->getCpu()->keyboard[i] = (eventType == SDL_EventType::SDL_KEYDOWN ? 1 : 0);
 }
+
+void GameController::reset()
+{
+	_screen->clear();
+}

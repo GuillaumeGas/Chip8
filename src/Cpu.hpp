@@ -70,4 +70,7 @@ public:
 
 	 */
 	uint8_t keyboard[KEYBOARD_SIZE];
+
+private:
+	void _init();
 };

@@ -4,7 +4,7 @@
 using namespace std;
 
 PauseScreen::PauseScreen(SDL_Renderer * renderer) 
-	: Drawable(renderer), _screenType(ScreenType::BROWSE_SCREEN), _font(nullptr), _textureDir(nullptr) /*, _indexLineSelected(0)*/
+	: Drawable(renderer), _screenType(ScreenType::BROWSE_SCREEN), _font(nullptr), _textureDir(nullptr), _selectedLineIndex(0)
 {
 	TTF_Init();
 	_initText();
@@ -62,14 +62,14 @@ void PauseScreen::_drawBrowser()
 {
 	SDL_RenderCopy(_renderer, _textureDir, NULL, &_rectDir);
 
+	SDL_Rect selectedLineBackground = _selectedLineBackground;
+	selectedLineBackground.y += _selectedLineIndex * 20;
+	SDL_SetRenderDrawColor(_renderer, _selectedLineBackgroundColor.r, _selectedLineBackgroundColor.g, _selectedLineBackgroundColor.b, _selectedLineBackgroundColor.a);
+	SDL_RenderFillRect(_renderer, &selectedLineBackground);
+
     int line = 0;
     for (std::pair<SDL_Rect, SDL_Texture*> & file : _filesList)
     {
-        /*if (line == _indexLineSelected)
-        {
-            SDL_SetRenderDrawColor(_renderer, _selectedLineBackgroundColor.r, _selectedLineBackgroundColor.g, _selectedLineBackgroundColor.b, _selectedLineBackgroundColor.a);
-            SDL_RenderFillRect(_renderer, &_selectedLineBackground);
-        }*/
         SDL_RenderCopy(_renderer, file.second, NULL, &file.first);
     }
 }
@@ -91,10 +91,12 @@ void PauseScreen::setRomPath(string newPath)
 
 void PauseScreen::setFilesList(const vector<File> & list)
 {
+	_filesList.clear();
+
     int offset = 20;
     for (const File & file : list)
     {
-        SDL_Rect rect = { PAUSE_SCREEN_OFFSET + 4,  ((PAUSE_SCREEN_OFFSET / 2) + 6) + offset, 0, 0 };
+        SDL_Rect rect = { PAUSE_SCREEN_OFFSET + 4,  ((PAUSE_SCREEN_OFFSET / 2) + 15) + offset, 0, 0 };
         SDL_Texture * texture = nullptr;
         _buildTexture(file.fileName, &texture, &rect);
         _filesList.push_back(pair<SDL_Rect, SDL_Texture*>(rect, texture));
@@ -141,4 +143,14 @@ string PauseScreen::_getShortPath(string & path)
 	stringstream ss;
 	ss << firstPart << "..." << secondPart;
 	return ss.str();
+}
+
+int PauseScreen::getSelectedLineIndex() const
+{
+	return _selectedLineIndex;
+}
+
+void PauseScreen::setSelectedLineIndex(int value)
+{
+	_selectedLineIndex = value;
 }

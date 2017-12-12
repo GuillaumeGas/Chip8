@@ -30,7 +30,6 @@ public:
 	std::vector<File> getFiles() const;
 	std::string getPath() const;
 	void enter(std::string directoryName);
-	void exit();
     void setCurrent(std::string dirPath);
 
 	static std::string GetFullFilePath(const std::string & filePath);

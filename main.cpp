@@ -6,6 +6,7 @@
 #include "src/Chip8.hpp"
 #include "src/Disassembly.hpp"
 #include "src/utils/Directory.hpp"
+//#include "src/Assembler/Assembler.hpp"
 
 #define DEFAULT_ROM "welcome.ch8"
 
@@ -16,36 +17,49 @@ void printUsage();
 int main(int argc, char** argv)
 {
 	try {
-		if (argc == 1) 
+		if (argc == 1)
 		{
 			Chip8 c(DEFAULT_ROM);
 			c.start();
 		}
-		else if (argc == 2) 
+		else if (argc == 2)
 		{
 			Chip8 c(argv[1]);
 			c.start();
 		}
-		else if (argc == 3) 
+		else if (argc >= 3)
 		{
 			string cmd = argv[1];
 
-			if (cmd == "-d") 
+			if (cmd == "-d")
 			{
 				Chip8 c(argv[2], true);
 				c.start();
 			}
-			else if (cmd == "-disass") 
+			else if (cmd == "-disass")
 			{
 				Disassembly d(argv[2]);
 				d.disass();
 			}
-			else 
+			/*else if (cmd == "-asm")
+			{
+				if (argc > 3)
+				{
+					Assembler a(argv[2], argv[3]);
+					a.assemble();
+				}
+				else
+				{
+					Assembler a(argv[2], argv[3]);
+					a.assemble();
+				}
+			}*/
+			else
 			{
 				throw UnknownCommandArgsException(argv[1]);
 			}
 		}
-		else 
+		else
 		{
 			throw TooManyArgsException();
 		}
@@ -55,11 +69,11 @@ int main(int argc, char** argv)
 		cout << e.toString() << endl;
 		printUsage();
 	}
-	catch (const Chip8Exception & e) 
+	catch (const Chip8Exception & e)
 	{
 		cout << e.toString() << endl;
 	}
-	catch (const exception & e) 
+	catch (const exception & e)
 	{
 		cout << "An error occured ! (" << e.what() << ")" << endl;
 		return -1;
