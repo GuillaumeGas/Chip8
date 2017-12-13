@@ -6,7 +6,7 @@
 #include "src/Chip8.hpp"
 #include "src/Disassembly.hpp"
 #include "src/utils/Directory.hpp"
-//#include "src/Assembler/Assembler.hpp"
+#include "src/Assembler/Assembler.hpp"
 
 #define DEFAULT_ROM "welcome.ch8"
 
@@ -41,19 +41,18 @@ int main(int argc, char** argv)
 				Disassembly d(argv[2]);
 				d.disass();
 			}
-			/*else if (cmd == "-asm")
+			else if (cmd == "-asm")
 			{
+                Assembler a;
 				if (argc > 3)
 				{
-					Assembler a(argv[2], argv[3]);
-					a.assemble();
+					a.assemble(argv[2]);
 				}
 				else
 				{
-					Assembler a(argv[2], argv[3]);
-					a.assemble();
+					a.assemble(argv[2], argv[3]);
 				}
-			}*/
+			}
 			else
 			{
 				throw UnknownCommandArgsException(argv[1]);
