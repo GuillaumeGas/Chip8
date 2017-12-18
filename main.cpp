@@ -43,7 +43,7 @@ int main(int argc, char** argv)
 			}
 			else if (cmd == "-asm")
 			{
-                Assembler a;
+				Assembler a;
 				if (argc > 3)
 				{
 					a.assemble(argv[2]);
@@ -84,6 +84,7 @@ void printUsage()
 {
 	cout << "Usage :" << endl;
 	cout << "  chip8.exe [[-d | -disass] rom_path.ch8]" << endl << endl;
-	cout << "  -d : enable debug mode" << endl;
-	cout << "  -disass : disassemble the rom" << endl;
+	cout << "  -d : enables debug mode" << endl;
+	cout << "  -disass : disassembles the rom" << endl;
+	cout << "  -asm : assembles the source file" << endl;
 }

@@ -11,7 +11,7 @@
 #define LEX_TOKEN_LIST				\
     LEX_TOKEN (CLS, "cls")			\
     LEX_TOKEN (RET, "ret")			\
-    LEX_TOKEN (JP, "jp")			\
+    LEX_TOKEN (JUMP, "jump")			\
     LEX_TOKEN (CALL, "call")		\
     LEX_TOKEN (SE, "se")			\
     LEX_TOKEN (SNE, "sne")			\
@@ -35,5 +35,6 @@
 	LEX_TOKEN (LOW, "low")			\
 	LEX_TOKEN (HIGH, "high")		\
 	LEX_TOKEN (EXIT, "exit")		\
+	LEX_TOKEN (COLON, ":")			\
     LEX_TOKEN (_EOF_, "<lex::eof>")	\
     LEX_TOKEN (OTHER, "<lex::other>")

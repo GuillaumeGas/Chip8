@@ -12,12 +12,13 @@ namespace ast
 	class Program : public Ast
 	{
 	public:
-		Program(std::vector<Instruction*> instructions, Position * pos);
+		Program(std::vector<Instruction*> * instructions, Position * pos);
 		~Program();
 
 		std::string toString() const override;
+		void Program::assemble(std::ostream & stream);
 
 	private:
-		std::vector<Instruction*> _instructions;
+		std::vector<Instruction*> * _instructions;
 	};
 }

@@ -6,7 +6,7 @@
 #define DEFAULT_COLUMN 0
 
 #define NULL_POSITION_PTR				\
-    (Position *) NULL
+    (Position *) nullptr
 
 class Position {
 public:

@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string>
+#include <fstream>
 
 #include "Assembler.hpp"
 #include "parser/Lexer.hpp"
@@ -24,7 +25,7 @@ void Assembler::assemble(const char * filePath, const char * resFilePath)
     try
     {
         lex = new Lexer(std::string(filePath));
-        lex->setKeys({ " ", "\n", "\r", "\t" });
+        lex->setKeys({ " ", ":", "\n", "\r", "\t" });
         lex->setSkips({ " ", "\n", "\r", "\t" });
         lex->setComs({ std::make_pair(";", "\n") });
     }
@@ -39,6 +40,14 @@ void Assembler::assemble(const char * filePath, const char * resFilePath)
 		syntax = new Syntax(lex);
 		ast::Program * programAst = syntax->generateAst();
 		std::cout << programAst->toString() << std::endl;
+
+		std::string resFile = (resFilePath == nullptr) ? DEFAULT_RES_FILE_NAME : resFilePath;
+		std::ofstream stream;
+		stream.open(resFile);
+
+		programAst->assemble(stream);
+
+		stream.close();
 	}
 	catch (const SyntaxException & e)
 	{

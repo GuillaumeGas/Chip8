@@ -16,7 +16,7 @@ Lexer::Lexer(string file_name) {
         throw FileNotFoundException(file_name);
     }
 
-    Global::getInstance()->setFile(file_name);
+    Global::Instance()->setFile(file_name);
 }
 
 Lexer::~Lexer() {
@@ -125,7 +125,7 @@ TokenPtr Lexer::getWord() {
     }
     else {
         if (this->new_line) {
-            Global::getInstance()->addLine(line);
+            Global::Instance()->addLine(line);
             this->new_line = false;
         }
     }
