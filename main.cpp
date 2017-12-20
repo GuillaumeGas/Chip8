@@ -24,8 +24,15 @@ int main(int argc, char** argv)
 		}
 		else if (argc == 2)
 		{
-			Chip8 c(argv[1]);
-			c.start();
+			if (string(argv[1]) == "-h")
+			{
+				printUsage();
+			}
+			else
+			{
+				Chip8 c(argv[1]);
+				c.start();
+			}
 		}
 		else if (argc >= 3)
 		{
@@ -83,8 +90,10 @@ int main(int argc, char** argv)
 void printUsage()
 {
 	cout << "Usage :" << endl;
-	cout << "  chip8.exe [[-d | -disass] rom_path.ch8]" << endl << endl;
+	cout << "  chip8.exe [[-d | -disass] rom_path.ch8]" << endl;
+	cout << "  chip8.exe -asm source_path.asm" << endl << endl;
 	cout << "  -d : enables debug mode" << endl;
 	cout << "  -disass : disassembles the rom" << endl;
 	cout << "  -asm : assembles the source file" << endl;
+	cout << "  -h : this help" << endl;
 }

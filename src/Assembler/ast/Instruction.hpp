@@ -5,7 +5,7 @@
 #include "Ast.hpp"
 #include "../global/Position.hpp"
 
-#define INSTRUCTION_SIZE 2
+#define BASE_ADDRESS 512
 
 namespace ast
 {

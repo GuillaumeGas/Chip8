@@ -8,7 +8,7 @@ using namespace ast;
 
 Instruction::Instruction(uint16_t size, Position * pos) : Ast(pos), size(size) {}
 
-Jump::Jump(std::string label, Position * pos) : Instruction(INSTRUCTION_SIZE + sizeof(uint16_t), pos), label(label) {}
+Jump::Jump(std::string label, Position * pos) : Instruction(sizeof(uint16_t), pos), label(label) {}
 
 std::string Jump::toString() const
 {
@@ -20,7 +20,7 @@ uint16_t Jump::firstPass(uint16_t nextOffset)
 	std::map<Instruction*, uint16_t> * instAddrMap = Global::Instance()->getInstsMap();
 	if (instAddrMap->find(this) != instAddrMap->end())
 	{
-		(*instAddrMap)[this] = nextOffset;
+		(*instAddrMap)[this] = nextOffset + BASE_ADDRESS;
 	}
 	return nextOffset + this->size;
 }
@@ -31,5 +31,5 @@ void Jump::secondPass(std::ostream & stream)
 	std::map<std::string, Instruction*> * labelsMap = Global::Instance()->getLabelsMap();
 	uint16_t addr = (*instAddrMap)[(*labelsMap)[this->label]];
 	uint16_t value = 0x1000 | addr;
-	stream << value;
+	stream << (uint8_t)(value >> 8) << (uint8_t)addr;
 }

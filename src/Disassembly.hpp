@@ -18,5 +18,6 @@ private:
 	void loadFile(const char * file_name);
 	void _disass(const uint16_t opcode, const int offset);
 
-	uint8_t buffer[BUF_SIZE];
+	uint8_t _buffer[BUF_SIZE];
+	size_t _romSize;
 };

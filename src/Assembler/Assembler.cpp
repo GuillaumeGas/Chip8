@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include <fstream>
+#include <ios>
 
 #include "Assembler.hpp"
 #include "parser/Lexer.hpp"
@@ -43,7 +44,7 @@ void Assembler::assemble(const char * filePath, const char * resFilePath)
 
 		std::string resFile = (resFilePath == nullptr) ? DEFAULT_RES_FILE_NAME : resFilePath;
 		std::ofstream stream;
-		stream.open(resFile);
+		stream.open(resFile, std::ios::out | std::ios::binary);
 
 		programAst->assemble(stream);
 

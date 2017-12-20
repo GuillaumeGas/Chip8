@@ -11,10 +11,10 @@ void Disassembly::disass() {
 	uint16_t opcode;
 	int i = 0;
 
-	while (i < (BUF_SIZE - 1)) {
-		opcode = (this->buffer[i] << 8) | this->buffer[i + 1];
+	while (i < (BUF_SIZE - 1) && i < _romSize) {
+		opcode = (this->_buffer[i] << 8) | this->_buffer[i + 1];
 		if (opcode != 0) {
-			opcode = (this->buffer[i] << 8) | this->buffer[i + 1];
+			opcode = (this->_buffer[i] << 8) | this->_buffer[i + 1];
 			this->_disass(opcode, offset);
 		}
 		offset += 2;
@@ -235,7 +235,11 @@ void Disassembly::loadFile(const char * file_name) {
 	fopen_s(&game, file_name, "rb");
 
 	if (game != NULL) {
-		fread(&this->buffer, sizeof(uint8_t) * BUF_SIZE, 1, game);
+		fseek(game, 0, SEEK_END);
+		_romSize = ftell(game);
+		rewind(game);
+
+		fread(&this->_buffer, sizeof(uint8_t) * BUF_SIZE, 1, game);
 		fclose(game);
 	}
 	else {

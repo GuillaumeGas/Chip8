@@ -71,6 +71,9 @@ public:
 	 */
 	uint8_t keyboard[KEYBOARD_SIZE];
 
+protected:
+	size_t _romSize;
+
 private:
 	void _init();
 };

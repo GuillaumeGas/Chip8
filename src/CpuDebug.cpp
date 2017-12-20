@@ -14,7 +14,7 @@ CpuDebug::CpuDebug(GameScreen * screen) : Cpu(screen)
 
 bool CpuDebug::emulateCycle() 
 {
-	if (this->pc >= (MEM_SIZE - 1) || !this->running)
+	if ((this->pc >= (MEM_SIZE - 1) && this->pc < _romSize) || !this->running)
 		return false;
 
 	uint16_t opcode = getNextOpCode();

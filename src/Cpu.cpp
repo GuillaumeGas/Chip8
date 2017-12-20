@@ -34,7 +34,7 @@ void Cpu::_init()
 
 bool Cpu::emulateCycle() 
 {
-	if (this->pc >= (MEM_SIZE - 1) || !this->running)
+	if ((this->pc >= (MEM_SIZE - 1) && this->pc < _romSize) || !this->running)
 		return false;
 
 	execOpcode(getNextOpCode());
@@ -64,6 +64,10 @@ void Cpu::loadProgram(const char * file_name)
 	fopen_s(&game, file_name, "rb");
 
 	if (game != NULL) {
+		fseek(game, 0, SEEK_END);
+		_romSize = ftell(game);
+		rewind(game);
+
 		fread(&this->memory[START_ADDRESS], sizeof(uint8_t) * (MEM_SIZE - START_ADDRESS), 1, game);
 		fclose(game);
 	}
